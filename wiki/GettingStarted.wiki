@@ -4,5 +4,51 @@
 This document describes the steps needed to take in order to set up a host running the vmaki management node including Xen Hypervisor support.
 
 = Prerequisites =
-
 Install Debian Lenny on a physical host using LVM volumes. Make sure there is enough free space within the volume pool for the creation of guest volumes.
+
+= Linux =
+Install required packages via apt & RubyGems:
+{{{
+# sudo apt-get install make gcc ruby ruby-dev rubygems irb libvirt-bin libvirt-dev libxml-ruby postgresql postgresql-server-dev-8.3 sqlite3 libsqlite3-dev libopenssl-ruby libxml2-dev libxslt-ruby libxslt1-dev ssh-askpass-gnome openssh-server
+}}}
+Add the following line to the .profile file in your home directory:
+{{{
+PATH="$PATH:/var/lib/gems/1.8/bin"
+}}}
+Immediately apply those changes to your environment and upgrade RubyGems to 1.3.1:
+{{{
+# source .profile
+# sudo gem install rubygems-update
+# cd /var/lib/gems/1.8/bin
+# sudo ./update_rubygems
+}}}
+Install some more gems:
+{{{
+# sudo gem install rails rake mongrel postgres libxml-ruby uuid net-ssh net-sftp
+}}}
+download http://libvirt.org/ruby/download/ruby-libvirt-0.1.0.gem
+{{{
+# sudo gem install ruby-libvirt-0.1.0.gem
+}}}
+
+= Xen =
+Edit "/etc/xen/xend-config.sxp" and add the following line:
+{{{
+(xend-unix-server yes)
+(network-script 'network-bridge')
+(vnc-listen '0.0.0.0')
+}}}
+
+You can optionally also add a VNC Password:
+{{{
+(vncpasswd 'mypassword')
+}}}
+
+Create a symlink called "xen" pointing to the lib folder of the xen installation to be used:
+{{{
+ln -sf /usr/lib64/xen-3.2-1 /usr/lib64/xen
+}}}
+
+= Prerequisites =
+
+= PostgreSQL =
