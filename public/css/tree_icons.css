@@ -1,0 +1,30 @@
+            .x-tree-node-leaf .x-tree-node-icon{
+                  background-image:url(../images/icons/computer_off.gif) !important;
+            }
+            .x-tree-node-collapsed .x-tree-node-icon{
+                  background-image:url(../images/icons/server.gif) !important;
+            }
+            .x-tree-node-expanded .x-tree-node-icon{
+                  background-image:url(../images/icons/server.gif) !important;
+            }
+            .server-connected-node .x-tree-node-icon{
+                background-image:url(../images/icons/server_start.gif) !important;
+            }
+            .server-disconnected-node .x-tree-node-icon{
+                background-image:url(../images/icons/server_stop.gif) !important;
+            }
+            .vm-running-node .x-tree-node-icon{
+                background-image:url(../images/icons/computer_start.gif) !important;
+            }
+            .vm-shutdown-node .x-tree-node-icon{
+                background-image:url(../images/icons/computer_off.gif) !important;
+            }
+            .vm-suspended-node .x-tree-node-icon{
+                background-image:url(../images/icons/pause_blue.gif) !important;
+            }
+            .vm-provisioning-node .x-tree-node-icon{
+                background-image:url(../images/icons/computer_hourglass.png) !important;
+            }
+            .vm-crashed-node .x-tree-node-icon{
+                background-image:url(../images/icons/computer_error.png) !important;
+            }

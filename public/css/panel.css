@@ -1,0 +1,73 @@
+
+.console-panel {
+    font-family: tahoma,arial,helvetica,sans-serif;
+    font-size: 14px;
+}
+
+.console-panel a:link {
+    text-decoration:none; font-weight:bold; color:#003366;
+}
+
+.console-panel a:visited {
+    text-decoration:none; font-weight:bold; color:#003366;
+}
+
+.console-panel a:hover { 
+    text-decoration:none; font-weight:bold; 
+}
+
+.console-panel a:active {
+    text-decoration:none; font-weight:bold;
+}
+
+.console-panel a:focus {
+    text-decoration:none; font-weight:bold;
+}
+
+
+.console-error{
+    text-align:center;
+    background-color:#FFDDDD;
+    border:thin solid red;
+    margin: 50px;
+    padding: 25px
+}
+
+.general-panel{
+    font-family: tahoma,arial,helvetica,sans-serif;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    font-size: 14px;
+}
+
+.general-panel td{
+    padding-right: 40px;
+}
+
+.x-spotlight {
+    z-index: 8999;
+    position: absolute;
+    top:0;
+    left:0;
+    -moz-opacity: 0.5;
+    opacity: .50;
+    filter: alpha(opacity=50);
+    background-color: #282828;
+    width:0;
+    height:0;
+    zoom: 1;
+}
+
+.x-dlg-mask{
+	z-index:10000;
+   display:none;
+   position:absolute;
+   top:0;
+   left:0;
+   -moz-opacity: 0.5;
+   opacity:.50;
+   filter: alpha(opacity=50);
+   background-color:#282828;
+}
+

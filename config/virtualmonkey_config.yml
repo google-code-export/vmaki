@@ -1,0 +1,3 @@
+# Virtual Monkey specific Configuration File
+libvirt_integration:  true
+logging_level: debug
