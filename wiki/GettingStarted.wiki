@@ -7,9 +7,9 @@ This document describes the steps needed to take in order to set up a host runni
 Install Debian Lenny on a physical host using LVM volumes. Make sure there is enough free space within the volume pool for the creation of guest volumes. For client machines the Firefox browser is highly recommended.
 
 = Getting vmaki =
-Check out *vmaki*'s trunk:
+Check out vmaki's trunk:
 {{{
-svn checkout http://vmaki.googlecode.com/svn/trunk/ vmaki
+# svn checkout http://vmaki.googlecode.com/svn/trunk/ vmaki
 }}}
 
 = Linux =
