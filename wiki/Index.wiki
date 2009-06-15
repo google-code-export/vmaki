@@ -1,3 +1,4 @@
 #summary Index page for this Wiki
 
-GettingStarted
+ * GettingStarted
+ * ScreenShots
