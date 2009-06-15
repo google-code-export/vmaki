@@ -49,6 +49,62 @@ Create a symlink called "xen" pointing to the lib folder of the xen installation
 ln -sf /usr/lib64/xen-3.2-1 /usr/lib64/xen
 }}}
 
-= Prerequisites =
-
 = PostgreSQL =
+== PostgreSQL Settings ==
+
+Change password of the postgres admin user:
+{{{
+# sudo passwd postgres
+}}}
+ 
+Create a new database and connect to it:
+{{{
+# sudo -u postgres createdb test
+# sudo -u postgres psql test
+}}}
+
+Then change the password of the database user as well:
+{{{
+test=# alter user postgres with password 'PASSWORD';
+}}}
+
+Then edit the postgresql.conf file:
+{{{
+# sudo gedit /etc/postgresql/8.3/main/postgresql.conf
+}}}
+
+And change the line:
+{{{
+#listen_addresses = 'localhost'
+}}}
+*TO:*
+{{{
+listen_addresses = '*'
+}}}
+The line:
+{{{
+#password_encryption = on
+}}}
+*TO:*
+{{{
+password_encryption = on
+}}}
+Now edit the file "/etc/postgresql/8.3/main/pg_hba.conf" and change all lines containing the following:
+{{{
+# sudo gedit /etc/postgresql/8.3/main/pg_hba.conf
+local all all ident sameuser
+}}}
+*TO:*
+{{{
+local all all md5
+}}}
+
+== Create new vmaki User ==
+
+{{{
+# sudo -u postgres createuser --superuser vmaki
+# sudo -u postgres createdb vmaki
+# sudo -u postgres psql vmaki
+vmaki=# alter user vmaki with password 'virtual_M0nk83!';
+\q
+}}}
