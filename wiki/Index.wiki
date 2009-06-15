@@ -1,4 +1,4 @@
 #summary Index page for this Wiki
 
  * GettingStarted
- * Screenshots
+ * [Screenshots]
