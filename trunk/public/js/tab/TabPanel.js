@@ -82,15 +82,14 @@ function TabPanel(){
             },
             disabled: true
         },{
-            title: 'Media',
+            title: 'ISO',
             id: 'mediaTab',
-            iconCls: 'media',
+            iconCls: 'iso',
             listeners: {
                 activate: function(panel){
                     panel.doLayout();
                 }
-            },
-            disabled: true
+            }
         },{
             title: 'Users',
             id: 'userTab',

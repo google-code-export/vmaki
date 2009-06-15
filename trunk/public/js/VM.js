@@ -44,6 +44,12 @@ VM.prototype.ostypeStore = new Ext.data.SimpleStore({
 // calls the add volumes request
 VM.addVm = function(){
 
+     // simplestore for bootdevice dropdown menu
+    isoStore = new Ext.data.SimpleStore({
+        fields: ['id', 'isoFile'],
+        data : [['1','CD-ROM'],['2', 'HD'],['3','Network']]
+    });
+
     // record model for the nic store
     nicRecord = Ext.data.Record.create([
         {name: 'id', mapping: 'nic.id'},
@@ -72,87 +78,159 @@ VM.addVm = function(){
         bodyStyle: 'padding:10px;',
         monitorValid: true,
         items: [{
-            xtype: 'textfield',
-            fieldLabel: 'Root Partion',
-            name: 'rootvolume_id',
-            hidden: true,
-            hideLabel: true
+            xtype: 'fieldset',
+            title: 'Settings',
+            id: 'settings_fieldset',
+            autoHeight: true,
+            items: [{
+                xtype: 'textfield',
+                fieldLabel: 'Root Partion',
+                name: 'rootvolume_id',
+                hidden: true,
+                hideLabel: true
+            },{
+                xtype: 'textfield',
+                fieldLabel: 'Root Partion',
+                name: 'swapvolume_id',
+                hidden: true,
+                hideLabel: true
+            },{
+                xtype: 'textfield',
+                fieldLabel: 'VM Name',
+                name: 'name',
+                allowBlank: false,
+                width: 100
+            },
+            new Ext.ux.SelectBox({
+                name: 'ostype',
+                id: 'ostypeSelect',
+                fieldLabel: 'Type',
+                mode: 'local',
+                triggerAction: 'all',
+                store: VM.prototype.ostypeStore,
+                displayField:'ostype',
+                allowBlank: false,
+                selectOnFocus: true,
+                editable: false,
+                width: 80
+            }),
+            new Ext.ux.form.Spinner({
+                name: 'memory',
+                fieldLabel: 'Memory [MByte]',
+                displayField:'memory',
+                allowBlank: false,
+                width: 80,
+                value: 128,
+                strategy: new Ext.ux.form.Spinner.NumberStrategy({
+                    minValue:'128',
+                    maxValue: 2048,
+                    incrementValue: 128
+                })
+            }),
+            new Ext.ux.form.Spinner({
+                name: 'vcpu',
+                fieldLabel: 'VCPUs',
+                displayField:'vcpu',
+                allowBlank: false,
+                width: 80,
+                value: 1,
+                strategy: new Ext.ux.form.Spinner.NumberStrategy({
+                    minValue:'1',
+                    maxValue:'2'
+                })
+            }),
+            new Ext.ux.form.Spinner({
+                name: 'root_capacity',
+                fieldLabel: 'Root Partition Capacity [GByte]',
+                displayField:'root_capacity',
+                allowBlank: false,
+                width: 80,
+                value: 3.0,
+                strategy: new Ext.ux.form.Spinner.NumberStrategy({
+                    minValue:'2.0',
+                    maxValue:'15.0',
+                    incrementValue: 0.5
+                })
+            }),
+            new Ext.ux.SelectBox({
+                name: 'nic_id',
+                fieldLabel: 'NIC',
+                triggerAction: 'all',
+                store: nicStore,
+                displayField:'name',
+                valueField: 'id',
+                allowBlank: false,
+                selectOnFocus: true,
+                editable: false,
+                width: 80
+            })]
         },{
-            xtype: 'textfield',
-            fieldLabel: 'Root Partion',
-            name: 'swapvolume_id',
-            hidden: true,
-            hideLabel: true
-        },{
-            xtype: 'textfield',
-            fieldLabel: 'VM Name',
-            name: 'name',
-            allowBlank: false,
-            width: 100
-        },
-        new Ext.ux.SelectBox({
-            name: 'ostype',
-            id: 'ostypeSelect',
-            fieldLabel: 'Type',
-            mode: 'local',
+            xtype: 'fieldset',
+            title: 'Media',
+            id: 'media_fieldset',
+            autoHeight: true,
+            collapsible: true,
+            collapsed: true,
+            items:[{
+                xtype: 'radio',
+                hideLabel: true,
+                boxLabel: 'CD-ROM',
+                name: 'media',
+                checked: true
+            },{
+                xtype: 'radio',
+                hideLabel: true,
+                boxLabel: 'ISO',
+                name: 'media',
+                listeners:{
+                    check: function(checkbox, checked){
+                        if(checked == true){
+                            VM.prototype.vmForm.getComponent('media_fieldset').getComponent('iso').enable();
+                        }
+                        else{
+                            VM.prototype.vmForm.getComponent('media_fieldset').getComponent('iso').disable();
+                            VM.prototype.vmForm.getComponent('media_fieldset').getComponent('iso').reset();
+                        }
+                    }
+                }
+            },
+            new Ext.ux.SelectBox({
+            name: 'iso',
+            id: 'iso',
+            disabled: 'true',
+            hideLabel: true,
             triggerAction: 'all',
-            store: VM.prototype.ostypeStore,
-            displayField:'ostype',
-            allowBlank: false,
-            selectOnFocus: true,
-            editable: false,
-            width: 80
-        }),
-        new Ext.ux.form.Spinner({
-            name: 'memory',
-            fieldLabel: 'Memory [MByte]',
-            displayField:'memory',
-            allowBlank: false,
-            width: 80,
-            value: 128,
-            strategy: new Ext.ux.form.Spinner.NumberStrategy({
-                minValue:'128',
-                maxValue: 2048,
-                incrementValue: 128
-            })
-        }),
-        new Ext.ux.form.Spinner({
-            name: 'vcpu',
-            fieldLabel: 'VCPUs',
-            displayField:'vcpu',
-            allowBlank: false,
-            width: 80,
-            value: 1,
-            strategy: new Ext.ux.form.Spinner.NumberStrategy({
-                minValue:'1',
-                maxValue:'2'
-            })
-        }),
-        new Ext.ux.form.Spinner({
-            name: 'root_capacity',
-            fieldLabel: 'Root Partition Capacity [GByte]',
-            displayField:'root_capacity',
-            allowBlank: false,
-            width: 80,
-            value: 3.0,
-            strategy: new Ext.ux.form.Spinner.NumberStrategy({
-                minValue:'2.0',
-                maxValue:'15.0',
-                incrementValue: 0.5
-            })
-        }),
-    new Ext.ux.SelectBox({
-            name: 'nic_id',
-            fieldLabel: 'NIC',
-            triggerAction: 'all',
-            store: nicStore,
-            displayField:'name',
+            store: isoStore,
+            displayField: 'isoFile',
             valueField: 'id',
-            allowBlank: false,
-            selectOnFocus: true,
+            //value: isoFile,
             editable: false,
-            width: 80
-        }),],
+            width: 160
+        }),{
+                xtype: 'radio',
+                hideLabel: true,
+                boxLabel: 'NFS',
+                name: 'media',
+                listeners:{
+                    check: function(checkbox, checked){
+                        if(checked == true){
+                            VM.prototype.vmForm.getComponent('media_fieldset').getComponent('nfs').enable();
+                        }
+                        else{
+                            VM.prototype.vmForm.getComponent('media_fieldset').getComponent('nfs').disable();
+                            VM.prototype.vmForm.getComponent('media_fieldset').getComponent('nfs').reset();
+                        }
+                    }
+                }
+            },{
+                xtype: 'textfield',
+                name: 'nfs',
+                id: 'nfs',
+                disabled: true,
+                hideLabel: true,
+                width: 180
+            }],
+        }],
         buttons: [{
             text: 'Add',
             formBind: true,
@@ -177,8 +255,8 @@ VM.addVm = function(){
     // checks if node supports hvm
     // if not Type is set to PV and the select box disabled
     if(node.attributes.hvm_support == 'false'){
-        VM.prototype.vmForm.getComponent('ostypeSelect').setValue('PV');
-        VM.prototype.vmForm.getComponent('ostypeSelect').disable();
+        VM.prototype.vmForm.getComponent('settings_fieldset').getComponent('ostypeSelect').setValue('PV');
+        VM.prototype.vmForm.getComponent('settings_fieldset').getComponent('ostypeSelect').disable();
     }
     // checks if host is connencted
     // if not the add vm window is not shown and a message appears
@@ -1054,3 +1132,113 @@ VM.reconfigureNicRequest = function(newNic){
             }
     })
 }
+
+// function to set Media for vm
+VM.setMedia = function(){
+
+     // simplestore for bootdevice dropdown menu
+    isoStore = new Ext.data.SimpleStore({
+        fields: ['id', 'isoFile'],
+        data : [['1','CD-ROM'],['2', 'HD'],['3','Network']]
+    });
+
+    // form to set media for a vm
+    var mediaForm = new Ext.FormPanel({
+        frame: true,
+        autoHeight: true,
+        autoWidth: true,
+        bodyStyle: 'padding:10px;',
+        monitorValid: true,
+            items:[{
+                xtype: 'radio',
+                fieldLabel: 'Media',
+                boxLabel: 'CD-ROM',
+                name: 'media'
+            },{
+                xtype: 'radio',
+                labelSeparator: '',
+                boxLabel: 'ISO',
+                name: 'media',
+                listeners:{
+                    check: function(checkbox, checked){
+                        if(checked == true){
+                            mediaForm.getComponent('iso').enable();
+                        }
+                        else{
+                            mediaForm.getComponent('iso').disable();
+                            mediaForm.getComponent('iso').reset();
+                        }
+                    }
+                }
+            },
+            new Ext.ux.SelectBox({
+            name: 'iso',
+            id: 'iso',
+            disabled: 'true',
+            labelSeparator: '',
+            triggerAction: 'all',
+            store: isoStore,
+            displayField: 'isoFile',
+            valueField: 'id',
+            //value: isoFile,
+            editable: false,
+            width: 160
+        }),{
+                xtype: 'radio',
+                labelSeparator: '',
+                boxLabel: 'NFS',
+                name: 'media',
+                listeners:{
+                    check: function(checkbox, checked){
+                        if(checked == true){
+                            mediaForm.getComponent('nfs').enable();
+                        }
+                        else{
+                            mediaForm.getComponent('nfs').disable();
+                            mediaForm.getComponent('nfs').reset();
+                        }
+                    }
+                }
+            },{
+                xtype: 'textfield',
+                name: 'nfs',
+                id: 'nfs',
+                disabled: true,
+                labelSeparator: '',
+                width: 160
+            }],
+    buttons: [{
+    text: 'Save',
+    formBind: true,
+    handler: function(){
+
+
+    vmMediaWindow.close();
+    }
+    },{
+    text: 'Cancel',
+    handler: function(){
+    vmMediaWindow.close();
+    }
+    }]
+    });
+
+    // Create new Window and add render hostForm to it
+    var vmMediaWindow = new Ext.Window({
+        layout: 'fit',
+        title: 'Attach Media',
+        resizable: false,
+        draggable: false,
+        items: mediaForm,
+        listeners:{
+            show: function(panel){
+                Util.prototype.spot.show(panel.id);
+            },
+            close: function(panel){
+                Util.prototype.spot.hide();
+            }
+        }
+    });
+// show window
+vmMediaWindow.show();
+    }

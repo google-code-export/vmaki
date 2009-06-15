@@ -61,6 +61,11 @@ function Menu(){
         icon: '../images/icons/computer_wrench.gif',
         handler: VM.getConfig
     })
+    this.vmMediaItem = new Ext.menu.Item({
+        text: 'Media',
+        icon: '../images/icons/cd.gif',
+        handler: VM.setMedia
+    })
 
     // host context menu
     this.hostContextMenu = new Ext.menu.Menu({
@@ -81,7 +86,8 @@ function Menu(){
         this.vmRebootItem,
         this.vmKillItem,
         this.vmDeleteItem,
-        this.vmSettingsItem
+        this.vmSettingsItem,
+        this.vmMediaItem
         ]
     })
 }
@@ -123,6 +129,7 @@ Menu.prototype.treeContextHandler = function(node){
             hostTree.treeMenu.vmRebootItem.enable();
             hostTree.treeMenu.vmKillItem.enable();
             hostTree.treeMenu.vmDeleteItem.disable();
+            hostTree.treeMenu.vmMediaItem.disable();
         }
         if(node.attributes.status == 'blocked'){
             hostTree.treeMenu.vmStartItem.disable();
@@ -132,6 +139,7 @@ Menu.prototype.treeContextHandler = function(node){
             hostTree.treeMenu.vmRebootItem.enable();
             hostTree.treeMenu.vmKillItem.enable();
             hostTree.treeMenu.vmDeleteItem.disable();
+            hostTree.treeMenu.vmMediaItem.disable();
         }
         if(node.attributes.status == 'paused'){
             hostTree.treeMenu.vmStartItem.disable();
@@ -141,6 +149,7 @@ Menu.prototype.treeContextHandler = function(node){
             hostTree.treeMenu.vmRebootItem.disable();
             hostTree.treeMenu.vmKillItem.disable();
             hostTree.treeMenu.vmDeleteItem.disable();
+            hostTree.treeMenu.vmMediaItem.disable();
         }
         if(node.attributes.status == 'shutoff'){
             hostTree.treeMenu.vmStartItem.enable();
@@ -150,6 +159,7 @@ Menu.prototype.treeContextHandler = function(node){
             hostTree.treeMenu.vmRebootItem.disable();
             hostTree.treeMenu.vmKillItem.enable();
             hostTree.treeMenu.vmDeleteItem.enable();
+            hostTree.treeMenu.vmMediaItem.enable();
         }
         if(node.attributes.status == 'crashed'){
             hostTree.treeMenu.vmStartItem.disable();
@@ -159,6 +169,7 @@ Menu.prototype.treeContextHandler = function(node){
             hostTree.treeMenu.vmRebootItem.disable();
             hostTree.treeMenu.vmKillItem.enable();
             hostTree.treeMenu.vmDeleteItem.disable();
+            hostTree.treeMenu.vmMediaItem.disable();
         }
         if(node.attributes.status == 'provisioning'){
             hostTree.treeMenu.vmStartItem.disable();
@@ -169,6 +180,7 @@ Menu.prototype.treeContextHandler = function(node){
             hostTree.treeMenu.vmKillItem.disable();
             hostTree.treeMenu.vmDeleteItem.disable();
             hostTree.treeMenu.vmSettingsItem.disable();
+            hostTree.treeMenu.vmMediaItem.disable();
         }
         if(node.attributes.status == 'nostate'){
             if(node.attributes.type == 'hvm'){
@@ -179,6 +191,7 @@ Menu.prototype.treeContextHandler = function(node){
                 hostTree.treeMenu.vmRebootItem.enable();
                 hostTree.treeMenu.vmKillItem.enable();
                 hostTree.treeMenu.vmDeleteItem.disable();
+                hostTree.treeMenu.vmMediaItem.disable();
             }
             if(node.attributes.type == 'linux'){
                 hostTree.treeMenu.vmStartItem.disable();
@@ -188,6 +201,7 @@ Menu.prototype.treeContextHandler = function(node){
                 hostTree.treeMenu.vmRebootItem.disable();
                 hostTree.treeMenu.vmKillItem.enable();
                 hostTree.treeMenu.vmDeleteItem.disable();
+                hostTree.treeMenu.vmMediaItem.disable();
             }
         }
     }
