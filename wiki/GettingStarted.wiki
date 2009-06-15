@@ -1,13 +1,8 @@
 #summary How to obtain & set up vmaki
 
 = Introduction =
+This document describes the steps needed to take in order to set up a host running the vmaki management node including Xen Hypervisor support.
 
-Add your content here.
+= Prerequisites =
 
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+Install Debian Lenny on a physical host using LVM volumes.
