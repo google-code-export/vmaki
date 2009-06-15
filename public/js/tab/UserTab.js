@@ -216,7 +216,7 @@ UserTab.prototype.addUser = function() {
                 close: function(panel){
                     Util.prototype.spot.hide();
                 }
-            },
+            }
     });
     // show window
     addUserWindow.show();
