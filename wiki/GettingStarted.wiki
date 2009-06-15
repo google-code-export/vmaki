@@ -1,4 +1,4 @@
-#summary How to obtain & set up vmaki
+#summary How to set up & run vmaki on your own host
 
 = Introduction =
 This document describes the steps needed to take in order to set up a host running the vmaki management node including Xen Hypervisor support.
