@@ -4,7 +4,13 @@
 This document describes the steps needed to take in order to set up a host running the vmaki management node including Xen Hypervisor support.
 
 = Prerequisites =
-Install Debian Lenny on a physical host using LVM volumes. Make sure there is enough free space within the volume pool for the creation of guest volumes.
+Install Debian Lenny on a physical host using LVM volumes. Make sure there is enough free space within the volume pool for the creation of guest volumes. For client machines the Firefox browser is highly recommended.
+
+= Getting vmaki =
+Check out *vmaki*'s trunk:
+{{{
+svn checkout http://vmaki.googlecode.com/svn/trunk/ vmaki
+}}}
 
 = Linux =
 Install required packages via apt & RubyGems:
@@ -107,4 +113,15 @@ local all all md5
 # sudo -u postgres psql vmaki
 vmaki=# alter user vmaki with password 'virtual_M0nk83!';
 \q
+}}}
+
+= Final Steps =
+Set up the database (change into vmaki's directory):
+{{{
+rake db:migrate
+}}}
+
+Start the vmaki process (also insides vmaki's directory):
+{{{
+script/server
 }}}
