@@ -1,0 +1,8 @@
+#summary A page showing screenshots
+
+= Overview Screen =
+http://vmaki.googlecode.com/files/overview.png
+
+
+= VNC Connection to an OpenSolaris Guest =
+http://vmaki.googlecode.com/files/vnc.png
