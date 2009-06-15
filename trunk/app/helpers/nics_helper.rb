@@ -1,0 +1,2 @@
+module NicsHelper
+end

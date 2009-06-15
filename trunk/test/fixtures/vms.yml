@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  memory: 1
+  vcpu: 1
+  bootloader: MyString
+  ostype: MyString
+  clockoffset: MyString
+  swapvolume_id: 1
+  rootvolume_id: 1
+
+two:
+  name: MyString
+  memory: 1
+  vcpu: 1
+  bootloader: MyString
+  ostype: MyString
+  clockoffset: MyString
+  swapvolume_id: 1
+  rootvolume_id: 1

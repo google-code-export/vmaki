@@ -1,0 +1,25 @@
+.user {
+			background-image:url(../images/icons/user_gray_cool.gif) !important;
+		}
+        .general {
+			background-image:url(../images/icons/information.gif) !important;
+		}
+        .network {
+			background-image:url(../images/icons/connect.gif) !important;
+		}
+        .console {
+			background-image:url(../images/icons/application_osx_terminal.gif) !important;
+		}
+        .snapshot {
+			background-image:url(../images/icons/camera.gif) !important;
+		}
+        .media {
+			background-image:url(../images/icons/cd.gif) !important;
+		}
+        .log {
+			background-image:url(../images/icons/book_open.gif) !important;
+		}
+        .performance {
+			background-image:url(../images/icons/server_chart.gif) !important;
+		}
+
