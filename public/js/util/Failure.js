@@ -36,6 +36,9 @@ Failure.prototype.bootdeviceReconfigure = ' Unable to reconfigure NIC';
 Failure.prototype.swapVolumeAdd = ' Unable to add the swap volume';
 Failure.prototype.rootVolumeAdd = ' Unable to add the root volume';
 
+// iso Failure Messages
+Failure.prototype.isoDelete = 'Unable to delete ISO File';
+
 // User Failure Messages
 Failure.prototype.userAdd = 'Unable to add user';
 Failure.prototype.userDelete = 'Unable to delete user';
