@@ -39,7 +39,7 @@ class IsosController < ApplicationController
 
 	# POST /isos
 	def create
-		@iso = Iso.new(params[:iso])
+		@iso = Iso.new #(params[:iso])
 
 		# test version
 		@iso.filename = "test.iso"
@@ -55,7 +55,6 @@ class IsosController < ApplicationController
 		#	file.write(data)
 		#end
 
-
 		respond_to do |format|
 			if @iso.save
 				#Dblogger.log("Production", @current_user.name, "Host", "Created Host #{@host.name} with id:#{@host.id}")
@@ -70,7 +69,7 @@ class IsosController < ApplicationController
 
 	# PUT /isos/1
 	def update
-		@iso = Host.find(params[:id])
+		@iso = Iso.find(params[:id])
 
 		respond_to do |format|
 			if @iso.update_attributes(params[:iso])
