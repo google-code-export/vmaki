@@ -14,7 +14,7 @@ function IsoTab(){
             cls: 'x-btn-text-icon',
             icon: 'images/icons/cdr_cross.gif',
             text: 'Delete ISO',
-            handler: this.deleteISO
+            handler: this.deleteIso
         }]
     })
 
@@ -59,7 +59,6 @@ IsoTab.prototype.addIso = function(){
         //fileUpload: true,
         width: 400,
         frame: true,
- //       title: 'File Upload Form',
         autoHeight: true,
         bodyStyle: 'padding: 10px 10px 0 10px;',
         labelWidth: 70,
@@ -87,11 +86,10 @@ IsoTab.prototype.addIso = function(){
         buttons: [{
             text: 'Upload',
             handler: function(){
-                //console.log(isoForm.getForm().findField('form-file'));
                 isoForm.getForm().submit({
                     fileUpload: true,
                     method: 'POST',
-                    url: Util.prototype.BASEURL + 'isos'
+                    url: Util.prototype.BASEURL + 'isos.json'
                 });
             }
         },{
@@ -125,7 +123,34 @@ IsoTab.prototype.addIso = function(){
 }
 
 IsoTab.prototype.deleteIso = function(){
-    
+     // gets the selected iso file
+    var sm = myTabPanel.myIsoTab.isoGrid.getSelectionModel();
+    var sel = sm.getSelected();
+    // checks if a iso file is selected
+    if(sm.hasSelection()){
+        Ext.Msg.show({
+            title: 'Remove ISO File',
+            buttons: Ext.MessageBox.YESNO,
+            msg: 'Are you sure you want to delete the ISO File <b>' + sel.data.filename + '</b>?',
+            fn: function(btn){
+                if (btn == 'yes'){
+                    Ext.Ajax.request({
+                        url: Util.prototype.BASEURL + 'isos/' + sel.data.id,
+                        method: 'DELETE',
+                        failure: function(response){
+                            Failure.checkFailure(response, Failure.prototype.isoDelete);
+                        }
+                })
+                myTabPanel.myIsoTab.isoStore.reload();
+                myTabPanel.myIsoTab.isoStore.removeAll();
+                }
+            }
+        })
+    }
+    else{
+        // message which is shown if no user is selected
+        Ext.Msg.alert('No ISO File Selected', 'Please select the ISO File you want to delete');
+    }
 }
 
 

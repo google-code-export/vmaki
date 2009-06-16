@@ -12,6 +12,7 @@ function GeneralTab(){
     this.hostMhz = "";
     this.cpuModel = "";
     this.hvmSupport = "";
+    this.ipAddress = "";
 
     // Pool
     this.poolId = "";
@@ -87,6 +88,8 @@ GeneralTab.prototype.setHostInformation = function(){
             if(this.hvmSupport == false){
                 this.hvmSupport = '../../images/icons/cancel.gif';
             }
+            // gets the ip address of the host
+            this.ipAddress = jsonResponse.data['host[ip_address]'];
         },
         failure: function(response){
             Failure.checkFailure(response);
@@ -150,6 +153,7 @@ GeneralTab.prototype.generateHostTab = function(panel){
                         document.getElementById("host_name").innerHTML = hostName;
                         document.getElementById("host_status").innerHTML = '<img src="' + hostStatus + '">';
                         document.getElementById("pool_name").innerHTML = poolName;
+                        document.getElementById("ip_address").innerHTML = ipAddress;
                         document.getElementById("total_memory").innerHTML = hostTotalMemory + ' MB';
                         document.getElementById("used_memory").innerHTML = hostMemory + ' MB';
                         document.getElementById("cpu_type").innerHTML = cpuModel;
