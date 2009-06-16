@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090522203220) do
+ActiveRecord::Schema.define(:version => 20090615234935) do
 
   create_table "hosts", :force => true do |t|
     t.string   "name"
@@ -30,6 +30,15 @@ ActiveRecord::Schema.define(:version => 20090522203220) do
     t.integer  "sockets"
     t.integer  "threads"
     t.boolean  "hvm_support"
+    t.string   "ip_address"
+  end
+
+  create_table "isos", :force => true do |t|
+    t.string   "name"
+    t.string   "filename"
+    t.decimal  "size"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "log", :force => true do |t|
@@ -95,6 +104,7 @@ ActiveRecord::Schema.define(:version => 20090522203220) do
     t.string   "vnc_url"
     t.integer  "max_memory"
     t.integer  "nic_id"
+    t.integer  "iso_id"
   end
 
   create_table "vnc_ports", :force => true do |t|
