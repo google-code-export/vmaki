@@ -28,6 +28,9 @@ function GeneralTab(){
     this.vmVcpu = "";
     this.vmBootDevice = "";
     this.nicId = "";
+    this.vmMedia = "";
+    this.isoId = "",
+    this.isoFilename = "";
 
     // Volume
     this.rootVolumeId = "";
@@ -219,13 +222,41 @@ GeneralTab.prototype.setVmInformation = function(panel){
 
             // gets the nic id
             this.nicId = jsonResponse.data['vm[nic_id]'];
+            // gets the attached Media
+            this.vmMedia = jsonResponse.data['vm[cdrom]'];
+            if(this.vmMedia == 'cdrom'){
+                this.vmMedia = 'CD-ROM';
+            }
+            if(this.vmMedia == 'iso'){
+                this.vmMedia = 'ISO File';
+            }
+            //gets the iso id
+            this.isoId = jsonResponse.data['vm[iso_id]'];
 
             // calls the set volume information function which gets the name and
             // capacity of the vm's root volume'
+            if(this.isoId){
+                myTabPanel.myGeneralTab.setIsoInformation(this.isoId);
+            }
             myTabPanel.myGeneralTab.setVolumeInformation(panel, this.rootVolumeId);            
         },
         failure: function(response){
             Failure.checkFailure(response);
+        }
+    })
+}
+
+GeneralTab.prototype.setIsoInformation = function(isoId){
+    Ext.Ajax.request({
+        url: Util.prototype.BASEURL + 'isos/' + isoId + '.json',
+        method: 'GET',
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        success: function(response){
+            var jsonResponse = Ext.util.JSON.decode(response.responseText);
+            this.isoFilename = jsonResponse.data['iso[filename]'];
+
         }
     })
 }
@@ -291,6 +322,12 @@ GeneralTab.prototype.generateVmTab = function(panel){
                         if(hostTree.selectedNode.attributes.type == 'linux'){
                             document.getElementById("boot_device_row").style.display="none";
                         }
+                        document.getElementById("media").innerHTML = vmMedia;
+                        if(vmMedia != 'ISO File'){
+                            document.getElementById("filename_row").style.display="none";
+                            document.getElementById("filename").style.display="none";
+                        }
+                        document.getElementById("filename").innerHTML = isoFilename;
                         
                     }
                 }
