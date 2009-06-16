@@ -204,7 +204,7 @@ class Vm < ActiveRecord::Base
 			if self.cdrom_changed?
 				puts "changing CDROM"
 				# check if a valid value has been set
-				if self.cdrom == "phy" || self.cdrom == "iso"
+				if self.cdrom.downcase == "phy" || self.cdrom.downcase == "iso"
 					# get the VNC Port already assigned to the VM and redefine the vm
 					vnc_port = get_vnc_port(@host)
 

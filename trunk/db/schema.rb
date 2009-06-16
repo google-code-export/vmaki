@@ -36,9 +36,9 @@ ActiveRecord::Schema.define(:version => 20090616130324) do
   create_table "isos", :force => true do |t|
     t.string   "description"
     t.string   "filename"
-    t.decimal  "size"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "size"
   end
 
   create_table "log", :force => true do |t|
