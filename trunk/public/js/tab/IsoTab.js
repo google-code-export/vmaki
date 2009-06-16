@@ -56,7 +56,8 @@ function IsoTab(){
 
 IsoTab.prototype.addIso = function(){
     var isoForm = new Ext.FormPanel({
-        //fileUpload: true,
+        fileUpload: true,
+        standardSubmit: true,
         width: 400,
         frame: true,
         autoHeight: true,
@@ -87,9 +88,12 @@ IsoTab.prototype.addIso = function(){
             text: 'Upload',
             handler: function(){
                 isoForm.getForm().submit({
-                    fileUpload: true,
                     method: 'POST',
-                    url: Util.prototype.BASEURL + 'isos.json'
+                    url: Util.prototype.BASEURL + 'isos.json',
+                    headers: {
+                        'Session_Key': Util.prototype.sessionKey
+                    }
+                    
                 });
             }
         },{

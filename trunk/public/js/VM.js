@@ -26,6 +26,8 @@ VM.prototype.vmRecord = Ext.data.Record.create([
     {name: 'set_status', mapping: 'vm.set_status'},
     {name: 'max_memory', mapping: 'vm.max_memory'},
     {name: 'nic_id', mapping: 'vm.nic_id'},
+    {name: 'cdrom', mapping: 'vm.cdrom'},
+    {name: 'iso_id', mapping: 'vm.iso_id'},
 ]);
 
 // simplestore for connection dropdown menu
@@ -33,6 +35,8 @@ VM.prototype.ostypeStore = new Ext.data.SimpleStore({
     fields: ['id', 'ostype'],
     data : [['1','PV'],['2', 'HVM']]
 });
+
+
 
 
 /*
@@ -44,10 +48,18 @@ VM.prototype.ostypeStore = new Ext.data.SimpleStore({
 // calls the add volumes request
 VM.addVm = function(){
 
-     // simplestore for bootdevice dropdown menu
-    isoStore = new Ext.data.SimpleStore({
-        fields: ['id', 'isoFile'],
-        data : [['1','CD-ROM'],['2', 'HD'],['3','Network']]
+    // record model for the iso store
+    isoRecord = Ext.data.Record.create([
+        {name: 'id', mapping: 'iso.id'},
+        {name: 'filename', mapping: 'iso.filename'}
+    ])
+
+    // json store for isos
+    isoStore = new Ext.data.JsonStore({
+        url: Util.prototype.BASEURL + 'isos.json',
+        root: 'isos',
+        fields: isoRecord,
+        autoLoad: true
     });
 
     // record model for the nic store
@@ -83,6 +95,16 @@ VM.addVm = function(){
             id: 'settings_fieldset',
             autoHeight: true,
             items: [{
+                xtype: 'textfield',
+                name: 'cdrom',
+                hidden: true,
+                hideLabel: true
+            },{
+                xtype: 'textfield',
+                name: 'iso_id',
+                hidden: true,
+                hideLabel: true
+            },{
                 xtype: 'textfield',
                 fieldLabel: 'Root Partion',
                 name: 'rootvolume_id',
@@ -173,12 +195,14 @@ VM.addVm = function(){
             collapsed: true,
             items:[{
                 xtype: 'radio',
+                id: 'cdrom_radio',
                 hideLabel: true,
                 boxLabel: 'CD-ROM',
                 name: 'media',
                 checked: true
             },{
                 xtype: 'radio',
+                id: 'iso_radio',
                 hideLabel: true,
                 boxLabel: 'ISO',
                 name: 'media',
@@ -195,19 +219,21 @@ VM.addVm = function(){
                 }
             },
             new Ext.ux.SelectBox({
-            name: 'iso',
-            id: 'iso',
-            disabled: 'true',
-            hideLabel: true,
-            triggerAction: 'all',
-            store: isoStore,
-            displayField: 'isoFile',
-            valueField: 'id',
-            //value: isoFile,
-            editable: false,
-            width: 160
-        }),{
+                displayField:'filename',
+                valueField: 'id',
+                allowBlank: false,
+                selectOnFocus: true,
+                editable: false,
+                name: 'iso_id',
+                id: 'iso',
+                disabled: 'true',
+                hideLabel: true,
+                triggerAction: 'all',
+                store: isoStore,
+                width: 200
+            }),{
                 xtype: 'radio',
+                id: 'nfs_radio',
                 hideLabel: true,
                 boxLabel: 'NFS',
                 name: 'media',
@@ -228,8 +254,8 @@ VM.addVm = function(){
                 id: 'nfs',
                 disabled: true,
                 hideLabel: true,
-                width: 180
-            }],
+                width: 220
+            }]
         }],
         buttons: [{
             text: 'Add',
@@ -305,6 +331,16 @@ VM.addVmRequest = function(){
     // sets value of ostype filed to linux if PV
     if(ostype == 'HVM'){
         VM.prototype.vmForm.getForm().findField('ostype').setValue('hvm');
+    }
+
+    // get media type and set the cdrom field corresponding to it
+    if(VM.prototype.vmForm.getComponent('media_fieldset').getComponent('cdrom_radio').getValue() == true){
+         VM.prototype.vmForm.getForm().findField('cdrom').setValue('phy');
+    }
+    if(VM.prototype.vmForm.getComponent('media_fieldset').getComponent('iso_radio').getValue() == true){
+         VM.prototype.vmForm.getForm().findField('cdrom').setValue('iso');
+         iso_id = VM.prototype.vmForm.getComponent('media_fieldset').getComponent('iso').getValue();
+         VM.prototype.vmForm.getForm().findField('iso_id').setValue(iso_id);
     }
 
     // close the window
@@ -1133,17 +1169,25 @@ VM.reconfigureNicRequest = function(newNic){
     })
 }
 
-// function to set Media for vm
+// function to change the Media which will be attached to the vm
 VM.setMedia = function(){
 
-     // simplestore for bootdevice dropdown menu
-    isoStore = new Ext.data.SimpleStore({
-        fields: ['id', 'isoFile'],
-        data : [['1','CD-ROM'],['2', 'HD'],['3','Network']]
+    // record model for the iso store
+    var isoRecord = Ext.data.Record.create([
+        {name: 'id', mapping: 'iso.id'},
+        {name: 'filename', mapping: 'iso.filename'}
+    ])
+
+    // json store for isos
+    var isoStore = new Ext.data.JsonStore({
+        url: Util.prototype.BASEURL + 'isos.json',
+        root: 'isos',
+        fields: isoRecord,
+        autoLoad: true
     });
 
     // form to set media for a vm
-    var mediaForm = new Ext.FormPanel({
+    VM.prototype.mediaForm = new Ext.FormPanel({
         frame: true,
         autoHeight: true,
         autoWidth: true,
@@ -1151,51 +1195,56 @@ VM.setMedia = function(){
         monitorValid: true,
             items:[{
                 xtype: 'radio',
+                id: 'cdrom_radio',
                 fieldLabel: 'Media',
                 boxLabel: 'CD-ROM',
                 name: 'media'
             },{
                 xtype: 'radio',
+                id: 'iso_radio',
                 labelSeparator: '',
                 boxLabel: 'ISO',
                 name: 'media',
                 listeners:{
+                    //fires when button is cheched or unchecked
                     check: function(checkbox, checked){
                         if(checked == true){
-                            mediaForm.getComponent('iso').enable();
+                            VM.prototype.mediaForm.getComponent('iso').enable();
                         }
                         else{
-                            mediaForm.getComponent('iso').disable();
-                            mediaForm.getComponent('iso').reset();
+                            VM.prototype.mediaForm.getComponent('iso').disable();
+                            VM.prototype.mediaForm.getComponent('iso').reset();
                         }
                     }
                 }
             },
             new Ext.ux.SelectBox({
-            name: 'iso',
-            id: 'iso',
-            disabled: 'true',
-            labelSeparator: '',
-            triggerAction: 'all',
-            store: isoStore,
-            displayField: 'isoFile',
-            valueField: 'id',
-            //value: isoFile,
-            editable: false,
-            width: 160
+                displayField:'filename',
+                valueField: 'id',
+                allowBlank: false,
+                selectOnFocus: true,
+                editable: false,
+                name: 'iso_id',
+                id: 'iso',
+                disabled: 'true',
+                labelSeparator: '',
+                triggerAction: 'all',
+                store: isoStore,
+                width: 200
         }),{
                 xtype: 'radio',
                 labelSeparator: '',
                 boxLabel: 'NFS',
                 name: 'media',
                 listeners:{
+                    //fires when button is cheched or unchecked
                     check: function(checkbox, checked){
                         if(checked == true){
-                            mediaForm.getComponent('nfs').enable();
+                            VM.prototype.mediaForm.getComponent('nfs').enable();
                         }
                         else{
-                            mediaForm.getComponent('nfs').disable();
-                            mediaForm.getComponent('nfs').reset();
+                            VM.prototype.mediaForm.getComponent('nfs').disable();
+                            VM.prototype.mediaForm.getComponent('nfs').reset();
                         }
                     }
                 }
@@ -1205,31 +1254,27 @@ VM.setMedia = function(){
                 id: 'nfs',
                 disabled: true,
                 labelSeparator: '',
-                width: 160
+                width: 200
             }],
-    buttons: [{
-    text: 'Save',
-    formBind: true,
-    handler: function(){
-
-
-    vmMediaWindow.close();
-    }
-    },{
-    text: 'Cancel',
-    handler: function(){
-    vmMediaWindow.close();
-    }
-    }]
+        buttons: [{
+            text: 'Save',
+            formBind: true,
+            handler: VM.prototype.setMediaRequest
+        },{
+            text: 'Cancel',
+            handler: function(){
+                VM.prototype.vmMediaWindow.close();
+            }
+        }]
     });
 
-    // Create new Window and add render hostForm to it
-    var vmMediaWindow = new Ext.Window({
+    // Create new Window and add render mediaForm to it
+    VM.prototype.vmMediaWindow = new Ext.Window({
         layout: 'fit',
         title: 'Attach Media',
         resizable: false,
         draggable: false,
-        items: mediaForm,
+        items: VM.prototype.mediaForm,
         listeners:{
             show: function(panel){
                 Util.prototype.spot.show(panel.id);
@@ -1239,6 +1284,38 @@ VM.setMedia = function(){
             }
         }
     });
-// show window
-vmMediaWindow.show();
+    // show window
+    VM.prototype.vmMediaWindow.show();
+}
+
+
+// function to send request to change attached media
+VM.prototype.setMediaRequest = function(){
+
+    // get media type and set the cdrom field corresponding to it
+    if(VM.prototype.mediaForm.getComponent('cdrom_radio').getValue() == true){
+         media = 'phy';
+         iso_id = '';
     }
+    if(VM.prototype.mediaForm.getComponent('iso_radio').getValue() == true){
+         media = 'iso';
+         iso_id = VM.prototype.mediaForm.getComponent('iso').getValue();
+    }
+
+    // closes the window
+    VM.prototype.vmMediaWindow.close();
+
+    //ajax request to change attached media
+    Ext.Ajax.request({
+        url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId + '.json',
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        jsonData: {vm: {'cdrom': media, 'iso_id': iso_id}},
+        success: function(){
+            hostTree.selectedNodeChange();
+        },
+        failure: function(response){
+                Failure.checkFailure(response, Failure.prototype.mediaReconfigure);
+            }
+    })
+}

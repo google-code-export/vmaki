@@ -30,6 +30,7 @@ Failure.prototype.vcpuReconfigure = ' Unable to reconfigure VCPU';
 Failure.prototype.volumeReconfigure = ' Unable to reconfigure Volume';
 Failure.prototype.bootdeviceReconfigure = ' Unable to reconfigure boot device';
 Failure.prototype.bootdeviceReconfigure = ' Unable to reconfigure NIC';
+Failure.prototype.mediaReconfigure = ' Unable to set Media';
 
 
 // Volume Failure Messages
