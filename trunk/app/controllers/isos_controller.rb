@@ -5,85 +5,81 @@ class IsosController < ApplicationController
     render :nothing => true, :status => :not_found
   end
 
-	# GET /hosts
+	# GET /isos
   def index
-    @hosts = Host.find(:all)
+    @isos = Iso.find(:all)
 
 		respond_to do |format|
-      format.xml { render :xml => @hosts }
-      format.json { render :json => @hosts.to_ext_json }
+      format.xml { render :xml => @isos }
+      format.json { render :json => @isos.to_ext_json }
     end
   end
 
-  # GET /hosts/1
+  # GET /isos/1
   def show
-    @host = Host.find(params[:id])
-		@host.update_mem_info
+    @iso = Iso.find(params[:id])
 
     respond_to do |format|
-			format.xml { render :xml => @host }
-			format.json { render :json => @host.to_ext_json }
+			format.xml { render :xml => @iso }
+			format.json { render :json => @iso.to_ext_json }
 		end
 	end
 
-	# GET /hosts/new
+	# GET /isos/new
 	def new
-		@host = Host.new
+		@iso = Iso.new
 
 		respond_to do |format|
-			format.xml { render :xml => @host }
-			format.json { render :json => @host.to_ext_json }
+			format.xml { render :xml => @iso }
+			format.json { render :json => @iso.to_ext_json }
 		end
 	end
 
-	# POST /hosts
+	# POST /isos
 	def create
 		@iso = Iso.new
-		
+		@iso.filename = params[:filename]
+		@iso.description = params[:description]
+		@iso.size = params[:size]
+		#data = request.headers["iso_data"]
+		#data.rewind
 
-		@host = Host.new(params[:host])
+		#File.open("UPLOAD.txt","wb") do |file|
+		#	file.write(data)
+		#end
 
-		# pass params array to Host Model object
-		# (needed for establishing libvirt connection)
-		@host.current_user = @current_user
 
 		respond_to do |format|
-			if @host.save
-				Dblogger.log("Production", @current_user.name, "Host", "Created Host #{@host.name} with id:#{@host.id}")
-				format.xml { render :xml => @host, :status => :created }
-				format.json { render :json => @host.to_ext_json, :status => :created }
+			if @iso.save
+				#Dblogger.log("Production", @current_user.name, "Host", "Created Host #{@host.name} with id:#{@host.id}")
+				format.xml { render :xml => @iso, :status => :created }
+				format.json { render :json => @iso.to_ext_json, :status => :created }
 			else
-				format.xml { render :xml => @host.errors, :status => "422" }
-				format.json { render :json => @host.errors.to_json, :status => "422" }
+				format.xml { render :xml => @iso.errors, :status => "422" }
+				format.json { render :json => @iso.errors.to_json, :status => "422" }
 			end
 		end
 	end
 
-	# PUT /hosts/1
+	# PUT /isos/1
 	def update
-		@host = Host.find(params[:id])
-
-		# pass current_user.name to model
-		@host.current_user = @current_user.name
+		@iso = Host.find(params[:id])
 
 		respond_to do |format|
-			if @host.update_attributes(params[:host])
-				Dblogger.log("Production", @current_user, "Host", "Updated Host #{@host.name} with id:#{@host.id}")
+			if @iso.update_attributes(params[:iso])
+				#Dblogger.log("Production", @current_user, "Host", "Updated Host #{@host.name} with id:#{@host.id}")
 				format.xml { render :nothing => true, :status => :ok }
 				format.json { render :nothing => true, :status => :ok }
 			end
 		end
 	end
 
-	# DELETE /hosts/1
+	# DELETE /isos/1
 	def destroy
-		@host = Host.find(params[:id])
+		@iso = Iso.find(params[:id])
+		@iso.destroy
 
-		host_id = @host.id
-		host_name = @host.name
-		@host.destroy
-
-		Dblogger.log("Production", @current_user.name, "Host", "Deleted Host #{host_name} with id:#{host_id}")
+		#Dblogger.log("Production", @current_user.name, "Host", "Deleted Host #{host_name} with id:#{host_id}")
 		respond_to do |format|
 			format.xml { render :nothing => true, :status => :ok }
 			format.json { render :nothing => true, :status => :ok }
