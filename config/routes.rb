@@ -1,9 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :nics
-
 	map.resources :session, :controller => 'sessions'
 
   map.resources :users
+
+	map.resources :isos
 
 	map.connect 'log',
 		:conditions => { :method => :get},

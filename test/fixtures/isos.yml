@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  filename: MyString
+  size: 9.99
+  vm_id: 1
+
+two:
+  filename: MyString
+  size: 9.99
+  vm_id: 1

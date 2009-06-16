@@ -10,15 +10,18 @@ class Host < ActiveRecord::Base
   has_many :pools
 	has_many :vms
 	has_many :nics
+	has_many :isos
 
 	before_save :manage_connection if APP_CONFIG["libvirt_integration"]
 	after_save :retrieve_nics if APP_CONFIG["libvirt_integration"]
 	before_destroy :delete_nics if APP_CONFIG["libvirt_integration"]
-	
+
 	def manage_connection
 		if self.connect == true
 			# connect host
 			establish_libvirt_connection
+			# get IP Address of localhost
+			self.ip_address = local_ip
 		elsif self.connect == false
 			# disconnect host
 			self.connected = false
@@ -28,12 +31,12 @@ class Host < ActiveRecord::Base
 
 	def establish_libvirt_connection
 		if self.connect == true # && self.connected == false
-			
+
 			if connection_already_exists
 				self.connected = true
 				# get all the latest details for this host
 				update_host_info
-					
+
 			elsif !connection_already_exists
 				connection = ConnectionsManager.instance
 				connection.add(self)
@@ -121,6 +124,23 @@ class Host < ActiveRecord::Base
 	def delete_nics
 		# before this host is being removed, make sure all associated nics are removed as well
 		Nic.destroy_all(:host_id => self.id)
+	end
+
+	private
+
+	require 'socket'
+
+	def local_ip
+		# turn off reverse DNS resolution temporarily
+		orig, Socket.do_not_reverse_lookup = Socket.do_not_reverse_lookup, true
+
+		UDPSocket.open do |s|
+			# One of Google's IPs. It is NOT being used in any way though, since no real connection is opened
+			s.connect '64.233.187.99', 1
+			s.addr.last
+		end
+	ensure
+		Socket.do_not_reverse_lookup = orig
 	end
 
 end

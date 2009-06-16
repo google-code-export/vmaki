@@ -608,7 +608,7 @@ class Vm < ActiveRecord::Base
 
 			# create cdrom device element
 			devices << cdrom = XML::Node.new("disk")
-			cdrom["type"] = Constants::DISK_TYPE
+			cdrom["type"] = Constants::DISK_TYPE #Used for ISO: "file"
 			cdrom["device"] = Constants::CDROM_DEVICE
 
 			# create driver element for cdrom
@@ -618,13 +618,14 @@ class Vm < ActiveRecord::Base
 			# create source element for cdrom
 			cdrom << source = XML::Node.new("source")
 			source["dev"] = "/dev/scd0"
+			#source["file"] = "/mnt/tmp/osol-0906-x86.iso" #"nfs://192.168.1.2/isos/osol-0906-x86.iso"
 
-			# create source element for cdrom
+			# create target element for cdrom
 			cdrom << target = XML::Node.new("target")
 			target["dev"] = "hdc"
 			target["bus"] = "ide"
 
-			# create readonly  element for cdrom
+			# create readonly element for cdrom
 			cdrom << readonly = XML::Node.new("readonly")
 
 			# create interface parent element
