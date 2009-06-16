@@ -18,10 +18,12 @@ class ApplicationController < ActionController::Base
 		if session_key.nil?
 			puts "NO HTTP_SESSION_KEY FOUND"
 			cookie = request.env["HTTP_COOKIE"]
-			session_cookie = cookie.match(/_session_id=\S+/).to_s
-			session_cookie = session_cookie.match(/[^(_session_id=)]\w+/).to_s
-			session_key = session_cookie
-			puts "SESSION_COOKIE IS: #{session_key}"
+			if !cookie.nil?
+				session_cookie = cookie.match(/_session_id=\S+/).to_s
+				session_cookie = session_cookie.match(/[^(_session_id=)]\w+/).to_s
+				session_key = session_cookie
+				puts "SESSION_COOKIE IS: #{session_key}"
+			end
 		end
 
 		session_temp = ActiveRecord::SessionStore::Session.find_by_session_id(session_key)
