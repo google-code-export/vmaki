@@ -1,4 +1,4 @@
-.user {
+        .user {
 			background-image:url(../images/icons/user_gray_cool.gif) !important;
 		}
         .general {
@@ -22,4 +22,15 @@
         .performance {
 			background-image:url(../images/icons/server_chart.gif) !important;
 		}
+        .file-upload {
+			background-image:url(../images/icons/folder_magnify.gif) !important;
+		}
+        #fi-button-msg {
+            border: 2px solid #ccc;
+            padding: 5px 10px;
+            background: #eee;
+            margin: 5px;
+            float: left;
+        }
+
 
