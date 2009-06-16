@@ -3,6 +3,7 @@ class Iso < ActiveRecord::Base
 	validates_uniqueness_of :filename
 
 	before_update :manage_update
+	before_destroy :manage_delete
 	
 	private
 
@@ -10,8 +11,14 @@ class Iso < ActiveRecord::Base
 		# check if filename attribute has been changed and if yes, change the physical filename as well
 		if self.filename_changed?
 			path = "/isos"
-			puts `mv #{isos}/#{self.filename_was} #{isos}/#{self.filename}`
+			puts `mv #{path}/#{self.filename_was} #{path}/#{self.filename}`
 		end
 
+	end
+
+	def manage_delete
+			path = "/isos"
+			
+			#puts `rm #{path}/#{self.filename}`
 	end
 end

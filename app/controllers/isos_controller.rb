@@ -1,7 +1,7 @@
+require "constants"
+
 class IsosController < ApplicationController
 	include ExtScaffold
-
-	protect_from_forgery :only => [:destroy]
 
 	rescue_from ActiveRecord::RecordNotFound do |exception|
     render :nothing => true, :status => :not_found
@@ -39,21 +39,23 @@ class IsosController < ApplicationController
 
 	# POST /isos
 	def create
-		@iso = Iso.new #(params[:iso])
+		request_form_hash = request.headers["rack.request.form_hash"]
+		isopath = request_form_hash["isoPath"]
+		filename = isopath[:filename]
 
-		# test version
-		@iso.filename = "test.iso"
-		@iso.description = "just a test"
-		@iso.size = 700
-#		@iso.filename = params[:filename]
-#		@iso.description = params[:description]
-#		@iso.size = params[:size]
-		#data = request.headers["iso_data"]
-		#data.rewind
+		@iso = Iso.new
 
-		#File.open("UPLOAD.txt","wb") do |file|
-		#	file.write(data)
-		#end
+		@iso.filename = filename
+		@iso.description = params[:description]
+		data = params[:isoPath]
+		data.rewind
+
+		File.open(@iso.filename,"wb") do |file|
+			file.write(data.read)
+		end
+
+		# set the size of the uploaded file in Megabytes
+		@iso.size = sprintf("%.2f", (File.size(@iso.filename).to_f / 1024 / 1024).to_f)
 
 		respond_to do |format|
 			if @iso.save
@@ -102,16 +104,18 @@ class IsosController < ApplicationController
 			# so set all corresponding iso_id references to NULL
 			@vms.each do |vm|
 				vm.iso_id = nil
+				vm.cdrom = Constants::DRIVER_NAME
 				vm.save
 			end
 
 			@iso.destroy
+			
+			#Dblogger.log("Production", @current_user.name, "Host", "Deleted Host #{host_name} with id:#{host_id}")
+			respond_to do |format|
+				format.xml { render :nothing => true, :status => :ok }
+				format.json { render :nothing => true, :status => :ok }
+			end
 		end
 
-		#Dblogger.log("Production", @current_user.name, "Host", "Deleted Host #{host_name} with id:#{host_id}")
-		respond_to do |format|
-			format.xml { render :nothing => true, :status => :ok }
-			format.json { render :nothing => true, :status => :ok }
-		end
 	end
 end

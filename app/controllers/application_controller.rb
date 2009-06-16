@@ -1,11 +1,11 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
-  protect_from_forgery # See ActionController::RequestForgeryProtection for details
+  #protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
 	before_filter :authenticate
 
   # Scrub sensitive parameters from your log
-  # filter_parameter_logging :password
+  filter_parameter_logging :password
 
 	private
 
@@ -14,6 +14,16 @@ class ApplicationController < ActionController::Base
 		cleanup
 
 		session_key = request.env["HTTP_SESSION_KEY"]
+		puts "SESSION_KEY: #{session_key}"
+		if session_key.nil?
+			puts "NO HTTP_SESSION_KEY FOUND"
+			cookie = request.env["HTTP_COOKIE"]
+			session_cookie = cookie.match(/_session_id=\S+/).to_s
+			session_cookie = session_cookie.match(/[^(_session_id=)]\w+/).to_s
+			session_key = session_cookie
+			puts "SESSION_COOKIE IS: #{session_key}"
+		end
+
 		session_temp = ActiveRecord::SessionStore::Session.find_by_session_id(session_key)
 		if session_temp
 			puts "Activated Session with SESSION_KEY: #{session_key}"
