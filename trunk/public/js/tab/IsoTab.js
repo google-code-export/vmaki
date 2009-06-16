@@ -26,18 +26,25 @@ IsoTab.prototype.addIso = function(){
         frame: true,
         autoHeight: true,
         bodyStyle: 'padding: 10px 10px 0 10px;',
+        defaults: {
+            allowBlank: false,
+            msgTarget: 'side'
+        },
         items: [{
             xtype: 'textfield',
-            fieldLabel: 'Name',
-        },
-        new Ext.form.FileUploadField({
+            fieldLabel: 'Name'
+        },{
+            xtype: 'fileuploadfield',
             id: 'form-file',
-            emtpyText: 'Select an ISO File',
+            emptyText: 'Select an ISO File...',
             fieldLabel: 'ISO File',
-            name: 'iso_path'
-        })
+            name: 'iso_path',
+            buttonCfg:{
+                text: ''
+            }
+
             
-        ]
+        }]
     })
 
     // Create new Window and add render hostForm to it

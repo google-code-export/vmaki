@@ -123,7 +123,7 @@ VM.addVm = function(){
                 value: 128,
                 strategy: new Ext.ux.form.Spinner.NumberStrategy({
                     minValue:'128',
-                    maxValue: 2048,
+                    //maxValue: 2048,
                     incrementValue: 128
                 })
             }),
@@ -690,7 +690,7 @@ VM.reconfigure = function(poolId, rootVolumeId){
             value: vmMemory,
             strategy: new Ext.ux.form.Spinner.NumberStrategy({
                 minValue:'128',
-                maxValue:'2048',
+                //maxValue:'2048',
                 incrementValue: 128
             })
         }),
@@ -879,7 +879,7 @@ VM.pvReconfigure = function(poolId, rootVolumeId){
             value: vmMemory,
             strategy: new Ext.ux.form.Spinner.NumberStrategy({
                 minValue:'128',
-                maxValue:'2048',
+                //maxValue:'2048',
                 incrementValue: 128
             })
         }),
@@ -893,7 +893,7 @@ VM.pvReconfigure = function(poolId, rootVolumeId){
             value: vmMaxMemory,
             strategy: new Ext.ux.form.Spinner.NumberStrategy({
                 minValue:'128',
-                maxValue:'2048',
+                //maxValue:'2048',
                 incrementValue: 128
             })
         }),
