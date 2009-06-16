@@ -6,6 +6,7 @@ function TabPanel(){
     // Objects initialization
     this.myGeneralTab = new GeneralTab();
     this.myConsole = new ConsoleTab();
+    this.myIsoTab = new IsoTab();
     //this.myLog = new Log();
 
     // tabpanel
@@ -85,8 +86,12 @@ function TabPanel(){
             title: 'ISO',
             id: 'mediaTab',
             iconCls: 'iso',
+//            items: new Ext.Panel({
+//                id: 'iso'
+//            }),
             listeners: {
                 activate: function(panel){
+                    panel.add(myTabPanel.myIsoTab.isoToolbar);
                     panel.doLayout();
                 }
             }
