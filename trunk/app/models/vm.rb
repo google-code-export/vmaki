@@ -9,12 +9,8 @@ class Vm < ActiveRecord::Base
 	attr_accessor :current_user
 	validates_uniqueness_of :name
 	
-
 	belongs_to :host
-
-	#belongs_to :swap, :class_name => "Volume", :foreign_key => "swapvolume_id"
 	belongs_to :root, :class_name => "Volume", :foreign_key => "rootvolume_id"
-
 	belongs_to :nic
 
 	before_create :define_vm if APP_CONFIG["libvirt_integration"]
@@ -61,10 +57,10 @@ class Vm < ActiveRecord::Base
 			@host = Host.find(self.host_id)
 			connection = ConnectionsManager.instance
 			connection_hash = connection.get(@host.name)
-			conn = connection_hash[:conn]
+			@conn = connection_hash[:conn]
 
 			# get a reference to the domain
-			@domain = conn.lookup_domain_by_uuid(self.uuid)
+			@domain = @conn.lookup_domain_by_uuid(self.uuid)
 			@info = @domain.info
 
 			puts "VM State: #{@info.state}"
@@ -120,7 +116,7 @@ class Vm < ActiveRecord::Base
 				# get kernel files
 				get_kernel_files
 
-				conn.define_domain_xml(to_libvirt_xml(vnc_port))
+				@conn.define_domain_xml(to_libvirt_xml(vnc_port))
 			end
 
 			# update VCPU if it has changed
@@ -144,7 +140,7 @@ class Vm < ActiveRecord::Base
 				# get kernel files
 				get_kernel_files
 
-				conn.define_domain_xml(to_libvirt_xml(vnc_port))
+				@conn.define_domain_xml(to_libvirt_xml(vnc_port))
       elsif self.boot_device_changed?
 				self.boot_device = nil
 			end
@@ -202,6 +198,21 @@ class Vm < ActiveRecord::Base
 				# update status
 				info = @domain.info
 				self.status = map_status(info.state)
+			end
+
+			# check if the cdrom attribute has been changed and if yes, redefine the domain
+			if self.cdrom_changed?
+				puts "changing CDROM"
+				# check if a valid value has been set
+				if self.cdrom == "phy" || self.cdrom == "iso"
+					# get the VNC Port already assigned to the VM and redefine the vm
+					vnc_port = get_vnc_port(@host)
+
+					# get kernel files
+					get_kernel_files
+
+					@conn.define_domain_xml(to_libvirt_xml(vnc_port))
+				end
 			end
 			
 			# get the VNC Port already assigned to the VM and redefine the vm
@@ -606,24 +617,47 @@ class Vm < ActiveRecord::Base
 			target["dev"] = "hda" #Constants::TARGET_DEVICE_ROOT
 			target["bus"] = "ide" #Constants::BUS_TYPE
 
-			# create cdrom device element
-			devices << cdrom = XML::Node.new("disk")
-			cdrom["type"] = Constants::DISK_TYPE #Used for ISO: "file"
-			cdrom["device"] = Constants::CDROM_DEVICE
+			# create a different CDROM element if a physical drive or an ISO image is being used
+			cdrom_enabled = false
+			if self.cdrom == "phy"
+				# the physical drive shall be used
+				cdrom_enabled = true
 
-			# create driver element for cdrom
-			cdrom << driver = XML::Node.new("driver")
-			driver["name"] = Constants::DRIVER_NAME
+				# create cdrom device element
+				devices << cdrom = XML::Node.new("disk")
+				cdrom["type"] = Constants::DISK_TYPE
+				cdrom["device"] = Constants::CDROM_DEVICE
 
-			# create source element for cdrom
-			cdrom << source = XML::Node.new("source")
-			source["dev"] = "/dev/scd0"
-			#source["file"] = "/mnt/tmp/osol-0906-x86.iso" #"nfs://192.168.1.2/isos/osol-0906-x86.iso"
+				# create driver element for cdrom
+				cdrom << driver = XML::Node.new("driver")
+				driver["name"] = Constants::DRIVER_NAME
 
-			# create target element for cdrom
-			cdrom << target = XML::Node.new("target")
-			target["dev"] = "hdc"
-			target["bus"] = "ide"
+				# create source element for cdrom
+				cdrom << source = XML::Node.new("source")
+				source["dev"] = Constants::SOURCE_DEVICE_CDROM
+			else
+				iso = Iso.find(self.iso_id)
+				if !iso.nil?
+					# an ISO image over NFS is going to be used
+					cdrom_enabled = true
+
+					# create cdrom device element
+					devices << cdrom = XML::Node.new("disk")
+					cdrom["type"] = Constants::FILE_DEVICE
+					cdrom["device"] = Constants::CDROM_DEVICE
+
+					# create source element for cdrom
+					cdrom << source = XML::Node.new("source")
+					source["file"] = "/mnt/tmp/#{iso.filename}" #"nfs://192.168.1.2/isos/osol-0906-x86.iso"
+				end
+			end
+			
+			if cdrom_enabled
+				# create target element for cdrom
+				cdrom << target = XML::Node.new("target")
+				target["dev"] = "hdc"
+				target["bus"] = "ide"
+			end
 
 			# create readonly element for cdrom
 			cdrom << readonly = XML::Node.new("readonly")

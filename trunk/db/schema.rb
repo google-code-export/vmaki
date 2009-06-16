@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090615234935) do
+ActiveRecord::Schema.define(:version => 20090616130324) do
 
   create_table "hosts", :force => true do |t|
     t.string   "name"
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(:version => 20090615234935) do
   end
 
   create_table "isos", :force => true do |t|
-    t.string   "name"
+    t.string   "description"
     t.string   "filename"
     t.decimal  "size"
     t.datetime "created_at"
@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(:version => 20090615234935) do
     t.integer  "max_memory"
     t.integer  "nic_id"
     t.integer  "iso_id"
+    t.string   "cdrom",         :default => "phy"
   end
 
   create_table "vnc_ports", :force => true do |t|
