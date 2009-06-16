@@ -50,7 +50,7 @@ class IsosController < ApplicationController
 		data = params[:isoPath]
 		data.rewind
 
-		File.open(@iso.filename,"wb") do |file|
+		File.open("#{Constants::NFS_MOUNT_PATH}/#{@iso.filename}","wb") do |file|
 			file.write(data.read)
 		end
 

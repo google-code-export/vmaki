@@ -129,7 +129,7 @@ IsoTab.prototype.addIso = function(){
 			}
 		}]
 
-	})
+	});
 
 	// Create new Window and add render hostForm to it
 	var addIsoWindow = new Ext.Window({
