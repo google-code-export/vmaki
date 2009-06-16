@@ -86,12 +86,9 @@ function TabPanel(){
             title: 'ISO',
             id: 'mediaTab',
             iconCls: 'iso',
-//            items: new Ext.Panel({
-//                id: 'iso'
-//            }),
             listeners: {
                 activate: function(panel){
-                    panel.add(myTabPanel.myIsoTab.isoToolbar);
+                    panel.add(myTabPanel.myIsoTab.isoGrid);
                     panel.doLayout();
                 }
             }
