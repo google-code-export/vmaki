@@ -53,22 +53,18 @@ function IsoTab(){
 		border: false,
 		autoHeight: true,
 		autoWidth: true,
-		minColumnWidth: 35,
+		minColumnWidth: 70,
 		store: this.isoStore,
 		tbar: this.isoToolbar,
-		//{header: 'ID', dataIndex: 'id'},
+        autoExpandColumn: 'filename',
 		columns:[
-		{
-			header: 'ID',
-			dataIndex: 'id'
-		},
-
 		{
 			header: 'Description',
 			dataIndex: 'description'
 		},
 
 		{
+            id: 'filename',
 			header: 'File',
 			dataIndex: 'filename'
 		},
@@ -105,7 +101,7 @@ IsoTab.prototype.addIso = function(){
 		},{
 			xtype: 'fileuploadfield',
 			id: 'form-file',
-			emptyText: 'Select an image',
+			emptyText: 'Select ISO File',
 			fieldLabel: 'File',
 			name: 'isoPath',
 			buttonCfg: {
@@ -119,7 +115,16 @@ IsoTab.prototype.addIso = function(){
 				isoForm.getForm().submit({
 					method: 'POST',
 					url: Util.prototype.BASEURL + 'isos',
-					timeout: 10000
+					timeout: 10000,
+                    waitMsg: 'ISO File is being uploaded',
+                    success: function(){
+                        addIsoWindow.close();
+                        myTabPanel.myIsoTab.isoStore.reload();
+                    },
+                    failure: function(response){
+						Failure.checkFailure(response, Failure.prototype.isoUpload);
+                    }
+
 				});
 			}
 		},{
