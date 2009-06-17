@@ -20,7 +20,9 @@ class ApplicationController < ActionController::Base
 			cookie = request.env["HTTP_COOKIE"]
 			if !cookie.nil?
 				session_cookie = cookie.match(/_session_id=\S+/).to_s
-				session_cookie = session_cookie.match(/[^(_session_id=)]\w+/).to_s
+				session_cookie = session_cookie.match(/[^(_session_id)]\w+/).to_s
+        # remove leading '='
+        session_cookie.slice!(0)
 				session_key = session_cookie
 				puts "SESSION_COOKIE IS: #{session_key}"
 			end
