@@ -231,31 +231,7 @@ VM.addVm = function(){
                 triggerAction: 'all',
                 store: isoStore,
                 width: 200
-            }),{
-                xtype: 'radio',
-                id: 'nfs_radio',
-                hideLabel: true,
-                boxLabel: 'NFS',
-                name: 'media',
-                listeners:{
-                    check: function(checkbox, checked){
-                        if(checked == true){
-                            VM.prototype.vmForm.getComponent('media_fieldset').getComponent('nfs').enable();
-                        }
-                        else{
-                            VM.prototype.vmForm.getComponent('media_fieldset').getComponent('nfs').disable();
-                            VM.prototype.vmForm.getComponent('media_fieldset').getComponent('nfs').reset();
-                        }
-                    }
-                }
-            },{
-                xtype: 'textfield',
-                name: 'nfs',
-                id: 'nfs',
-                disabled: true,
-                hideLabel: true,
-                width: 220
-            }]
+            })]
         }],
         buttons: [{
             text: 'Add',
@@ -1231,31 +1207,33 @@ VM.setMedia = function(){
                 triggerAction: 'all',
                 store: isoStore,
                 width: 200
-        }),{
-                xtype: 'radio',
-                labelSeparator: '',
-                boxLabel: 'NFS',
-                name: 'media',
-                listeners:{
-                    //fires when button is cheched or unchecked
-                    check: function(checkbox, checked){
-                        if(checked == true){
-                            VM.prototype.mediaForm.getComponent('nfs').enable();
-                        }
-                        else{
-                            VM.prototype.mediaForm.getComponent('nfs').disable();
-                            VM.prototype.mediaForm.getComponent('nfs').reset();
-                        }
-                    }
-                }
-            },{
-                xtype: 'textfield',
-                name: 'nfs',
-                id: 'nfs',
-                disabled: true,
-                labelSeparator: '',
-                width: 200
-            }],
+        }),
+//        {
+//                xtype: 'radio',
+//                labelSeparator: '',
+//                boxLabel: 'NFS',
+//                name: 'media',
+//                listeners:{
+//                    //fires when button is cheched or unchecked
+//                    check: function(checkbox, checked){
+//                        if(checked == true){
+//                            VM.prototype.mediaForm.getComponent('nfs').enable();
+//                        }
+//                        else{
+//                            VM.prototype.mediaForm.getComponent('nfs').disable();
+//                            VM.prototype.mediaForm.getComponent('nfs').reset();
+//                        }
+//                    }
+//                }
+//            },{
+//                xtype: 'textfield',
+//                name: 'nfs',
+//                id: 'nfs',
+//                disabled: true,
+//                labelSeparator: '',
+//                width: 200
+//            }
+        ],
         buttons: [{
             text: 'Save',
             formBind: true,
