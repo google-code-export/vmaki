@@ -741,6 +741,7 @@ class Vm < ActiveRecord::Base
 
 		end
 
+    puts doc.to_s
 		return doc.to_s
 	end
 
