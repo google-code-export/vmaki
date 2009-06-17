@@ -28,8 +28,16 @@ function ToolBar(){
     // Help Menu Entries
     this.helpMenu = new Ext.menu.Menu({
         id: 'helpMenu',
-        items:[
-             { text: 'About', disabled: true}
+        items:[{
+                 text: 'Manual',
+                 icon: '../images/icons/book_open.png',
+                 handler: Util.openHelp
+                 
+             },{
+                 text: 'About',
+                 icon: '../images/icons/information.gif',
+                 handler: Util.about
+             }
         ]
     })
        
