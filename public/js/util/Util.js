@@ -43,6 +43,12 @@ Util.prependRoot = function(root, string){
     return "{" + root + ":" + string + "}";
 }
 
+// function to open wiki manual in new window
+Util.openHelp = function(){
+    console.log('open manual');
+    window.open('http://code.google.com/p/vmaki/w/list');
+}
+
 
 
      
