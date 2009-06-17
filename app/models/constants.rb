@@ -14,6 +14,7 @@ class Constants
 	FILE_DEVICE = "file"
 	DRIVER_NAME = "phy"
 	NFS_MOUNT_PATH = "/mnt/tmp"
+  NFS_SOURCE_PATH = "/isos"
 	BUS_TYPE = "scsi"
 	OS_TYPE_XPATH = "//capabilities/guest/os_type"
 	CLOCK_OFFSET_LOCALTIME = "localtime"
