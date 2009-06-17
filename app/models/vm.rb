@@ -476,24 +476,52 @@ class Vm < ActiveRecord::Base
 			target["dev"] = Constants::TARGET_DEVICE_ROOT
 			target["bus"] = Constants::BUS_TYPE
 
-      # create CDROM for PV
-      # create disk parent element
-			devices << disk = XML::Node.new("disk")
-			disk["type"] = Constants::DISK_TYPE
-			disk["device"] = Constants::CDROM_DEVICE
+      # create a different CDROM element if a physical drive or an ISO image is being used
+			cdrom_enabled = false
+			if self.cdrom == "phy"
+				# the physical drive shall be used
+				cdrom_enabled = true
 
-			# create driver element
-			disk << driver = XML::Node.new("driver")
-			driver["name"] = Constants::DRIVER_NAME
+        # create CDROM for PV
+        # create disk parent element
+        devices << disk = XML::Node.new("disk")
+        disk["type"] = Constants::DISK_TYPE
+        disk["device"] = Constants::CDROM_DEVICE
 
-			# create source element
-			disk << source = XML::Node.new("source")
-			source["dev"] = Constants::SOURCE_DEVICE_CDROM
+        # create driver element
+        disk << driver = XML::Node.new("driver")
+        driver["name"] = Constants::DRIVER_NAME
 
-			# create target element
-			disk << target = XML::Node.new("target")
-			target["dev"] = Constants::TARGET_DEVICE_ROOT_HVM_AND_CDROM
-			target["bus"] = Constants::BUS_TYPE_IDE
+        # create source element
+        disk << source = XML::Node.new("source")
+        source["dev"] = Constants::SOURCE_DEVICE_CDROM
+
+			else
+				iso = Iso.find(self.iso_id)
+				if !iso.nil?
+					# an ISO image over NFS is going to be used
+					cdrom_enabled = true
+
+					# create cdrom device element
+					devices << cdrom = XML::Node.new("disk")
+					cdrom["type"] = Constants::FILE_DEVICE
+					cdrom["device"] = Constants::CDROM_DEVICE
+
+					# create source element for cdrom
+					cdrom << source = XML::Node.new("source")
+					source["file"] = "/mnt/tmp/#{iso.filename}" #"nfs://192.168.1.2/isos/osol-0906-x86.iso"
+				end
+			end
+
+			if cdrom_enabled
+				# create target element for cdrom
+        disk << target = XML::Node.new("target")
+        target["dev"] = Constants::TARGET_DEVICE_ROOT_HVM_AND_CDROM
+        target["bus"] = Constants::BUS_TYPE_IDE
+        # create readonly element for cdrom
+        cdrom << readonly = XML::Node.new("readonly")
+			end
+
 
 			# create interface parent element
 			devices << interface = XML::Node.new("interface")
