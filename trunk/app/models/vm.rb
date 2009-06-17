@@ -519,7 +519,7 @@ class Vm < ActiveRecord::Base
         target["dev"] = Constants::TARGET_DEVICE_ROOT_HVM_AND_CDROM
         target["bus"] = Constants::BUS_TYPE_IDE
         # create readonly element for cdrom
-        cdrom << readonly = XML::Node.new("readonly")
+        #cdrom << readonly = XML::Node.new("readonly")
 			end
 
 
