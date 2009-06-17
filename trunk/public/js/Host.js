@@ -156,7 +156,7 @@ Host.addHostRequest = function(){
 
     // Load Mask
     var myMask = new Ext.LoadMask(Ext.getBody(), {
-        msg:"Please wait...Host " + Host.prototype.hostForm.getForm().findField('name').getValue()  + "is beeing connected"
+        msg:"Please wait...Host " + Host.prototype.hostForm.getForm().findField('name').getValue()  + "is being connected"
     });
 
     // POST Request
