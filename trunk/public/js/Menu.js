@@ -129,7 +129,7 @@ Menu.prototype.treeContextHandler = function(node){
             hostTree.treeMenu.vmRebootItem.enable();
             hostTree.treeMenu.vmKillItem.enable();
             hostTree.treeMenu.vmDeleteItem.disable();
-            hostTree.treeMenu.vmMediaItem.disable();
+            hostTree.treeMenu.vmMediaItem.enable();
         }
         if(node.attributes.status == 'blocked'){
             hostTree.treeMenu.vmStartItem.disable();
@@ -139,7 +139,7 @@ Menu.prototype.treeContextHandler = function(node){
             hostTree.treeMenu.vmRebootItem.enable();
             hostTree.treeMenu.vmKillItem.enable();
             hostTree.treeMenu.vmDeleteItem.disable();
-            hostTree.treeMenu.vmMediaItem.disable();
+            hostTree.treeMenu.vmMediaItem.enable();
         }
         if(node.attributes.status == 'paused'){
             hostTree.treeMenu.vmStartItem.disable();
@@ -149,7 +149,7 @@ Menu.prototype.treeContextHandler = function(node){
             hostTree.treeMenu.vmRebootItem.disable();
             hostTree.treeMenu.vmKillItem.disable();
             hostTree.treeMenu.vmDeleteItem.disable();
-            hostTree.treeMenu.vmMediaItem.disable();
+            hostTree.treeMenu.vmMediaItem.enable();
         }
         if(node.attributes.status == 'shutoff'){
             hostTree.treeMenu.vmStartItem.enable();
@@ -169,7 +169,7 @@ Menu.prototype.treeContextHandler = function(node){
             hostTree.treeMenu.vmRebootItem.disable();
             hostTree.treeMenu.vmKillItem.enable();
             hostTree.treeMenu.vmDeleteItem.disable();
-            hostTree.treeMenu.vmMediaItem.disable();
+            hostTree.treeMenu.vmMediaItem.enable();
         }
         if(node.attributes.status == 'provisioning'){
             hostTree.treeMenu.vmStartItem.disable();
@@ -191,7 +191,7 @@ Menu.prototype.treeContextHandler = function(node){
                 hostTree.treeMenu.vmRebootItem.enable();
                 hostTree.treeMenu.vmKillItem.enable();
                 hostTree.treeMenu.vmDeleteItem.disable();
-                hostTree.treeMenu.vmMediaItem.disable();
+                hostTree.treeMenu.vmMediaItem.enable();
             }
             if(node.attributes.type == 'linux'){
                 hostTree.treeMenu.vmStartItem.disable();
@@ -201,7 +201,7 @@ Menu.prototype.treeContextHandler = function(node){
                 hostTree.treeMenu.vmRebootItem.disable();
                 hostTree.treeMenu.vmKillItem.enable();
                 hostTree.treeMenu.vmDeleteItem.disable();
-                hostTree.treeMenu.vmMediaItem.disable();
+                hostTree.treeMenu.vmMediaItem.enable();
             }
         }
     }
