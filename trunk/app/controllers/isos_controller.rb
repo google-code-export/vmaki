@@ -50,21 +50,22 @@ class IsosController < ApplicationController
 		data = params[:isoPath]
 		data.rewind
 
-		File.open("#{Constants::NFS_MOUNT_PATH}/#{@iso.filename}","wb") do |file|
+    full_path = "/isos/#{@iso.filename}"
+		File.open(full_path,"wb") do |file|
 			file.write(data.read)
 		end
 
 		# set the size of the uploaded file in Megabytes
-		@iso.size = sprintf("%.2f", (File.size(@iso.filename).to_f / 1024 / 1024).to_f)
+		@iso.size = sprintf("%.2f", (File.size(full_path).to_f / 1024 / 1024).to_f)
 
 		respond_to do |format|
 			if @iso.save
 				#Dblogger.log("Production", @current_user.name, "Host", "Created Host #{@host.name} with id:#{@host.id}")
-				format.xml { render :xml => @iso, :status => :created }
-				format.json { render :json => @iso.to_ext_json, :status => :created }
+				format.xml { render :nothing => true, :status => :created }
+				format.json { render :nothing => true, :status => :created }
 			else
-				format.xml { render :xml => @iso.errors, :status => "422" }
-				format.json { render :json => @iso.errors.to_json, :status => "422" }
+				format.xml { render :nothing => true, :status => "422" }
+				format.json { render :nothing => true, :status => "422" }
 			end
 		end
 	end

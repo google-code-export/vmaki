@@ -118,7 +118,7 @@ IsoTab.prototype.addIso = function(){
 			handler: function(){
 				isoForm.getForm().submit({
 					method: 'POST',
-					url: Util.prototype.BASEURL + 'isos.json',
+					url: Util.prototype.BASEURL + 'isos',
 					timeout: 10000
 				});
 			}
