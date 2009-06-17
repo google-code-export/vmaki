@@ -119,10 +119,10 @@ vmaki=# alter user vmaki with password 'virtual_M0nk83!';
 
 Install NFS Server & create directories:
 {{{
-sudo apt-get install nfs-kernel-server
-mkdir /isos
-chmod 777 /isos
-mkdir -p /mnt/tmp
+# sudo apt-get install nfs-kernel-server
+# mkdir /isos
+# chmod 777 /isos
+# mkdir -p /mnt/tmp
 }}}
 
 Add the following line to "/etc/exports":
@@ -132,17 +132,17 @@ Add the following line to "/etc/exports":
 
 Now export the filesystem and mount it:
 {{{
-sudo exportfs -ra
-sudo mount IP:/isos /mnt/tmp
+# sudo exportfs -ra
+# sudo mount IP:/isos /mnt/tmp
 }}}
 
 = Final Steps =
 Set up the database (change into vmaki's directory):
 {{{
-rake db:migrate
+# rake db:migrate
 }}}
 
 Start the vmaki process (also insides vmaki's directory):
 {{{
-script/server
+# script/server
 }}}
