@@ -39,6 +39,7 @@ Failure.prototype.rootVolumeAdd = ' Unable to add the root volume';
 
 // iso Failure Messages
 Failure.prototype.isoDelete = 'Unable to delete ISO File';
+Failure.prototype.isoDelete = 'Unable to upload ISO File';
 
 // User Failure Messages
 Failure.prototype.userAdd = 'Unable to add user';

@@ -224,7 +224,7 @@ GeneralTab.prototype.setVmInformation = function(panel){
             this.nicId = jsonResponse.data['vm[nic_id]'];
             // gets the attached Media
             this.vmMedia = jsonResponse.data['vm[cdrom]'];
-            if(this.vmMedia == 'cdrom'){
+            if(this.vmMedia == 'phy'){
                 this.vmMedia = 'CD-ROM';
             }
             if(this.vmMedia == 'iso'){
@@ -327,7 +327,10 @@ GeneralTab.prototype.generateVmTab = function(panel){
                             document.getElementById("filename_row").style.display="none";
                             document.getElementById("filename").style.display="none";
                         }
-                        document.getElementById("filename").innerHTML = isoFilename;
+                        else{
+                            document.getElementById("filename").innerHTML = isoFilename;
+                        }
+                        
                         
                     }
                 }
