@@ -3,6 +3,7 @@ require 'host'
 require 'singleton'
 require 'net/ssh'
 require 'ssh_key'
+require 'constants'
 
 class ConnectionsManager
 	include Singleton
@@ -39,7 +40,7 @@ class ConnectionsManager
 	end
 
   def mount_nfs(host)
-    Net::SSH.start(host.name, host.username, :auth_methods => "publickey", :timeout => 2) do |ssh|
+    Net::SSH.start(host.name, host.username, :auth_methods => "publickey", :timeout => Constants::SSH_Timeout) do |ssh|
       puts "Unmounting existing NFS Share"
       puts ssh.exec!("umount /mnt/tmp")
       puts "Creating NFS mount directory"

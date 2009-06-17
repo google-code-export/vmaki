@@ -16,7 +16,7 @@ class Provisioning
 
   def mount_volume(volume, basedir)
     puts "mount"
-    Net::SSH.start(@hostname, @username, :auth_methods => "publickey", :timeout => 2) do |ssh|
+    Net::SSH.start(@hostname, @username, :auth_methods => "publickey", :timeout => Constants::SSH_Timeout) do |ssh|
       puts ssh.exec!("mkdir -p #{basedir}")
       puts ssh.exec!("mount -t ext3 #{volume} #{basedir}")
 			puts ssh.exec!("mkdir -p #{basedir}/lib/modules")
@@ -26,7 +26,7 @@ class Provisioning
   def provision_and_mount_pseudo_filesystems(basedir, debian_url, modules, vmname)
     puts "provision"
 		puts "Using modules: #{modules}"
-		Net::SSH.start(@hostname, @username, :auth_methods => "publickey", :timeout => 2) do |ssh|
+		Net::SSH.start(@hostname, @username, :auth_methods => "publickey", :timeout => Constants::SSH_Timeout) do |ssh|
       puts ssh.exec!("debootstrap lenny #{basedir} #{debian_url}")
 			puts ssh.exec!("cp -rfd /lib/modules/#{modules} #{basedir}/lib/modules")
       puts ssh.exec!("mount -o bind /dev #{basedir}/dev")
@@ -107,7 +107,7 @@ class Provisioning
 		hostname = vmname
 
     puts "chroot"
-    Net::SFTP.start(@hostname, @username, :auth_methods => "publickey", :timeout => 2) do |sftp|
+    Net::SFTP.start(@hostname, @username, :auth_methods => "publickey", :timeout => Constants::SSH_Timeout) do |sftp|
       # write inittab
       #sftp.file.open("#{basedir}/etc/inittab", IO::WRONLY|IO::CREAT) do |file|
       #  inittab.each do |data|
@@ -132,7 +132,7 @@ class Provisioning
       end
     end
 		puts "apt-get stuff"
-    Net::SSH.start(@hostname, @username, :auth_methods => "publickey", :timeout => 2) do |ssh|
+    Net::SSH.start(@hostname, @username, :auth_methods => "publickey", :timeout => Constants::SSH_Timeout) do |ssh|
       puts ssh.exec!("chroot #{basedir} apt-get update")
 			puts ssh.exec!("chroot #{basedir} apt-get install libc6 udev -y")
     end
@@ -140,7 +140,7 @@ class Provisioning
 
   def unmount(basedir)
     puts "unmount"
-    Net::SSH.start(@hostname, @username, :auth_methods => "publickey", :timeout => 2) do |ssh|
+    Net::SSH.start(@hostname, @username, :auth_methods => "publickey", :timeout => Constants::SSH_Timeout) do |ssh|
       puts ssh.exec!("umount #{basedir}/dev")
       puts ssh.exec!("umount #{basedir}/proc")
       puts ssh.exec!("umount #{basedir}")

@@ -35,7 +35,7 @@ class Vm < ActiveRecord::Base
 			info = @domain.info
 
 			# To take a look at the current XML description of the VM, uncomment the following line:
-			Dblogger.log("Debug", "system", "VM", @domain.xml_desc)
+			# Dblogger.log("Debug", "system", "VM", @domain.xml_desc)
 			mapped_status = map_status(info.state)
 
 			self.status = mapped_status
@@ -330,7 +330,7 @@ class Vm < ActiveRecord::Base
 		host = Host.find_by_id(self.host_id)
 
 		# check which kernel the node is running on. Check if it's a Xen Kernel and which Architecture it is based on
-		Net::SSH.start(host.name, host.username, :auth_methods => "publickey", :timeout => 2) do |ssh|
+		Net::SSH.start(host.name, host.username, :auth_methods => "publickey", :timeout => Constants::SSH_Timeout) do |ssh|
 			kernel_release = ssh.exec!("uname -r")
 			@modules = String.new
 			@arch = String.new
