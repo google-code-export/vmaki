@@ -121,6 +121,7 @@ Host.addHost = function() {
         layout: 'fit',
         id: 'addHostWindow',
         title: 'Add Host System',
+        width: 300,
         resizable: false,
         draggable: false,
         listeners:{
