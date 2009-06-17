@@ -17,7 +17,7 @@ Failure.prototype.hostRemove = 'Unable to remove Host';
 Failure.prototype.poolAdd = 'Unable to add the Pool';
 
 // VM Failure Messages
-Failure.prototype.vmAdd = ' Unable to create Host';
+Failure.prototype.vmAdd = ' Unable to create VM';
 Failure.prototype.vmDelete = ' Unable to delete selected VM';
 Failure.prototype.vmStart = ' Unable to start the selected VM';
 Failure.prototype.vmSuspend = ' Unable to suspend the selected VM';

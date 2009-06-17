@@ -70,7 +70,7 @@ function IsoTab(){
 		},
 
 		{
-			header: 'Size',
+			header: 'Size [MB]',
 			dataIndex: 'size'
 		},
 		]
