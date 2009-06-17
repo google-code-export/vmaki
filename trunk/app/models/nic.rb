@@ -1,4 +1,5 @@
 require 'net/ssh'
+require 'constants'
 
 class Nic < ActiveRecord::Base
 	belongs_to :host
@@ -7,7 +8,7 @@ class Nic < ActiveRecord::Base
 	def self.retrieve(host_id)
 		host = Host.find(host_id)
 		nics_array = Array.new
-		Net::SSH.start(host.name, host.username, :auth_methods => "publickey", :timeout => 2) do |ssh|
+		Net::SSH.start(host.name, host.username, :auth_methods => "publickey", :timeout => Constants::SSH_Timeout) do |ssh|
 			nics = ssh.exec!("ifconfig | grep ^eth | cut -c1-5")
 			nics.each { |s| nics_array << s.chomp.chop }
 		end

@@ -1,5 +1,6 @@
 
 class Constants
+  SSH_Timeout = 10
 	LVM = "logical"
 	HYPERVISOR_TYPE = "xen"
 	HVM_TYPE = "hvm"

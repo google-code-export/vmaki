@@ -48,7 +48,7 @@ class Volume < ActiveRecord::Base
 		new_size_in_mb = (self.capacity * 1024).to_i
 		puts "New Size: #{new_size_in_mb}"
 		puts "Target Path: /dev/#{self.target_path}"
-		Net::SSH.start(@host.name, @host.username, :auth_methods => "publickey", :timeout => 2) do |ssh|
+		Net::SSH.start(@host.name, @host.username, :auth_methods => "publickey", :timeout => Constants::SSH_Timeout) do |ssh|
 
 			# check if volume contains a root filesystem and if yes, resize that as well
 			if self.mkfs
@@ -114,13 +114,13 @@ class Volume < ActiveRecord::Base
 			# now check which filesystem has to be created (either ext3 or swap)
 			if self.vol_type == "root"
 				puts "Creating a root filesystem on #{target_path}"
-				Net::SSH.start(@host.name, @host.username, :auth_methods => "publickey", :timeout => 2) do |ssh|
+				Net::SSH.start(@host.name, @host.username, :auth_methods => "publickey", :timeout => Constants::SSH_Timeout) do |ssh|
 					return ssh.exec!("mkfs -t ext3 #{target_path}")
 				end
 			end
 			if self.vol_type == "swap"
 				puts "Creating a swap filesystem on #{target_path}"
-				Net::SSH.start(@host.name, @host.username, :auth_methods => "publickey", :timeout => 2) do |ssh|
+				Net::SSH.start(@host.name, @host.username, :auth_methods => "publickey", :timeout => Constants::SSH_Timeout) do |ssh|
 					return ssh.exec!("mkswap #{target_path}")
 				end
 			end

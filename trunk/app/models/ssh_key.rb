@@ -1,13 +1,14 @@
 require 'net/ssh'
 require 'net/sftp'
+require 'constants'
 
 class SshKey
 	def connect(type, hostname, username, password=nil)
 		begin
 			if type == "key"
-				session = Net::SSH.start(hostname, username, :auth_methods => "publickey", :timeout => 2)
+				session = Net::SSH.start(hostname, username, :auth_methods => "publickey", :timeout => Constants::SSH_Timeout)
 			elsif type == "password"
-				session = Net::SSH.start(hostname, username, :password => password, :timeout => 2)
+				session = Net::SSH.start(hostname, username, :password => password, :timeout => Constants::SSH_Timeout)
 			end
 
 			# if we get till here, it means the connection has been successfully established!
