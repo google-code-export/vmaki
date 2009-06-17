@@ -21,6 +21,10 @@ function ToolBar(){
               text: 'VM Settings',
               icon: '../images/icons/computer_wrench.gif',
               handler: VM.getConfig
+          },{
+              text: 'Media',
+              icon: '../images/icons/cd.gif',
+              handler: VM.setMedia
           }
         ]
     })

@@ -208,6 +208,7 @@ UserTab.prototype.addUser = function() {
         title: 'Add User',
         resizable: false,
         draggable: false,
+        width: 330,
         items: userForm,
         listeners:{
                 show: function(panel){
@@ -247,6 +248,7 @@ UserTab.prototype.renameUser = function(id){
             xtype: 'textfield',
             fieldLabel: 'Username',
             name: 'username',
+            width: 160,
             allowBlank: false
         }],
         buttons: [{
@@ -280,6 +282,8 @@ UserTab.prototype.renameUser = function(id){
         layout: 'fit',
         title: 'Enter new User Name',
         resizable: false,
+        draggable: false,
+        width: 330,
         items: renameUserForm,
         listeners:{
                 show: function(panel){
@@ -307,12 +311,14 @@ UserTab.prototype.resetPassword = function(id){
             inputType: 'password',
             fieldLabel: 'Enter',
             name: 'password',
+            width: 160,
             allowBlank: false
         },{
             xtype: 'textfield',
             inputType: 'password',
             fieldLabel: 'Confirm',
             name: 'conf_password',
+            width: 160,
             allowBlank: false
         }],
         buttons: [{
@@ -356,6 +362,8 @@ UserTab.prototype.resetPassword = function(id){
         layout: 'fit',
         title: 'Enter new Password',
         resizable: false,
+        draggable: false,
+        width: 330,
         items: resetPasswordForm,
         listeners:{
                 show: function(panel){

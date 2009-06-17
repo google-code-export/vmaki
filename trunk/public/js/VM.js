@@ -270,6 +270,7 @@ VM.addVm = function(){
             title: 'Add VM',
             resizable: false,
             draggable: false,
+            width: 380,
             listeners:{
                 show: function(panel){
                     // on show spot is activated
@@ -852,6 +853,7 @@ VM.reconfigure = function(poolId, rootVolumeId){
         title: 'Reconfigure VM',
         resizable: false,
         draggable: false,
+        width: 350,
         listeners:{
             show: function(panel){
                 Util.prototype.spot.show(panel.id);
@@ -1032,6 +1034,7 @@ VM.pvReconfigure = function(poolId, rootVolumeId){
         title: 'Reconfigure VM',
         resizable: false,
         draggable: false,
+        width: 350,
         listeners:{
             show: function(panel){
                 Util.prototype.spot.show(panel.id);
@@ -1147,7 +1150,12 @@ VM.reconfigureNicRequest = function(newNic){
 
 // function to change the Media which will be attached to the vm
 VM.setMedia = function(){
-
+    // checks if selected node is not a vm
+    if(hostTree.selectedNodeType != 'vm'){
+        Ext.Msg.alert('No VM Selected', 'Please select the VM you want to set the Media for');
+    }
+    // if a vm is selected
+    else{
     // record model for the iso store
     var isoRecord = Ext.data.Record.create([
         {name: 'id', mapping: 'iso.id'},
@@ -1252,6 +1260,7 @@ VM.setMedia = function(){
         title: 'Attach Media',
         resizable: false,
         draggable: false,
+        width: 360,
         items: VM.prototype.mediaForm,
         listeners:{
             show: function(panel){
@@ -1296,4 +1305,5 @@ VM.prototype.setMediaRequest = function(){
                 Failure.checkFailure(response, Failure.prototype.mediaReconfigure);
             }
     })
+}
 }

@@ -142,6 +142,7 @@ IsoTab.prototype.addIso = function(){
 		title: 'Add ISO File',
 		resizable: false,
 		draggable: false,
+        width: 450,
 		items: isoForm,
 		listeners:{
 			show: function(panel){
