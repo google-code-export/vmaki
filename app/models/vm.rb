@@ -514,8 +514,9 @@ class Vm < ActiveRecord::Base
 			end
 
 			if cdrom_enabled
+				puts "CDROM ENABLED!"
 				# create target element for cdrom
-        disk << target = XML::Node.new("target")
+        cdrom << target = XML::Node.new("target")
         target["dev"] = Constants::TARGET_DEVICE_ROOT_HVM_AND_CDROM
         target["bus"] = Constants::BUS_TYPE_IDE
         # create readonly element for cdrom
@@ -741,7 +742,6 @@ class Vm < ActiveRecord::Base
 
 		end
 
-    puts doc.to_s
 		return doc.to_s
 	end
 
