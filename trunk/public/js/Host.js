@@ -38,7 +38,7 @@ Host.addHost = function() {
 
     // mask when host is created
     hostMask = new Ext.LoadMask(Ext.getBody(), {
-        msg: 'Host is beeing connected...'
+        msg: 'Host is being connected...'
     })
 
     // form to create new host
