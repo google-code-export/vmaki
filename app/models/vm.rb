@@ -466,7 +466,7 @@ class Vm < ActiveRecord::Base
 
 			# create source element
 			volume = Volume.find(self.rootvolume_id)
-			pool = Pool.find(volume.pool_id)
+			#pool = Pool.find(volume.pool_id)
 			source_device_root = "/dev/#{pool.name}/#{volume.name}"
 			disk << source = XML::Node.new("source")
 			source["dev"] = source_device_root
@@ -475,6 +475,25 @@ class Vm < ActiveRecord::Base
 			disk << target = XML::Node.new("target")
 			target["dev"] = Constants::TARGET_DEVICE_ROOT
 			target["bus"] = Constants::BUS_TYPE
+
+      # create CDROM for PV
+      # create disk parent element
+			devices << disk = XML::Node.new("disk")
+			disk["type"] = Constants::DISK_TYPE
+			disk["device"] = Constants::CDROM_DEVICE
+
+			# create driver element
+			disk << driver = XML::Node.new("driver")
+			driver["name"] = Constants::DRIVER_NAME
+
+			# create source element
+			disk << source = XML::Node.new("source")
+			source["dev"] = Constants::SOURCE_DEVICE_CDROM
+
+			# create target element
+			disk << target = XML::Node.new("target")
+			target["dev"] = Constants::TARGET_DEVICE_ROOT_HVM_AND_CDROM
+			target["bus"] = Constants::BUS_TYPE_IDE
 
 			# create interface parent element
 			devices << interface = XML::Node.new("interface")
@@ -614,8 +633,8 @@ class Vm < ActiveRecord::Base
 
 			# create target element
 			disk << target = XML::Node.new("target")
-			target["dev"] = "hda" #Constants::TARGET_DEVICE_ROOT
-			target["bus"] = "ide" #Constants::BUS_TYPE
+			target["dev"] = Constants::TARGET_DEVICE_ROOT_HVM_AND_CDROM
+			target["bus"] = Constants::BUS_TYPE_IDE
 
 			# create a different CDROM element if a physical drive or an ISO image is being used
 			cdrom_enabled = false
