@@ -1245,7 +1245,9 @@ VM.setMedia = function(){
         buttons: [{
             text: 'Save',
             formBind: true,
-            handler: VM.prototype.setMediaRequest
+            handler: function(){
+                VM.prototype.setMediaRequest();
+            }
         },{
             text: 'Cancel',
             handler: function(){
