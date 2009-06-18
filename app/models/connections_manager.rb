@@ -46,7 +46,7 @@ class ConnectionsManager
       puts "Creating NFS mount directory"
       puts ssh.exec!("mkdir -p #{Constants::NFS_MOUNT_PATH}")
       puts "Mounting NFS Share from Management Node"
-      puts ssh.exec!("mount #{local_ip}:#{NFS_SHARE_NAME} #{Constants::NFS_MOUNT_PATH}")
+      puts ssh.exec!("mount #{local_ip}:#{Constants::NFS_SHARE_NAME} #{Constants::NFS_MOUNT_PATH}")
     end
   end
 

@@ -7,7 +7,7 @@ class SnapshotsController < ApplicationController
 
 	# GET /snapshots
   def index
-    @snapshots = Snapshot.find(:all)
+    @snapshots = Snapshot.find(:all, :conditions => {:vm_id => params[:vm_id]} )
 
 		respond_to do |format|
       format.xml { render :xml => @snapshots }
