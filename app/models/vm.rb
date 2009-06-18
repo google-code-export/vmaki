@@ -52,6 +52,10 @@ class Vm < ActiveRecord::Base
 	private
 
 	def manage_libvirt_update
+		# set up target_device & target_bus for PV & HVM guests
+		self.ostype == "linux" ? @target_device = "xvda" :  @target_device = "hdc"
+		self.ostype == "linux" ? @target_bus = "xen" :  @target_bus = "ide"
+
 		# check if the model has been changed
 		if self.changed? && self.status != "provisioning"
 			@host = Host.find(self.host_id)
@@ -166,13 +170,18 @@ class Vm < ActiveRecord::Base
 				if self.action == "shutdown"
 					puts "Shutting down Domain: #{@domain.name}"
 					@domain.shutdown
+					xml_define_vm(@host, @conn)
 					info = @domain.info
 					self.status = info.state
 				end
 
 				if self.action == "reboot"
+					# in order to be able to redefine the domain (to make Media changes during run-time permanent)
+					# the domain has to be shutdown, redefined and then created
 					puts "Rebooting Domain: #{@domain.name}"
-					@domain.reboot
+					@domain.shutdown
+					xml_define_vm(@host, @conn)
+					@domain.create
 					info = @domain.info
 					self.status = info.state
 				end
@@ -191,6 +200,7 @@ class Vm < ActiveRecord::Base
 				if self.action == "kill"
 					puts "Destroying Domain: #{@domain.name}"
 					@domain.destroy
+					xml_define_vm(@host, @conn)
 					info = @domain.info
 					self.status = info.state
 				end
@@ -203,16 +213,56 @@ class Vm < ActiveRecord::Base
 			# check if the cdrom attribute has been changed and if yes, redefine the domain
 			if self.cdrom_changed? || self.iso_id_changed?
 				puts "changing CDROM"
-				# check if a valid value has been set
-				if (self.cdrom.downcase == "phy" || (self.cdrom.downcase == "iso" && !self.iso_id.nil?))
-					# get the VNC Port already assigned to the VM and redefine the vm
-					vnc_port = get_vnc_port(@host)
+				# check the status of the VM
+				if self.status == "shutoff"
+					puts "Redefining VM for CDROM change"
+					# the VM has been shut off, redefine the VM the physical or file-based drive
+					if ((self.cdrom.downcase == "phy") || (self.cdrom.downcase == "iso" && !self.iso_id.nil?))
+						xml_define_vm(@host, @conn)
+					end
+				elsif (!(self.status == "shutoff") && (self.ostype == "hvm"))
+					# if the VM has not been shut off, detach & attach the physical or file-based drive
+					if (self.cdrom.downcase == "phy")
+						puts "Switching from ISO to PHY"
 
-					# get kernel files
-					get_kernel_files
+						detach_xml = "<disk type='file' device='cdrom'>
+													<target dev='#{@target_device}' />
+												</disk>"
 
-					@conn.define_domain_xml(to_libvirt_xml(vnc_port))
+						attach_xml = "<disk type='block' device='cdrom'>
+													<driver name='phy'/>
+													<source dev='/dev/scd0'/>
+													<target dev='#{@target_device}' bus='#{@target_bus}'/>
+													<readonly/>
+												</disk>"
+
+						puts detach_xml
+						puts attach_xml
+						@domain.detach_device(detach_xml)
+						@domain.attach_device(attach_xml)
+
+					elsif (self.cdrom.downcase == "iso" && !self.iso_id.nil?)
+						puts "Switching from PHY to ISO"
+						
+						# first detach the physical cdrom drive from the guest
+						detach_xml = "<disk type='block' device='cdrom'>
+													<target dev='#{@target_device}' />
+												</disk>"
+
+						attach_xml = "<disk type='file' device='cdrom'>
+													<driver name='file'/>
+													<source file='/mnt/tmp/debian-501-amd64-netinst.iso'/>
+													<target dev='#{@target_device}' bus='#{@target_bus}'/>
+												</disk>"
+
+						puts detach_xml
+						puts attach_xml
+						@domain.detach_device(detach_xml)
+						@domain.attach_device(attach_xml)
+					end
 				end
+			
+
 			end
 			
 			# get the VNC Port already assigned to the VM and redefine the vm
@@ -356,6 +406,10 @@ class Vm < ActiveRecord::Base
 	end
 
 	def to_libvirt_xml(vnc_port_number)
+		# set up target_device & target_bus for PV & HVM guests
+		self.ostype == "linux" ? @target_device = "xvda" :  @target_device = "hdc"
+		self.ostype == "linux" ? @target_bus = "xen" :  @target_bus = "ide"
+
 		# set architecture related lib folder
 		if @arch == "amd64"
 			lib = "lib64"
@@ -484,16 +538,16 @@ class Vm < ActiveRecord::Base
 
         # create CDROM for PV
         # create disk parent element
-        devices << disk = XML::Node.new("disk")
-        disk["type"] = Constants::DISK_TYPE
-        disk["device"] = Constants::CDROM_DEVICE
+        devices << cdrom = XML::Node.new("disk")
+        cdrom["type"] = Constants::DISK_TYPE
+        cdrom["device"] = Constants::CDROM_DEVICE
 
         # create driver element
-        disk << driver = XML::Node.new("driver")
+        cdrom << driver = XML::Node.new("driver")
         driver["name"] = Constants::DRIVER_NAME
 
         # create source element
-        disk << source = XML::Node.new("source")
+        cdrom << source = XML::Node.new("source")
         source["dev"] = Constants::SOURCE_DEVICE_CDROM
 
 			else
@@ -509,7 +563,7 @@ class Vm < ActiveRecord::Base
 
 					# create source element for cdrom
 					cdrom << source = XML::Node.new("source")
-					source["file"] = "/mnt/tmp/#{iso.filename}" #"nfs://192.168.1.2/isos/osol-0906-x86.iso"
+					source["file"] = "/mnt/tmp/#{iso.filename}"
 				end
 			end
 
@@ -517,10 +571,10 @@ class Vm < ActiveRecord::Base
 				puts "CDROM ENABLED!"
 				# create target element for cdrom
         cdrom << target = XML::Node.new("target")
-        target["dev"] = Constants::TARGET_DEVICE_ROOT_HVM_AND_CDROM
-        target["bus"] = Constants::BUS_TYPE_IDE
+        target["dev"] = @target_device
+        target["bus"] = @target_bus
         # create readonly element for cdrom
-        #cdrom << readonly = XML::Node.new("readonly")
+        cdrom << readonly = XML::Node.new("readonly")
 			end
 
 
@@ -662,7 +716,7 @@ class Vm < ActiveRecord::Base
 
 			# create target element
 			disk << target = XML::Node.new("target")
-			target["dev"] = Constants::TARGET_DEVICE_ROOT_HVM_AND_CDROM
+			target["dev"] = Constants::TARGET_DEVICE_ROOT_HVM
 			target["bus"] = Constants::BUS_TYPE_IDE
 
 			# create a different CDROM element if a physical drive or an ISO image is being used
@@ -696,15 +750,15 @@ class Vm < ActiveRecord::Base
 
 					# create source element for cdrom
 					cdrom << source = XML::Node.new("source")
-					source["file"] = "/mnt/tmp/#{iso.filename}" #"nfs://192.168.1.2/isos/osol-0906-x86.iso"
+					source["file"] = "/mnt/tmp/#{iso.filename}"
 				end
 			end
 			
 			if cdrom_enabled
 				# create target element for cdrom
 				cdrom << target = XML::Node.new("target")
-				target["dev"] = "hdc"
-				target["bus"] = "ide"
+				target["dev"] = @target_device
+				target["bus"] = @target_bus
 			end
 
 			# create readonly element for cdrom
@@ -742,6 +796,7 @@ class Vm < ActiveRecord::Base
 
 		end
 
+		puts doc.to_s
 		return doc.to_s
 	end
 
@@ -762,5 +817,15 @@ class Vm < ActiveRecord::Base
 		end
 
 		return status
+	end
+
+	def xml_define_vm(host, conn)
+		#get the VNC Port already assigned to the VM and redefine the vm
+		vnc_port = get_vnc_port(host)
+
+		# get kernel files
+		get_kernel_files
+
+		conn.define_domain_xml(to_libvirt_xml(vnc_port))
 	end
 end
