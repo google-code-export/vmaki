@@ -221,7 +221,7 @@ SnapshotTab.prototype.deleteSnapshot = function(){
     // checks if a iso file is selected
     if(sm.hasSelection()){
         Ext.Msg.show({
-            title: 'Remove ISO File',
+            title: 'Delete Snapshot',
             buttons: Ext.MessageBox.YESNO,
             msg: 'Are you sure you want to delete snapshot <b>' + sel.data.name + '</b>?',
             fn: function(btn){
@@ -257,7 +257,7 @@ SnapshotTab.prototype.restoreSnapshot = function(){
     // checks if a iso file is selected
     else if(sm.hasSelection()){
         Ext.Msg.show({
-            title: 'Remove ISO File',
+            title: 'Restore Snapshot',
             buttons: Ext.MessageBox.YESNO,
             msg: 'Are you sure you want to restore snapshot <b>' + sel.data.name + '</b>?',
             fn: function(btn){
@@ -342,7 +342,7 @@ SnapshotTab.prototype.renameSnapshot = function(){
         // window which contains rename iso form
         var renameSnapshotWindow = new Ext.Window({
             layout: 'fit',
-            title: 'Enter new Description and Filename',
+            title: 'Enter new Description',
             resizable: false,
             draggable: false,
             width: 430,
