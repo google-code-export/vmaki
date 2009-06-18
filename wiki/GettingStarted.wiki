@@ -32,9 +32,9 @@ Install some more gems:
 {{{
 # sudo gem install rails rake mongrel postgres libxml-ruby uuid net-ssh net-sftp
 }}}
-download http://libvirt.org/ruby/download/ruby-libvirt-0.1.0.gem
+download http://vmaki.googlecode.com/svn/trunk/ruby-libvirt/pkg/ruby-libvirt-0.1.1.gem
 {{{
-# sudo gem install ruby-libvirt-0.1.0.gem
+# sudo gem install ruby-libvirt-0.1.1.gem
 }}}
 
 = Xen =
