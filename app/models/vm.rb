@@ -255,7 +255,7 @@ class Vm < ActiveRecord::Base
 
 							attach_xml = "<disk type='file' device='cdrom'>
 													<driver name='file'/>
-													<source file='/mnt/tmp/#{iso.filename}'/>
+													<source file='#{Constants::NFS_MOUNT_PATH}/#{iso.filename}'/>
 													<target dev='#{@target_device}' bus='#{@target_bus}'/>
 												</disk>"
 
@@ -568,7 +568,7 @@ class Vm < ActiveRecord::Base
 
 					# create source element for cdrom
 					cdrom << source = XML::Node.new("source")
-					source["file"] = "/mnt/tmp/#{iso.filename}"
+					source["file"] = "#{Constants::NFS_MOUNT_PATH}/#{iso.filename}"
 				end
 			end
 
@@ -755,7 +755,7 @@ class Vm < ActiveRecord::Base
 
 					# create source element for cdrom
 					cdrom << source = XML::Node.new("source")
-					source["file"] = "/mnt/tmp/#{iso.filename}"
+					source["file"] = "#{Constants::NFS_MOUNT_PATH}/#{iso.filename}"
 				end
 			end
 			

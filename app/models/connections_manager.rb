@@ -42,11 +42,11 @@ class ConnectionsManager
   def mount_nfs(host)
     Net::SSH.start(host.name, host.username, :auth_methods => "publickey", :timeout => Constants::SSH_Timeout) do |ssh|
       puts "Unmounting existing NFS Share"
-      puts ssh.exec!("umount /mnt/tmp")
+      puts ssh.exec!("umount #{Constants::NFS_MOUNT_PATH}")
       puts "Creating NFS mount directory"
-      puts ssh.exec!("mkdir -p /mnt/tmp")
+      puts ssh.exec!("mkdir -p #{Constants::NFS_MOUNT_PATH}")
       puts "Mounting NFS Share from Management Node"
-      puts ssh.exec!("mount #{local_ip}:/isos /mnt/tmp")
+      puts ssh.exec!("mount #{local_ip}:#{NFS_SHARE_NAME} #{Constants::NFS_MOUNT_PATH}")
     end
   end
 

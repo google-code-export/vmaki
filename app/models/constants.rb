@@ -16,6 +16,8 @@ class Constants
 	DRIVER_NAME = "phy"
 	NFS_MOUNT_PATH = "/mnt/tmp"
   NFS_SOURCE_PATH = "/isos"
+	NFS_SHARE_NAME = "/isos"
+	SNAPSHOTS_PATH = "/snapshots"
 	BUS_TYPE = "scsi"
   BUS_TYPE_IDE = "ide"
 	OS_TYPE_XPATH = "//capabilities/guest/os_type"
