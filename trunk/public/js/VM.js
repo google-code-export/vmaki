@@ -376,7 +376,7 @@ VM.checkVmStatus = function(vmId, hostId){
             if(status == 'provisioning'){
                 setTimeout('VM.checkVmStatus(' + vmId + ',' + hostId + ')', 30000);
             }
-            if(status == 'restoring'){
+            else if(status == 'restoring'){
                 setTimeout('VM.checkVmStatus(' + vmId + ',' + hostId + ')', 30000);
             }
             else{
