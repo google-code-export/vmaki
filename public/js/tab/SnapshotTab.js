@@ -144,6 +144,14 @@ SnapshotTab.prototype.addSnapshot = function(){
         autoWidth: true,
         bodyStyle: 'padding:10px;',
         items: [{
+             xtype: 'label',
+             height: 30,
+             cls: 'label',
+             html: '<p>Creating Snapshot for VM <b>' + hostTree.selectedNode.attributes.text + '</b></p>'
+        },{
+             xtype: 'label',
+             text: ' '
+        },{
             xtype: 'textfield',
             id: 'description',
             fieldLabel: 'Description',
@@ -170,7 +178,6 @@ SnapshotTab.prototype.addSnapshot = function(){
                         var jsonResponse = Ext.util.JSON.decode(response.responseText);
                         snapshotId = jsonResponse.data['snapshot[id]'];
                         myTabPanel.mySnapshotTab.checkSnapshotStatus(snapshotId);
-                    //console.log(jsonResponse);
                     },
                     failure: function(response){
                         Failure.checkFailure(response, Failure.prototype.snapshotAdd);
