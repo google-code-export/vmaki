@@ -1,36 +1,7 @@
 
 SnapshotTab = function(){
 
-    // toolbar
-	this.snapshotToolbar = new Ext.Toolbar({
-		items:[{
-			xtype: 'tbbutton',
-			cls: 'x-btn-text-icon',
-			icon: 'images/icons/camera_add.gif',
-			text: 'Add Snapshot',
-			handler: this.addSnapshot
-		},{
-			xtype: 'tbbutton',
-			cls: 'x-btn-text-icon',
-			icon: 'images/icons/camera_stop.gif',
-			text: 'Delete Snapshot',
-			handler: this.deleteSnapshot
-		},{
-			xtype: 'tbbutton',
-			cls: 'x-btn-text-icon',
-			icon: 'images/icons/camera_go.png',
-			text: 'Restore Snapshot',
-			handler: this.restoreSnapshot
-		},{
-			xtype: 'tbbutton',
-			cls: 'x-btn-text-icon',
-			icon: 'images/icons/camera_edit.gif',
-			text: 'Rename Snapshot',
-			handler: this.deleteSnapshot
-		}]
-	})
-
-    // IsoTab record definition
+      // IsoTab record definition
 	this.snapshotRecord = Ext.data.Record.create([
         {name: 'id', mapping: 'snapshot.id'},
         {name: 'name', mapping: 'snapshot.name'},
@@ -58,7 +29,7 @@ SnapshotTab.prototype.getStore = function(panel){
 		autoWidth: true,
 		minColumnWidth: 100,
 		store: snapshotStore,
-		tbar: myTabPanel.mySnapshotTab.snapshotToolbar,
+		//tbar: myTabPanel.mySnapshotTab.snapshotToolbar,
         autoExpandColumn: 'description',
 		columns:[
             {header: 'Name', dataIndex: 'name', width: 200},
@@ -70,10 +41,38 @@ SnapshotTab.prototype.getStore = function(panel){
 	})
     
     panel.add(new Ext.Panel({
+        layout: 'fit',
         border: false,
         id: 'snapshot',
-        //tbar: SnapshotTab.prototype.snapshotToolbar,
-        items: snapshotGrid
+        tbar: [{
+			xtype: 'tbbutton',
+			cls: 'x-btn-text-icon',
+			icon: 'images/icons/camera_add.gif',
+			text: 'Add Snapshot',
+			handler: this.addSnapshot
+		},{
+			xtype: 'tbbutton',
+			cls: 'x-btn-text-icon',
+			icon: 'images/icons/camera_stop.gif',
+			text: 'Delete Snapshot',
+			handler: this.deleteSnapshot
+		},{
+			xtype: 'tbbutton',
+			cls: 'x-btn-text-icon',
+			icon: 'images/icons/camera_go.png',
+			text: 'Restore Snapshot',
+			handler: this.restoreSnapshot
+		},{
+			xtype: 'tbbutton',
+			cls: 'x-btn-text-icon',
+			icon: 'images/icons/camera_edit.gif',
+			text: 'Rename Snapshot',
+			handler: this.deleteSnapshot
+		}],
+        items: [
+            //myTabPanel.mySnapshotTab.snapshotToolbar,
+            snapshotGrid
+        ]
     }))
     panel.doLayout();
 }

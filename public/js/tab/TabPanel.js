@@ -69,7 +69,6 @@ function TabPanel(){
                 deactivate: function(panel){
                         // destorys the link panel
                         panel.getComponent('link').destroy();
-                        //panel.getComponent('applet').destroy()
                 }
 
             }
@@ -80,7 +79,8 @@ function TabPanel(){
             items: [
                 new Ext.Panel({
                     id: 'snapshot'
-                })],
+                })
+            ],
             listeners: {
                 activate: function(panel){
                      // checks if selected node is a vm
