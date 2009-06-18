@@ -1,0 +1,990 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Libvirt::Domain</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Libvirt::Domain</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/ext/libvirt/_libvirt_c.html">
+                ext/libvirt/_libvirt.c
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Class <a href="Domain.html">Libvirt::Domain</a>
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000072">attach_device</a>&nbsp;&nbsp;
+      <a href="#M000069">autostart</a>&nbsp;&nbsp;
+      <a href="#M000070">autostart=</a>&nbsp;&nbsp;
+      <a href="#M000054">core_dump</a>&nbsp;&nbsp;
+      <a href="#M000068">create</a>&nbsp;&nbsp;
+      <a href="#M000049">destroy</a>&nbsp;&nbsp;
+      <a href="#M000073">detach_device</a>&nbsp;&nbsp;
+      <a href="#M000071">free</a>&nbsp;&nbsp;
+      <a href="#M000057">id</a>&nbsp;&nbsp;
+      <a href="#M000055">info</a>&nbsp;&nbsp;
+      <a href="#M000060">max_memory</a>&nbsp;&nbsp;
+      <a href="#M000061">max_memory=</a>&nbsp;&nbsp;
+      <a href="#M000063">max_vcpus</a>&nbsp;&nbsp;
+      <a href="#M000062">memory=</a>&nbsp;&nbsp;
+      <a href="#M000046">migrate</a>&nbsp;&nbsp;
+      <a href="#M000056">name</a>&nbsp;&nbsp;
+      <a href="#M000059">os_type</a>&nbsp;&nbsp;
+      <a href="#M000065">pin_vcpu</a>&nbsp;&nbsp;
+      <a href="#M000048">reboot</a>&nbsp;&nbsp;
+      <a href="#M000053">restore</a>&nbsp;&nbsp;
+      <a href="#M000051">resume</a>&nbsp;&nbsp;
+      <a href="#M000052">save</a>&nbsp;&nbsp;
+      <a href="#M000047">shutdown</a>&nbsp;&nbsp;
+      <a href="#M000050">suspend</a>&nbsp;&nbsp;
+      <a href="#M000067">undefine</a>&nbsp;&nbsp;
+      <a href="#M000058">uuid</a>&nbsp;&nbsp;
+      <a href="#M000064">vcpus=</a>&nbsp;&nbsp;
+      <a href="#M000066">xml_desc</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Class <a href="Domain/Info.html" class="link">Libvirt::Domain::Info</a><br />
+
+    </div>
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">MIGRATE_LIVE</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(VIR_MIGRATE_LIVE)</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+virDomainMigrateFlags
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">connection</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000053" class="method-detail">
+        <a name="M000053"></a>
+
+        <div class="method-heading">
+          <a href="#M000053" class="method-signature">
+          <span class="method-name">restore</span><span class="method-args">(p1, p2)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Call <tt><a
+href="http://www.libvirt.org/html/libvirt-libvirt.html#virDomainRestore">virDomainRestore</a></tt>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000053-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000053-source">
+<pre>
+/*
+ * Call +virDomainRestore+[http://www.libvirt.org/html/libvirt-libvirt.html#virDomainRestore]
+ */
+VALUE libvirt_dom_s_restore(VALUE klass, VALUE c, VALUE from) {
+
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000072" class="method-detail">
+        <a name="M000072"></a>
+
+        <div class="method-heading">
+          <a href="#M000072" class="method-signature">
+          <span class="method-name">attach_device</span><span class="method-args">(p1)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Added by Martin Gajdos
+</p>
+<p>
+Call <tt><a
+href="http://www.libvirt.org/html/libvirt-libvirt.html#virDomainAttachDevice">virDomainAttachDevice</a></tt>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000072-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000072-source">
+<pre>
+/* Added by Martin Gajdos
+ *
+ * Call +virDomainAttachDevice+[http://www.libvirt.org/html/libvirt-libvirt.html#virDomainAttachDevice]
+ */
+VALUE libvirt_dom_attach_device(VALUE s, VALUE xml) {
+
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000069" class="method-detail">
+        <a name="M000069"></a>
+
+        <div class="method-heading">
+          <a href="#M000069" class="method-signature">
+          <span class="method-name">autostart</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Call <tt><a
+href="http://www.libvirt.org/html/libvirt-libvirt.html#virDomainGetAutostart">virDomainGetAutostart</a></tt>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000069-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000069-source">
+<pre>
+/*
+ * Call +virDomainGetAutostart+[http://www.libvirt.org/html/libvirt-libvirt.html#virDomainGetAutostart]
+ */
+VALUE libvirt_dom_autostart(VALUE s){
+
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000070" class="method-detail">
+        <a name="M000070"></a>
+
+        <div class="method-heading">
+          <a href="#M000070" class="method-signature">
+          <span class="method-name">autostart=</span><span class="method-args">(p1)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Call <tt><a
+href="http://www.libvirt.org/html/libvirt-libvirt.html#virDomainSetAutostart">virDomainSetAutostart</a></tt>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000070-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000070-source">
+<pre>
+/*
+ * Call +virDomainSetAutostart+[http://www.libvirt.org/html/libvirt-libvirt.html#virDomainSetAutostart]
+ */
+VALUE libvirt_dom_autostart_set(VALUE s, VALUE autostart) {
+
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000054" class="method-detail">
+        <a name="M000054"></a>
+
+        <div class="method-heading">
+          <a href="#M000054" class="method-signature">
+          <span class="method-name">core_dump</span><span class="method-args">(...)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Call <tt><a
+href="http://www.libvirt.org/html/libvirt-libvirt.html#virDomainCoreDump">virDomainCoreDump</a></tt>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000054-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000054-source">
+<pre>
+/*
+ * Call +virDomainCoreDump+[http://www.libvirt.org/html/libvirt-libvirt.html#virDomainCoreDump]
+ */
+VALUE libvirt_dom_core_dump(int argc, VALUE *argv, VALUE s) {
+
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000068" class="method-detail">
+        <a name="M000068"></a>
+
+        <div class="method-heading">
+          <a href="#M000068" class="method-signature">
+          <span class="method-name">create</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Call <tt><a
+href="http://www.libvirt.org/html/libvirt-libvirt.html#virDomainCreate">virDomainCreate</a></tt>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000068-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000068-source">
+<pre>
+/*
+ * Call +virDomainCreate+[http://www.libvirt.org/html/libvirt-libvirt.html#virDomainCreate]
+ */
+VALUE libvirt_dom_create(VALUE s) {
+
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000049" class="method-detail">
+        <a name="M000049"></a>
+
+        <div class="method-heading">
+          <a href="#M000049" class="method-signature">
+          <span class="method-name">destroy</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Call <tt><a
+href="http://www.libvirt.org/html/libvirt-libvirt.html#virDomainDestroy">virDomainDestroy</a></tt>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000049-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000049-source">
+<pre>
+/*
+ * Call +virDomainDestroy+[http://www.libvirt.org/html/libvirt-libvirt.html#virDomainDestroy]
+ */
+VALUE libvirt_dom_destroy(VALUE s) {
+
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000073" class="method-detail">
+        <a name="M000073"></a>
+
+        <div class="method-heading">
+          <a href="#M000073" class="method-signature">
+          <span class="method-name">detach_device</span><span class="method-args">(p1)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Added by Martin Gajdos
+</p>
+<p>
+Call <tt><a
+href="http://www.libvirt.org/html/libvirt-libvirt.html#virDomainDetachDevice">virDomainDetachDevice</a></tt>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000073-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000073-source">
+<pre>
+/* Added by Martin Gajdos
+ *
+ * Call +virDomainDetachDevice+[http://www.libvirt.org/html/libvirt-libvirt.html#virDomainDetachDevice]
+ */
+VALUE libvirt_dom_detach_device(VALUE s, VALUE xml) {
+
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000071" class="method-detail">
+        <a name="M000071"></a>
+
+        <div class="method-heading">
+          <a href="#M000071" class="method-signature">
+          <span class="method-name">free</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Call <tt><a
+href="http://www.libvirt.org/html/libvirt-libvirt.html#virDomainFree">virDomainFree</a></tt>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000071-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000071-source">
+<pre>
+/*
+ * Call +virDomainFree+[http://www.libvirt.org/html/libvirt-libvirt.html#virDomainFree]
+ */
+VALUE libvirt_dom_free(VALUE s) {
+
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000057" class="method-detail">
+        <a name="M000057"></a>
+
+        <div class="method-heading">
+          <a href="#M000057" class="method-signature">
+          <span class="method-name">id</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Call <tt><a
+href="http://www.libvirt.org/html/libvirt-libvirt.html#virDomainGetID">virDomainGetID</a></tt>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000057-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000057-source">
+<pre>
+/*
+ * Call +virDomainGetID+[http://www.libvirt.org/html/libvirt-libvirt.html#virDomainGetID]
+ */
+VALUE libvirt_dom_id(VALUE s) {
+
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000055" class="method-detail">
+        <a name="M000055"></a>
+
+        <div class="method-heading">
+          <a href="#M000055" class="method-signature">
+          <span class="method-name">domain.info &rarr; Libvirt::Domain::Info<br />
+</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Call <tt><a
+href="http://www.libvirt.org/html/libvirt-libvirt.html#virDomainGetInfo">virDomainGetInfo</a></tt>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000055-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000055-source">
+<pre>
+/*
+ * call-seq:
+ *   domain.info -&gt; Libvirt::Domain::Info
+ *
+ * Call +virDomainGetInfo+[http://www.libvirt.org/html/libvirt-libvirt.html#virDomainGetInfo]
+ */
+VALUE libvirt_dom_info(VALUE s) {
+
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000060" class="method-detail">
+        <a name="M000060"></a>
+
+        <div class="method-heading">
+          <a href="#M000060" class="method-signature">
+          <span class="method-name">max_memory</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Call <tt><a
+href="http://www.libvirt.org/html/libvirt-libvirt.html#virDomainGetMaxMemory">virDomainGetMaxMemory</a></tt>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000060-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000060-source">
+<pre>
+/*
+ * Call +virDomainGetMaxMemory+[http://www.libvirt.org/html/libvirt-libvirt.html#virDomainGetMaxMemory]
+ */
+VALUE libvirt_dom_max_memory(VALUE s) {
+
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000061" class="method-detail">
+        <a name="M000061"></a>
+
+        <div class="method-heading">
+          <a href="#M000061" class="method-signature">
+          <span class="method-name">max_memory=</span><span class="method-args">(p1)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Call <tt><a
+href="http://www.libvirt.org/html/libvirt-libvirt.html#virDomainSetMaxMemory">virDomainSetMaxMemory</a></tt>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000061-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000061-source">
+<pre>
+/*
+ * Call +virDomainSetMaxMemory+[http://www.libvirt.org/html/libvirt-libvirt.html#virDomainSetMaxMemory]
+ */
+VALUE libvirt_dom_max_memory_set(VALUE s, VALUE max_memory) {
+
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000063" class="method-detail">
+        <a name="M000063"></a>
+
+        <div class="method-heading">
+          <a href="#M000063" class="method-signature">
+          <span class="method-name">max_vcpus</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Call <tt><a
+href="http://www.libvirt.org/html/libvirt-libvirt.html#virDomainGetMaxVcpus">virDomainGetMaxVcpus</a></tt>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000063-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000063-source">
+<pre>
+/*
+ * Call +virDomainGetMaxVcpus+[http://www.libvirt.org/html/libvirt-libvirt.html#virDomainGetMaxVcpus]
+ */
+VALUE libvirt_dom_max_vcpus(VALUE s) {
+
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000062" class="method-detail">
+        <a name="M000062"></a>
+
+        <div class="method-heading">
+          <a href="#M000062" class="method-signature">
+          <span class="method-name">memory=</span><span class="method-args">(p1)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Call <tt><a
+href="http://www.libvirt.org/html/libvirt-libvirt.html#virDomainSetMemory">virDomainSetMemory</a></tt>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000062-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000062-source">
+<pre>
+/*
+ * Call +virDomainSetMemory+[http://www.libvirt.org/html/libvirt-libvirt.html#virDomainSetMemory]
+ */
+VALUE libvirt_dom_memory_set(VALUE s, VALUE memory) {
+
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000046" class="method-detail">
+        <a name="M000046"></a>
+
+        <div class="method-heading">
+          <a href="#M000046" class="method-signature">
+          <span class="method-name">migrate</span><span class="method-args">(...)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Class <a href="Domain.html">Libvirt::Domain</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000046-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000046-source">
+<pre>
+/*
+ * Class Libvirt::Domain
+ */
+VALUE libvirt_dom_migrate(int argc, VALUE *argv, VALUE s) {
+
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000056" class="method-detail">
+        <a name="M000056"></a>
+
+        <div class="method-heading">
+          <a href="#M000056" class="method-signature">
+          <span class="method-name">name</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Call <tt><a
+href="http://www.libvirt.org/html/libvirt-libvirt.html#virDomainGetName">virDomainGetName</a></tt>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000056-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000056-source">
+<pre>
+/*
+ * Call +virDomainGetName+[http://www.libvirt.org/html/libvirt-libvirt.html#virDomainGetName]
+ */
+VALUE libvirt_dom_name(VALUE s) {
+
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000059" class="method-detail">
+        <a name="M000059"></a>
+
+        <div class="method-heading">
+          <a href="#M000059" class="method-signature">
+          <span class="method-name">os_type</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Call <tt><a
+href="http://www.libvirt.org/html/libvirt-libvirt.html#virDomainGetOSType">virDomainGetOSType</a></tt>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000059-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000059-source">
+<pre>
+/*
+ * Call +virDomainGetOSType+[http://www.libvirt.org/html/libvirt-libvirt.html#virDomainGetOSType]
+ */
+VALUE libvirt_dom_os_type(VALUE s) {
+
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000065" class="method-detail">
+        <a name="M000065"></a>
+
+        <div class="method-heading">
+          <a href="#M000065" class="method-signature">
+          <span class="method-name">pin_vcpu</span><span class="method-args">(p1, p2)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Call <tt><a
+href="http://www.libvirt.org/html/libvirt-libvirt.html#virDomainPinVcpu">virDomainPinVcpu</a></tt>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000065-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000065-source">
+<pre>
+/*
+ * Call +virDomainPinVcpu+[http://www.libvirt.org/html/libvirt-libvirt.html#virDomainPinVcpu]
+ */
+VALUE libvirt_dom_pin_vcpu(VALUE s, VALUE vcpu, VALUE cpulist) {
+
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000048" class="method-detail">
+        <a name="M000048"></a>
+
+        <div class="method-heading">
+          <a href="#M000048" class="method-signature">
+          <span class="method-name">reboot</span><span class="method-args">(...)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Call <tt><a
+href="http://www.libvirt.org/html/libvirt-libvirt.html#virDomainReboot">virDomainReboot</a></tt>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000048-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000048-source">
+<pre>
+/*
+ * Call +virDomainReboot+[http://www.libvirt.org/html/libvirt-libvirt.html#virDomainReboot]
+ */
+VALUE libvirt_dom_reboot(int argc, VALUE *argv, VALUE s) {
+
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000051" class="method-detail">
+        <a name="M000051"></a>
+
+        <div class="method-heading">
+          <a href="#M000051" class="method-signature">
+          <span class="method-name">resume</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Call <tt><a
+href="http://www.libvirt.org/html/libvirt-libvirt.html#virDomainResume">virDomainResume</a></tt>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000051-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000051-source">
+<pre>
+/*
+ * Call +virDomainResume+[http://www.libvirt.org/html/libvirt-libvirt.html#virDomainResume]
+ */
+VALUE libvirt_dom_resume(VALUE s) {
+
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000052" class="method-detail">
+        <a name="M000052"></a>
+
+        <div class="method-heading">
+          <a href="#M000052" class="method-signature">
+          <span class="method-name">save</span><span class="method-args">(p1)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Call <tt><a
+href="http://www.libvirt.org/html/libvirt-libvirt.html#virDomainSave">virDomainSave</a></tt>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000052-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000052-source">
+<pre>
+/*
+ * Call +virDomainSave+[http://www.libvirt.org/html/libvirt-libvirt.html#virDomainSave]
+ */
+VALUE libvirt_dom_save(VALUE s, VALUE to) {
+
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000047" class="method-detail">
+        <a name="M000047"></a>
+
+        <div class="method-heading">
+          <a href="#M000047" class="method-signature">
+          <span class="method-name">shutdown</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Call <tt><a
+href="http://www.libvirt.org/html/libvirt-libvirt.html#virDomainShutdown">virDomainShutdown</a></tt>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000047-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000047-source">
+<pre>
+/*
+ * Call +virDomainShutdown+[http://www.libvirt.org/html/libvirt-libvirt.html#virDomainShutdown]
+ */
+VALUE libvirt_dom_shutdown(VALUE s) {
+
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000050" class="method-detail">
+        <a name="M000050"></a>
+
+        <div class="method-heading">
+          <a href="#M000050" class="method-signature">
+          <span class="method-name">suspend</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Call <tt><a
+href="http://www.libvirt.org/html/libvirt-libvirt.html#virDomainSuspend">virDomainSuspend</a></tt>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000050-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000050-source">
+<pre>
+/*
+ * Call +virDomainSuspend+[http://www.libvirt.org/html/libvirt-libvirt.html#virDomainSuspend]
+ */
+VALUE libvirt_dom_suspend(VALUE s) {
+
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000067" class="method-detail">
+        <a name="M000067"></a>
+
+        <div class="method-heading">
+          <a href="#M000067" class="method-signature">
+          <span class="method-name">undefine</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Call <tt><a
+href="http://www.libvirt.org/html/libvirt-libvirt.html#virDomainUndefine">virDomainUndefine</a></tt>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000067-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000067-source">
+<pre>
+/*
+ * Call +virDomainUndefine+[http://www.libvirt.org/html/libvirt-libvirt.html#virDomainUndefine]
+ */
+VALUE libvirt_dom_undefine(VALUE s) {
+
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000058" class="method-detail">
+        <a name="M000058"></a>
+
+        <div class="method-heading">
+          <a href="#M000058" class="method-signature">
+          <span class="method-name">uuid</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Call <tt><a
+href="http://www.libvirt.org/html/libvirt-libvirt.html#virDomainGetUUIDString">virDomainGetUUIDString</a></tt>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000058-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000058-source">
+<pre>
+/*
+ * Call +virDomainGetUUIDString+[http://www.libvirt.org/html/libvirt-libvirt.html#virDomainGetUUIDString]
+ */
+VALUE libvirt_dom_uuid(VALUE s) {
+
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000064" class="method-detail">
+        <a name="M000064"></a>
+
+        <div class="method-heading">
+          <a href="#M000064" class="method-signature">
+          <span class="method-name">vcpus=</span><span class="method-args">(p1)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Call <tt><a
+href="http://www.libvirt.org/html/libvirt-libvirt.html#virDomainSetVcpus">virDomainSetVcpus</a></tt>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000064-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000064-source">
+<pre>
+/*
+ * Call +virDomainSetVcpus+[http://www.libvirt.org/html/libvirt-libvirt.html#virDomainSetVcpus]
+ */
+VALUE libvirt_dom_vcpus_set(VALUE s, VALUE nvcpus) {
+
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000066" class="method-detail">
+        <a name="M000066"></a>
+
+        <div class="method-heading">
+          <a href="#M000066" class="method-signature">
+          <span class="method-name">xml_desc</span><span class="method-args">(...)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Call <tt><a
+href="http://www.libvirt.org/html/libvirt-libvirt.html#virDomainGetXMLDesc">virDomainGetXMLDesc</a></tt>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000066-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000066-source">
+<pre>
+/*
+ * Call +virDomainGetXMLDesc+[http://www.libvirt.org/html/libvirt-libvirt.html#virDomainGetXMLDesc]
+ */
+VALUE libvirt_dom_xml_desc(int argc, VALUE *argv, VALUE s) {
+
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
