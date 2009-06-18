@@ -182,6 +182,17 @@ Menu.prototype.treeContextHandler = function(node){
             hostTree.treeMenu.vmSettingsItem.disable();
             hostTree.treeMenu.vmMediaItem.disable();
         }
+        if(node.attributes.status == 'restoring'){
+            hostTree.treeMenu.vmStartItem.disable();
+            hostTree.treeMenu.vmSuspendItem.disable();
+            hostTree.treeMenu.vmResumeItem.disable();
+            hostTree.treeMenu.vmShutdownItem.disable();
+            hostTree.treeMenu.vmRebootItem.disable();
+            hostTree.treeMenu.vmKillItem.disable();
+            hostTree.treeMenu.vmDeleteItem.disable();
+            hostTree.treeMenu.vmSettingsItem.disable();
+            hostTree.treeMenu.vmMediaItem.disable();
+        }
         if(node.attributes.status == 'nostate'){
             if(node.attributes.type == 'hvm'){
                 hostTree.treeMenu.vmStartItem.disable();

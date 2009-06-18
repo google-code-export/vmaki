@@ -13,7 +13,21 @@ SnapshotTab = function(){
 }
 
 
+        // example of custom renderer function
+    function renderStatus(val){
+        if(val == 'creating'){
+            return '<span style="color:red;">' + val + '</span>';
+        }
+        else{
+            return '<span style="color:green;">' + val + '</span>';
+        }
+        return val;
+    }
+
 SnapshotTab.prototype.getStore = function(panel){
+
+
+
     // snapshot store
     snapshotStore = new Ext.data.JsonStore({
 		url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId + '/snapshots.json',
@@ -36,7 +50,7 @@ SnapshotTab.prototype.getStore = function(panel){
             {header: 'Description', dataIndex: 'description', id: 'description'},
             {header: 'Date', dataIndex: 'date'},
             {header: 'Size [GB]', dataIndex: 'size'},
-            {header: 'Status', dataIndex: 'status'}
+            {header: 'Status', dataIndex: 'status', renderer: renderStatus}
 		]
 	})
     
@@ -69,11 +83,10 @@ SnapshotTab.prototype.getStore = function(panel){
 			text: 'Rename Snapshot',
 			handler: this.deleteSnapshot
 		}],
-        items: [
-            //myTabPanel.mySnapshotTab.snapshotToolbar,
-            snapshotGrid
-        ]
+        items: snapshotGrid
+        
     }))
+    
     panel.doLayout();
 }
 
@@ -105,10 +118,9 @@ SnapshotTab.prototype.addSnapshot = function(){
                     method: 'POST',
                     jsonData: {'snapshot':{'description': description }},
                     success: function(response){
-                        console.log(response);
-                        //var jsonResponse = Ext.util.JSON.decode(response.responseText);
-                        //snapshotId = jsonResponse.data['snapshot[id]'];
-                        //console.log(snapshotId);
+                        var jsonResponse = Ext.util.JSON.decode(response.responseText);
+                        snapshotId = jsonResponse.data['snapshot[id]'];
+                        myTabPanel.mySnapshotTab.checkSnapshotStatus(snapshotId);
                         //console.log(jsonResponse);
                     },
                     failure: function(response){
@@ -173,7 +185,40 @@ SnapshotTab.prototype.deleteSnapshot = function(){
 	}
 	else{
 		// message which is shown if no user is selected
-		Ext.Msg.alert('No ISO File Selected', 'Please select the Snapshot you want to delete');
+		Ext.Msg.alert('No Snapshot Selected', 'Please select the Snapshot you want to delete');
+	}
+}
+
+SnapshotTab.prototype.restoreSnapshot = function(){
+        // gets the selected iso file
+	var sm = snapshotGrid.getSelectionModel();
+	var sel = sm.getSelected();
+	// checks if a iso file is selected
+	if(sm.hasSelection()){
+		Ext.Msg.show({
+			title: 'Remove ISO File',
+			buttons: Ext.MessageBox.YESNO,
+			msg: 'Are you sure you want to restore snapshot <b>' + sel.data.name + '</b>?',
+			fn: function(btn){
+				if (btn == 'yes'){
+					Ext.Ajax.request({
+						url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId + '/snapshots/' + sel.data.id,
+						method: 'PUT',
+                        jsonData: {'snapshot':{'restore': true }},
+                        success: function(){
+                            hostTree.rootNode.reload();
+                        },
+						failure: function(response){
+							Failure.checkFailure(response, Failure.prototype.snapshotDelete);
+						}
+					})
+				}
+			}
+		})
+	}
+	else{
+		// message which is shown if no user is selected
+		Ext.Msg.alert('No Snapshot Selected', 'Please select the Snapshot you want to restore');
 	}
 }
 
@@ -187,16 +232,16 @@ SnapshotTab.prototype.noVmSelected = function(panel){
     panel.doLayout();
 }
 
-SnapshotTab.prototype.checkSnapshotStatus = function(){
+SnapshotTab.prototype.checkSnapshotStatus = function(snapshotId){
     Ext.Ajax.request({
-        url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId + '/snapshots/',
+        url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId + '/snapshots/' + snapshotId + '.json',
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
         success: function(response){
             var jsonResponse = Ext.util.JSON.decode(response.responseText);
             status = jsonResponse.data['snapshot[status]'];
             if(status == 'creating'){
-                setTimeout('VM.checkVmStatus(' + vmId + ',' + hostId + ')', 30000);
+                setTimeout('myTabPanel.mySnapshotTab.checkSnapshotStatus(' + snapshotId + ')', 30000);
             }
             else{
                 snapshotStore.reload();
@@ -207,5 +252,9 @@ SnapshotTab.prototype.checkSnapshotStatus = function(){
         }
     });
 }
+
+
+
+
 
 
