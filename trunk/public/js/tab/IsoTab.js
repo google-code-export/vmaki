@@ -15,6 +15,12 @@ function IsoTab(){
 			icon: 'images/icons/cdr_cross.gif',
 			text: 'Delete ISO',
 			handler: this.deleteIso
+		},{
+			xtype: 'tbbutton',
+			cls: 'x-btn-text-icon',
+			icon: 'images/icons/cdr_edit.gif',
+			text: 'Rename ISO',
+			handler: this.renameIso
 		}]
 	})
 
@@ -189,4 +195,85 @@ IsoTab.prototype.deleteIso = function(){
 	}
 }
 
+IsoTab.prototype.renameIso = function(){
+    // gets the selected user
+    var sm = myTabPanel.myIsoTab.isoGrid.getSelectionModel();
+    var sel = sm.getSelected();
+    // checks if a user is selectd
+    if(sm.hasSelection()){
+        console.log(sel.data.id);
+            //form to rename iso
+    var renameIsoForm = new Ext.FormPanel({
+        frame: true,
+        autoHeight: true,
+        autoWidth: true,
+        bodyStyle: 'padding:10px;',
+        items: [{
+            xtype: 'textfield',
+            fieldLabel: 'Description',
+            name: 'description',
+            width: 250,
+            value: sel.data.description,
+            allowBlank: false
+        },{
+            xtype: 'textfield',
+            fieldLabel: 'Filename',
+            name: 'filename',
+            width: 250,
+            value: sel.data.filename,
+            allowBlank: false
+        }],
+        buttons: [{
+            text: 'Rename',
+            bindForm: true,
+            handler: function(){
+                // gets the value out of the form
+                var description = renameIsoForm.getForm().findField('description').getValue();
+                var filename = renameIsoForm.getForm().findField('filename').getValue();
+                // sends request to the server
+                Ext.Ajax.request({
+                    url: Util.prototype.BASEURL + 'isos/' + sel.data.id,
+                    method: 'PUT',
+                    jsonData: {'iso':{'description': description, 'filename': filename }},
+                    failure: function(response){
+                        Failure.checkFailure(response, Failure.prototype.isoRename);
+                    }
+                });
+                // closes window and reloads the store
+                renameIsoWindow.close();
+                myTabPanel.myIsoTab.isoStore.reload();
+            }
+        },{
+            text: 'Cancel',
+            handler: function(){
+                  renameIsoWindow.close();
+            }
+        }]
+    });
+    // window which contains rename iso form
+    var renameIsoWindow = new Ext.Window({
+        layout: 'fit',
+        title: 'Enter new Description and Filename',
+        resizable: false,
+        draggable: false,
+        width: 430,
+        items: renameIsoForm,
+        listeners:{
+                show: function(panel){
+                    Util.prototype.spot.show(panel.id);
+                },
+                close: function(panel){
+                    Util.prototype.spot.hide();
+                }
+            }
+    });
+    renameIsoWindow.show();
+
+
+    }
+    else{
+        // message which is shown if no user is selected
+        Ext.Msg.alert('No ISO File Selected', 'Please select the ISO File you want to rename');
+    }
+}
 
