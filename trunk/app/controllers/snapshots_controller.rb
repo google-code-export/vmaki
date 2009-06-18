@@ -42,12 +42,12 @@ class SnapshotsController < ApplicationController
 
 		respond_to do |format|
 			if @snapshot.save
-				#Dblogger.log("Production", @current_user.name, "Host", "Created Host #{@host.name} with id:#{@host.id}")
-				format.xml { render :nothing => true, :status => :created }
-				format.json { render :nothing => true, :status => :created }
+				Dblogger.log("Production", @current_user.name, "Snapshot", "Created Snapshot #{@snapshot.name} with id:#{@snapshot.id}")
+				format.xml { render :xml => @snapshot, :status => :created }
+				format.json { render :json => @snapshot.to_ext_json, :status => :created }
 			else
-				format.xml { render :nothing => true, :status => "422" }
-				format.json { render :nothing => true, :status => "422" }
+				format.xml { render :xml => @snapshot.errors, :status => "422" }
+				format.json { render :json => @snapshot.errors.to_json, :status => "422" }
 			end
 		end
 	end
