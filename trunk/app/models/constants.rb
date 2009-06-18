@@ -2,6 +2,7 @@
 class Constants
   SSH_Timeout = 10
 	LVM = "logical"
+	LVM_SNAPSHOT_SIZE = "500M"
 	HYPERVISOR_TYPE = "xen"
 	HVM_TYPE = "hvm"
 	KERNEL_PATH = "/boot"

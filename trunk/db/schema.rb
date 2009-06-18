@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090618115013) do
+ActiveRecord::Schema.define(:version => 20090618180813) do
 
   create_table "hosts", :force => true do |t|
     t.string   "name"
@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(:version => 20090618115013) do
     t.integer  "vm_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "restore"
   end
 
   create_table "users", :force => true do |t|

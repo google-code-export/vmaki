@@ -52,7 +52,9 @@ class IsosController < ApplicationController
 
     full_path = "#{Constants::NFS_SOURCE_PATH}/#{@iso.filename}"
 		File.open(full_path,"wb") do |file|
-			file.write(data.read)
+			while buffer = data.read(4096)
+				file.write(buffer)
+			end
 		end
 
 		# set the size of the uploaded file in Megabytes
