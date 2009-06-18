@@ -1,5 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-	map.resources :session, :controller => 'sessions'
+  map.resources :session, :controller => 'sessions'
 
   map.resources :users
 
@@ -17,7 +17,9 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :hosts, :collection => { :allvms => :get, :init => :put } do |host|
 		host.resources :nics
-		host.resources :vms
+		host.resources :vms do |vm|
+			vm.resources :snapshots
+		end
     host.resources :pools do |pool|
       pool.resources :volumes
     end

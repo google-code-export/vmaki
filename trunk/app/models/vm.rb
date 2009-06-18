@@ -6,6 +6,8 @@ require "constants"
 require "provisioning"
 
 class Vm < ActiveRecord::Base
+	has_many :snapshots
+
 	attr_accessor :current_user
 	validates_uniqueness_of :name
 	
@@ -243,22 +245,25 @@ class Vm < ActiveRecord::Base
 
 					elsif (self.cdrom.downcase == "iso" && !self.iso_id.nil?)
 						puts "Switching from PHY to ISO"
+						iso = Iso.find(self.iso_id)
+						if !iso.nil?
 						
-						# first detach the physical cdrom drive from the guest
-						detach_xml = "<disk type='block' device='cdrom'>
+							# first detach the physical cdrom drive from the guest
+							detach_xml = "<disk type='block' device='cdrom'>
 													<target dev='#{@target_device}' />
 												</disk>"
 
-						attach_xml = "<disk type='file' device='cdrom'>
+							attach_xml = "<disk type='file' device='cdrom'>
 													<driver name='file'/>
-													<source file='/mnt/tmp/debian-501-amd64-netinst.iso'/>
+													<source file='/mnt/tmp/#{iso.filename}'/>
 													<target dev='#{@target_device}' bus='#{@target_bus}'/>
 												</disk>"
 
-						puts detach_xml
-						puts attach_xml
-						@domain.detach_device(detach_xml)
-						@domain.attach_device(attach_xml)
+							puts detach_xml
+							puts attach_xml
+							@domain.detach_device(detach_xml)
+							@domain.attach_device(attach_xml)
+						end
 					end
 				end
 			

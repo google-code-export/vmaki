@@ -60,12 +60,7 @@ class VmsController < ApplicationController
   def create
     @vm = Vm.new(params[:vm])
     @vm.host_id = params[:host_id]
-
-#		if @vm.swapvolume_id.nil?
-#			puts "no swapvolume defined, setting to 0"
-#			@vm.swapvolume_id = 1
-#		end
-		
+	
     respond_to do |format|
       if @vm.save
 				Dblogger.log("Production", @current_user.name, "VM", "Created VM #{@vm.name} with id:#{@vm.id} and Params:#{params[:vm]}")
