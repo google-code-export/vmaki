@@ -1,7 +1,0 @@
-img <-> lvm storage volume
--------------------------
-1. Create an image from the LVM volume:
-dd if=/dev/xenhost/deb01-root bs=64M | gzip -c > deb-root.img.gz
-
-2. Convert the image back to an LVM volume:
-gunzip -c deb-root.img.gz | dd of=/dev/xenhost/deb02-root bs=64M
