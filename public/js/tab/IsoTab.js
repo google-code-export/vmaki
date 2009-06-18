@@ -19,8 +19,8 @@ function IsoTab(){
 			xtype: 'tbbutton',
 			cls: 'x-btn-text-icon',
 			icon: 'images/icons/cdr_edit.gif',
-			text: 'Rename ISO',
-			handler: this.renameIso
+			text: 'Update ISO',
+			handler: this.updateIso
 		}]
 	})
 
@@ -195,7 +195,7 @@ IsoTab.prototype.deleteIso = function(){
 	}
 }
 
-IsoTab.prototype.renameIso = function(){
+IsoTab.prototype.updateIso = function(){
     // gets the selected user
     var sm = myTabPanel.myIsoTab.isoGrid.getSelectionModel();
     var sel = sm.getSelected();
@@ -224,7 +224,7 @@ IsoTab.prototype.renameIso = function(){
             allowBlank: false
         }],
         buttons: [{
-            text: 'Rename',
+            text: 'Update',
             bindForm: true,
             handler: function(){
                 // gets the value out of the form
@@ -236,7 +236,7 @@ IsoTab.prototype.renameIso = function(){
                     method: 'PUT',
                     jsonData: {'iso':{'description': description, 'filename': filename }},
                     failure: function(response){
-                        Failure.checkFailure(response, Failure.prototype.isoRename);
+                        Failure.checkFailure(response, Failure.prototype.isoUpdate);
                     }
                 });
                 // closes window and reloads the store
@@ -272,8 +272,8 @@ IsoTab.prototype.renameIso = function(){
 
     }
     else{
-        // message which is shown if no user is selected
-        Ext.Msg.alert('No ISO File Selected', 'Please select the ISO File you want to rename');
+        // message which is shown if no iso is selected
+        Ext.Msg.alert('No ISO File Selected', 'Please select the ISO File you want to update');
     }
 }
 

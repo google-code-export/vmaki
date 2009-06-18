@@ -25,6 +25,9 @@
             .vm-provisioning-node .x-tree-node-icon{
                 background-image:url(../images/icons/computer_hourglass.png) !important;
             }
+            .vm-restoring-node .x-tree-node-icon{
+                background-image:url(../images/icons/computer_hourglass.png) !important;
+            }
             .vm-crashed-node .x-tree-node-icon{
                 background-image:url(../images/icons/computer_error.png) !important;
             }

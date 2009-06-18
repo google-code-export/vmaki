@@ -7,6 +7,7 @@ function TabPanel(){
     this.myGeneralTab = new GeneralTab();
     this.myConsole = new ConsoleTab();
     this.myIsoTab = new IsoTab();
+    this.mySnapshotTab = new SnapshotTab();
     //this.myLog = new Log();
 
     // tabpanel
@@ -76,12 +77,27 @@ function TabPanel(){
             title: 'Snapshot',
             iconCls: 'snapshot',
             id: 'snapshotTab',
+            items: [
+                new Ext.Panel({
+                    id: 'snapshot'
+                })],
             listeners: {
                 activate: function(panel){
-                    panel.doLayout();
+                     // checks if selected node is a vm
+                    if(hostTree.selectedNodeType == 'vm'){
+                        myTabPanel.mySnapshotTab.getStore(panel);
+                    }
+                    else{
+                        // calls function to display no vm selected message
+                        myTabPanel.mySnapshotTab.noVmSelected(panel);
+                    }
+                },
+                deactivate: function(panel){
+                        // destorys the snapshot panel
+                        panel.getComponent('snapshot').destroy();
+                        panel.doLayout();
                 }
-            },
-            disabled: true
+            }
         },{
             title: 'ISO',
             id: 'mediaTab',

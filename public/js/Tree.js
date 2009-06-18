@@ -200,6 +200,10 @@ Tree.setVmIcon = function(node){
             vmNode.getUI().addClass('vm-provisioning-node');
             VM.checkVmStatus(vmNode.attributes.vm_id, node.attributes.host_id);
         }
+        if(vmNode.attributes.status == 'restoring'){
+            vmNode.getUI().addClass('vm-restoring-node');
+            VM.checkVmStatus(vmNode.attributes.vm_id, node.attributes.host_id);
+        }
         if(vmNode.attributes.status == 'provisioned'){
             vmNode.getUI().addClass('vm-shutdown-node');
         }
