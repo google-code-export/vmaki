@@ -1,0 +1,134 @@
+
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!--
+
+    Methods
+
+  -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Methods</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="rdoc-style.css" type="text/css" />
+  <base target="docwin" />
+</head>
+<body>
+<div id="index">
+  <h1 class="section-bar">Methods</h1>
+  <div id="index-entries">
+    <a href="classes/Libvirt/Domain.html#M000072">attach_device (Libvirt::Domain)</a><br />
+    <a href="classes/Libvirt/Network.html#M000043">autostart (Libvirt::Network)</a><br />
+    <a href="classes/Libvirt/Domain.html#M000069">autostart (Libvirt::Domain)</a><br />
+    <a href="classes/Libvirt/StoragePool.html#M000019">autostart (Libvirt::StoragePool)</a><br />
+    <a href="classes/Libvirt/StoragePool.html#M000020">autostart= (Libvirt::StoragePool)</a><br />
+    <a href="classes/Libvirt/Domain.html#M000070">autostart= (Libvirt::Domain)</a><br />
+    <a href="classes/Libvirt/Network.html#M000044">autostart= (Libvirt::Network)</a><br />
+    <a href="classes/Libvirt/Network.html#M000042">bridge_name (Libvirt::Network)</a><br />
+    <a href="classes/Libvirt/StoragePool.html#M000009">build (Libvirt::StoragePool)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000082">capabilities (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000074">close (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000075">closed? (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/Domain.html#M000054">core_dump (Libvirt::Domain)</a><br />
+    <a href="classes/Libvirt/StoragePool.html#M000011">create (Libvirt::StoragePool)</a><br />
+    <a href="classes/Libvirt/Domain.html#M000068">create (Libvirt::Domain)</a><br />
+    <a href="classes/Libvirt/Network.html#M000037">create (Libvirt::Network)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000095">create_domain_linux (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000102">create_network_xml (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000106">create_storage_pool_xml (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/StoragePool.html#M000027">create_vol_xml (Libvirt::StoragePool)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000099">define_domain_xml (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000103">define_network_xml (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000107">define_storage_pool_xml (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/StorageVol.html#M000031">delete (Libvirt::StorageVol)</a><br />
+    <a href="classes/Libvirt/StoragePool.html#M000013">delete (Libvirt::StoragePool)</a><br />
+    <a href="classes/Libvirt/StoragePool.html#M000012">destroy (Libvirt::StoragePool)</a><br />
+    <a href="classes/Libvirt/Domain.html#M000049">destroy (Libvirt::Domain)</a><br />
+    <a href="classes/Libvirt/Network.html#M000038">destroy (Libvirt::Network)</a><br />
+    <a href="classes/Libvirt/Domain.html#M000073">detach_device (Libvirt::Domain)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000108">discover_storage_pool_sources (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/Domain.html#M000071">free (Libvirt::Domain)</a><br />
+    <a href="classes/Libvirt/StorageVol.html#M000035">free (Libvirt::StorageVol)</a><br />
+    <a href="classes/Libvirt/Network.html#M000045">free (Libvirt::Network)</a><br />
+    <a href="classes/Libvirt/StoragePool.html#M000026">free (Libvirt::StoragePool)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000078">hostname (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/Domain.html#M000057">id (Libvirt::Domain)</a><br />
+    <a href="classes/Libvirt/StorageVol.html#M000032">info (Libvirt::StorageVol)</a><br />
+    <a href="classes/Libvirt/StoragePool.html#M000017">info (Libvirt::StoragePool)</a><br />
+    <a href="classes/Libvirt/Domain.html#M000055">info (Libvirt::Domain)</a><br />
+    <a href="classes/Libvirt/StorageVol.html#M000030">key (Libvirt::StorageVol)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000086">list_defined_domains (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000090">list_defined_networks (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000094">list_defined_storage_pools (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000084">list_domains (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000088">list_networks (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000092">list_storage_pools (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/StoragePool.html#M000022">list_volumes (Libvirt::StoragePool)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000097">lookup_domain_by_id (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000096">lookup_domain_by_name (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000098">lookup_domain_by_uuid (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000100">lookup_network_by_name (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000101">lookup_network_by_uuid (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000104">lookup_storage_pool_by_name (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000105">lookup_storage_pool_by_uuid (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/StoragePool.html#M000024">lookup_volume_by_key (Libvirt::StoragePool)</a><br />
+    <a href="classes/Libvirt/StoragePool.html#M000023">lookup_volume_by_name (Libvirt::StoragePool)</a><br />
+    <a href="classes/Libvirt/StoragePool.html#M000025">lookup_volume_by_path (Libvirt::StoragePool)</a><br />
+    <a href="classes/Libvirt/Version.html#M000005">major (Libvirt::Version)</a><br />
+    <a href="classes/Libvirt/Domain.html#M000060">max_memory (Libvirt::Domain)</a><br />
+    <a href="classes/Libvirt/Domain.html#M000061">max_memory= (Libvirt::Domain)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000080">max_vcpus (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/Domain.html#M000063">max_vcpus (Libvirt::Domain)</a><br />
+    <a href="classes/Libvirt/Domain.html#M000062">memory= (Libvirt::Domain)</a><br />
+    <a href="classes/Libvirt/Domain.html#M000046">migrate (Libvirt::Domain)</a><br />
+    <a href="classes/Libvirt/Version.html#M000006">minor (Libvirt::Version)</a><br />
+    <a href="classes/Libvirt/Domain.html#M000056">name (Libvirt::Domain)</a><br />
+    <a href="classes/Libvirt/Network.html#M000039">name (Libvirt::Network)</a><br />
+    <a href="classes/Libvirt/StorageVol.html#M000029">name (Libvirt::StorageVol)</a><br />
+    <a href="classes/Libvirt/StoragePool.html#M000015">name (Libvirt::StoragePool)</a><br />
+    <a href="classes/Libvirt/Version.html#M000004">new (Libvirt::Version)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000081">node_get_info (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000085">num_of_defined_domains (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000089">num_of_defined_networks (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000093">num_of_defined_storage_pools (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000083">num_of_domains (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000087">num_of_networks (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000091">num_of_storage_pools (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/StoragePool.html#M000021">num_of_volumes (Libvirt::StoragePool)</a><br />
+    <a href="classes/Libvirt.html#M000002">open (Libvirt)</a><br />
+    <a href="classes/Libvirt.html#M000003">open_read_only (Libvirt)</a><br />
+    <a href="classes/Libvirt/Domain.html#M000059">os_type (Libvirt::Domain)</a><br />
+    <a href="classes/Libvirt/StorageVol.html#M000034">path (Libvirt::StorageVol)</a><br />
+    <a href="classes/Libvirt/Domain.html#M000065">pin_vcpu (Libvirt::Domain)</a><br />
+    <a href="classes/Libvirt/StorageVol.html#M000028">pool (Libvirt::StorageVol)</a><br />
+    <a href="classes/Libvirt/Domain.html#M000048">reboot (Libvirt::Domain)</a><br />
+    <a href="classes/Libvirt/StoragePool.html#M000014">refresh (Libvirt::StoragePool)</a><br />
+    <a href="classes/Libvirt/Version.html#M000007">release (Libvirt::Version)</a><br />
+    <a href="classes/Libvirt/Domain.html#M000053">restore (Libvirt::Domain)</a><br />
+    <a href="classes/Libvirt/Domain.html#M000051">resume (Libvirt::Domain)</a><br />
+    <a href="classes/Libvirt/Domain.html#M000052">save (Libvirt::Domain)</a><br />
+    <a href="classes/Libvirt/Domain.html#M000047">shutdown (Libvirt::Domain)</a><br />
+    <a href="classes/Libvirt/Domain.html#M000050">suspend (Libvirt::Domain)</a><br />
+    <a href="classes/Libvirt/Version.html#M000008">to_s (Libvirt::Version)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000076">type (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/Domain.html#M000067">undefine (Libvirt::Domain)</a><br />
+    <a href="classes/Libvirt/Network.html#M000036">undefine (Libvirt::Network)</a><br />
+    <a href="classes/Libvirt/StoragePool.html#M000010">undefine (Libvirt::StoragePool)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000079">uri (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt/Network.html#M000040">uuid (Libvirt::Network)</a><br />
+    <a href="classes/Libvirt/Domain.html#M000058">uuid (Libvirt::Domain)</a><br />
+    <a href="classes/Libvirt/StoragePool.html#M000016">uuid (Libvirt::StoragePool)</a><br />
+    <a href="classes/Libvirt/Domain.html#M000064">vcpus= (Libvirt::Domain)</a><br />
+    <a href="classes/Libvirt/Connect.html#M000077">version (Libvirt::Connect)</a><br />
+    <a href="classes/Libvirt.html#M000001">version (Libvirt)</a><br />
+    <a href="classes/Libvirt/StorageVol.html#M000033">xml_desc (Libvirt::StorageVol)</a><br />
+    <a href="classes/Libvirt/StoragePool.html#M000018">xml_desc (Libvirt::StoragePool)</a><br />
+    <a href="classes/Libvirt/Network.html#M000041">xml_desc (Libvirt::Network)</a><br />
+    <a href="classes/Libvirt/Domain.html#M000066">xml_desc (Libvirt::Domain)</a><br />
+  </div>
+</div>
+</body>
+</html>
