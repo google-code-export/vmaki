@@ -376,6 +376,9 @@ VM.checkVmStatus = function(vmId, hostId){
             if(status == 'provisioning'){
                 setTimeout('VM.checkVmStatus(' + vmId + ',' + hostId + ')', 30000);
             }
+            if(status == 'restoring'){
+                setTimeout('VM.checkVmStatus(' + vmId + ',' + hostId + ')', 30000);
+            }
             else{
                 hostTree.rootNode.reload();
             }

@@ -39,13 +39,17 @@ Failure.prototype.rootVolumeAdd = ' Unable to add the root volume';
 
 // iso Failure Messages
 Failure.prototype.isoDelete = 'Unable to delete ISO File';
-Failure.prototype.isoDelete = 'Unable to upload ISO File';
+Failure.prototype.isoUpload = 'Unable to upload ISO File';
+Failure.prototype.isoUpdate = 'Unable to update ISO File';
 
 // User Failure Messages
 Failure.prototype.userAdd = 'Unable to add user';
 Failure.prototype.userDelete = 'Unable to delete user';
 Failure.prototype.passwordReset = 'Unable to change Password';
 Failure.prototype.renameUser = 'Unable to rename user';
+
+// Snapshot Failure Messages
+Failure.prototype.snapshotAdd = 'Unable to add snapshot';
 
 
 
