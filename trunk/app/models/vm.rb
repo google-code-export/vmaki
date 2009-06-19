@@ -55,8 +55,7 @@ class Vm < ActiveRecord::Base
 
 	def manage_libvirt_update
 		# set up target_device & target_bus for PV & HVM guests
-		self.ostype == "linux" ? @target_device = "xvda" :  @target_device = "hdc"
-		self.ostype == "linux" ? @target_bus = "xen" :  @target_bus = "ide"
+		self.ostype == "linux" ? @target_device = "hda" :  @target_device = "hdc"
 
 		# check if the model has been changed
 		if self.changed? && self.status != "provisioning"
@@ -234,7 +233,7 @@ class Vm < ActiveRecord::Base
 						attach_xml = "<disk type='block' device='cdrom'>
 													<driver name='phy'/>
 													<source dev='/dev/scd0'/>
-													<target dev='#{@target_device}' bus='#{@target_bus}'/>
+													<target dev='#{@target_device}' bus='#{Constants::BUS_TYPE_IDE}'/>
 													<readonly/>
 												</disk>"
 
@@ -256,7 +255,7 @@ class Vm < ActiveRecord::Base
 							attach_xml = "<disk type='file' device='cdrom'>
 													<driver name='file'/>
 													<source file='#{Constants::NFS_MOUNT_PATH}/#{iso.filename}'/>
-													<target dev='#{@target_device}' bus='#{@target_bus}'/>
+													<target dev='#{@target_device}' bus='#{Constants::BUS_TYPE_IDE}'/>
 												</disk>"
 
 							puts detach_xml
@@ -420,8 +419,7 @@ class Vm < ActiveRecord::Base
 
 	def to_libvirt_xml(vnc_port_number)
 		# set up target_device & target_bus for PV & HVM guests
-		self.ostype == "linux" ? @target_device = "xvda" :  @target_device = "hdc"
-		self.ostype == "linux" ? @target_bus = "xen" :  @target_bus = "ide"
+		self.ostype == "linux" ? @target_device = "hda" :  @target_device = "hdc"
 
 		# set architecture related lib folder
 		if @arch == "amd64"
@@ -585,7 +583,7 @@ class Vm < ActiveRecord::Base
 				# create target element for cdrom
         cdrom << target = XML::Node.new("target")
         target["dev"] = @target_device
-        target["bus"] = @target_bus
+        target["bus"] = Constants::BUS_TYPE_IDE
         # create readonly element for cdrom
         cdrom << readonly = XML::Node.new("readonly")
 			end
@@ -771,7 +769,7 @@ class Vm < ActiveRecord::Base
 				# create target element for cdrom
 				cdrom << target = XML::Node.new("target")
 				target["dev"] = @target_device
-				target["bus"] = @target_bus
+				target["bus"] = Constants::BUS_TYPE_IDE
 			end
 
 			# create readonly element for cdrom

@@ -54,7 +54,7 @@ class SnapshotsController < ApplicationController
 
 	# PUT /snapshots/1
 	def update
-		@snapshot = Snapshot.find(params[:id])
+		@snapshot = Snapshot.find(params[:id], :conditions => {:vm_id => params[:vm_id]})
 
 		respond_to do |format|
 			if @snapshot.update_attributes(params[:snapshot])

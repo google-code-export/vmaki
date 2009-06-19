@@ -9,6 +9,8 @@ class Snapshot < ActiveRecord::Base
 	before_update :manage_update
   before_destroy :manage_delete
 
+	private
+	
 	def manage_create
 		vm = Vm.find_by_id(self.vm_id)
 		snapshots = Snapshot.find(:all, :conditions => {:vm_id => self.vm_id} )
