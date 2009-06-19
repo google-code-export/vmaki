@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090618180813) do
+ActiveRecord::Schema.define(:version => 20090619141908) do
 
   create_table "hosts", :force => true do |t|
     t.string   "name"
@@ -36,9 +36,9 @@ ActiveRecord::Schema.define(:version => 20090618180813) do
   create_table "isos", :force => true do |t|
     t.string   "description"
     t.string   "filename"
+    t.decimal  "size"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "size"
   end
 
   create_table "log", :force => true do |t|
@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(:version => 20090618180813) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "restore"
+    t.string   "display_date"
   end
 
   create_table "users", :force => true do |t|
