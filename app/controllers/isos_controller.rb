@@ -96,7 +96,7 @@ class IsosController < ApplicationController
 			statuses << vm.status
 		end
 
-		if statuses.any? { |status| status.include? "running" }
+		if statuses.any? { |status| status.include? Constants::VM_LIBVIRT_RUNNING }
 			respond_to do |format|
 				format.xml { render :nothing => true, :status => :forbidden }
 				format.json { render :nothing => true, :status => :forbidden }

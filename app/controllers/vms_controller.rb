@@ -1,3 +1,5 @@
+require 'constants'
+
 class VmsController < ApplicationController
 	include ExtScaffold
 
@@ -107,7 +109,7 @@ class VmsController < ApplicationController
   def destroy
     @vm = Vm.find(params[:id])
 		if APP_CONFIG["libvirt_integration"]
-			if @vm.status == "shutoff"
+			if @vm.status == Constants::VM_LIBVIRT_SHUTOFF
 				# libvirt integration enabled and VM status is 'shutoff', so delete it (also gets undefined in Xen context)
 				@vm.destroy
 				Dblogger.log("Production", @current_user.name, "VM", "Deleted VM #{@vm.name} with id:#{@vm.id}")
