@@ -23,6 +23,9 @@ function renderStatus(val){
     if(val == 'creating'){
         return '<span style="color:red;">' + val + '</span>';
     }
+    else if(val == 'restoring'){
+        return '<span style="color:red;">' + val + '</span>';
+    }
     else{
         return '<span style="color:green;">' + val + '</span>';
     }
@@ -238,6 +241,7 @@ SnapshotTab.prototype.restoreSnapshot = function(){
                         jsonData: {'snapshot':{'restore': true}},
                         success: function(){
                             hostTree.rootNode.reload();
+                            snapshotStore.reload();
                         },
                         failure: function(response){
                             Failure.checkFailure(response, Failure.prototype.snapshotDelete);
@@ -353,6 +357,9 @@ SnapshotTab.prototype.checkSnapshotStatus = function(snapshotId){
             var jsonResponse = Ext.util.JSON.decode(response.responseText);
             status = jsonResponse.data['snapshot[status]'];
             if(status == 'creating'){
+                setTimeout('myTabPanel.mySnapshotTab.checkSnapshotStatus(' + snapshotId + ')', 30000);
+            }
+            else if(status == 'restoring'){
                 setTimeout('myTabPanel.mySnapshotTab.checkSnapshotStatus(' + snapshotId + ')', 30000);
             }
             else{
