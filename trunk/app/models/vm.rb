@@ -291,10 +291,10 @@ class Vm < ActiveRecord::Base
 		# check if the debian website is reachable
 		raise "Debian Site unreachable, cannot continue with provsioning" if !check_connectivity
 		threads = []
-		Dblogger.log("Production", "system", "VM", "Provisioning VM: #{self.name}")
+    vm_name = self.name
+		
+    Dblogger.log("Production", "system", "VM", "Provisioning VM: #{vm_name}")
 
-		# Enable Active Record to be used concurrently
-		vm_name = self.name
 
 		threads << Thread.new("provisioning-thread") do |thread|
 			self.status = "provisioning"
