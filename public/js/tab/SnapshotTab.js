@@ -57,7 +57,7 @@ SnapshotTab.prototype.getStore = function(panel){
         columns:[
             {header: 'Name', dataIndex: 'name', width: 200},
             {header: 'Description', dataIndex: 'description', id: 'description'},
-            {header: 'Date', dataIndex: 'date'},
+            {header: 'Creation Date', dataIndex: 'date'},
             {header: 'Size [GB]', dataIndex: 'size'},
             {header: 'Status', dataIndex: 'status', renderer: renderStatus}
         ]
