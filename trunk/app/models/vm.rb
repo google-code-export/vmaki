@@ -17,12 +17,12 @@ class Vm < ActiveRecord::Base
 
 	before_create :define_vm if APP_CONFIG["libvirt_integration"]
 	before_update :manage_libvirt_update if APP_CONFIG["libvirt_integration"]
-	before_destroy :undefine_vm if APP_CONFIG["libvirt_integration"]
+	before_destroy :manage_delete if APP_CONFIG["libvirt_integration"]
 
 	def refresh_libvirt_status
 		# if status is 'provisioning', then do not refresh the libvirt state,
 		# but return true so the current one will be returned.
-		return true if self.status == "provisioning"
+		return true if self.status == "provisioning" || self.status == "restoring"
 
 		@host = Host.find(self.host_id)
 		return false if !@host.connection_already_exists
@@ -77,7 +77,7 @@ class Vm < ActiveRecord::Base
 
 				# check if VM is HVM-based and make sure, it's not running
 				if self.ostype == Constants::HVM_TYPE
-					if self.status == "running"
+					if self.status == Constants::VM_LIBVIRT_RUNNING
 						raise "can't change memory on a running HVM guest"
 					else
 						puts "Changing memory on a hvm based guest"
@@ -92,7 +92,7 @@ class Vm < ActiveRecord::Base
 
 				else
 					# guest is PV-based
-          if self.ostype == "shutoff"
+          if self.ostype == Constants::VM_LIBVIRT_SHUTOFF
             puts "Changing Memory for shutoff PV guest"
             if self.memory < (@domain.max_memory / 1024)
               @domain.memory = self.memory * 1024
@@ -216,13 +216,13 @@ class Vm < ActiveRecord::Base
 			if self.cdrom_changed? || self.iso_id_changed?
 				puts "changing CDROM"
 				# check the status of the VM
-				if self.status == "shutoff"
+				if self.status == Constants::VM_LIBVIRT_SHUTOFF
 					puts "Redefining VM for CDROM change"
 					# the VM has been shut off, redefine the VM the physical or file-based drive
 					if ((self.cdrom.downcase == "phy") || (self.cdrom.downcase == "iso" && !self.iso_id.nil?))
 						xml_define_vm(@host, @conn)
 					end
-				elsif (!(self.status == "shutoff") && (self.ostype == "hvm"))
+				elsif (!(self.status == Constants::VM_LIBVIRT_SHUTOFF) && (self.ostype == Constants::HVM_TYPE))
 					# if the VM has not been shut off, detach & attach the physical or file-based drive
 					if (self.cdrom.downcase == "phy")
 						puts "Switching from ISO to PHY"
@@ -286,7 +286,8 @@ class Vm < ActiveRecord::Base
 	def provision(modules)
 		volume = Volume.find(self.rootvolume_id)
 		root_volume = "/dev/#{volume.target_path}"
-		host = Host.find(self.host_id)
+    host_id = self.host_id
+		host = Host.find(host_id)
 
 		# check if the debian website is reachable
 		raise "Debian Site unreachable, cannot continue with provsioning" if !check_connectivity
@@ -299,8 +300,8 @@ class Vm < ActiveRecord::Base
 		threads << Thread.new("provisioning-thread") do |thread|
 			self.status = "provisioning"
 			provision = Provisioning.new(root_volume, "/media/#{volume.name}", vm_name, @modules.chomp!, host.name, host.username)
-			ActiveRecord::Base.connection.execute("UPDATE vms SET status = 'provisioned' WHERE name = '#{vm_name}' ")
-			ActiveRecord::Base.connection.execute("INSERT INTO log (user, subject, text) VALUES ('system', 'VM', 'Provisioning of VM: #{vm_name} completed')")
+			ActiveRecord::Base.connection.execute("UPDATE vms SET status = 'provisioned' WHERE name = '#{vm_name}' AND host_id = #{host_id};")
+			ActiveRecord::Base.connection.execute("INSERT INTO log (user, subject, text) VALUES ('system', 'VM', 'Provisioning of VM: #{vm_name} completed');")
 		end
 
 	end
@@ -366,7 +367,14 @@ class Vm < ActiveRecord::Base
 		return status_text
 	end
 
-	def undefine_vm
+	def manage_delete
+    # delete all snapshots first
+    snapshots = Snapshot.find_all_by_vm_id(self.id)
+    snapshots.each do |snapshot|
+      snapshot.destroy
+    end
+
+    # undefine VM
 		host = Host.find(self.host_id)
 		connection = ConnectionsManager.instance
 		connection_hash = connection.get(host.name)
