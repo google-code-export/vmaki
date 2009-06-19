@@ -77,7 +77,7 @@ SnapshotTab.prototype.getStore = function(panel){
         },{
             xtype: 'tbbutton',
             cls: 'x-btn-text-icon',
-            icon: 'images/icons/camera_stop.gif',
+            icon: 'images/icons/camera_delete.gif',
             text: 'Delete Snapshot',
             handler: this.deleteSnapshot
         },{
