@@ -224,54 +224,71 @@ class Vm < ActiveRecord::Base
 				elsif (!(self.status == Constants::VM_LIBVIRT_SHUTOFF) && (self.ostype == Constants::HVM_TYPE))
 					# if the VM has not been shut off, detach & attach the physical or file-based drive
 					if (self.cdrom.downcase == "phy")
-						puts "Switching from ISO to PHY"
+						# create detach xml
+						detach_xml = XML::Document.new()
+						detach_xml.root = XML::Node.new("disk")
+						root = detach_xml.root
+						root["type"] = "file"
+						root["device"] = "cdrom"
+						root << target = XML::Node.new("target")
+						target["dev"] = @target_device
 
-						detach_xml = "<disk type='file' device='cdrom'>
-													<target dev='#{@target_device}' />
-												</disk>"
+						# create attach xml
+						attach_xml = XML::Document.new()
+						attach_xml.root = XML::Node.new("disk")
+						root = attach_xml.root
+						root["type"] = "block"
+						root["device"] = "cdrom"
+						root << driver = XML::Node.new("driver")
+						driver["name"] = "phy"
+						root << source = XML::Node.new("source")
+						source["dev"] = "/dev/scd0"
+						root << target = XML::Node.new("target")
+						target["dev"] = @target_device
+						target["bus"] = Constants::BUS_TYPE_IDE
+						root << readonly = XML::Node.new("readonly")
 
-						attach_xml = "<disk type='block' device='cdrom'>
-													<driver name='phy'/>
-													<source dev='/dev/scd0'/>
-													<target dev='#{@target_device}' bus='#{Constants::BUS_TYPE_IDE}'/>
-													<readonly/>
-												</disk>"
-
-						puts detach_xml
-						puts attach_xml
-						@domain.detach_device(detach_xml)
-						@domain.attach_device(attach_xml)
+						# detach & attach the previously defined device
+						@domain.detach_device(detach_xml.to_s)
+						@domain.attach_device(attach_xml.to_s)
 
 					elsif (self.cdrom.downcase == "iso" && !self.iso_id.nil?)
 						puts "Switching from PHY to ISO"
 						iso = Iso.find(self.iso_id)
 						if !iso.nil?
-						
-							# first detach the physical cdrom drive from the guest
-							detach_xml = "<disk type='block' device='cdrom'>
-													<target dev='#{@target_device}' />
-												</disk>"
+							# create detach xml
+							detach_xml = XML::Document.new()
+							detach_xml.root = XML::Node.new("disk")
+							root = detach_xml.root
+							root["type"] = "block"
+							root["device"] = "cdrom"
+							root << target = XML::Node.new("target")
+							target["dev"] = @target_device
 
-							attach_xml = "<disk type='file' device='cdrom'>
-													<driver name='file'/>
-													<source file='#{Constants::NFS_MOUNT_PATH}/#{iso.filename}'/>
-													<target dev='#{@target_device}' bus='#{Constants::BUS_TYPE_IDE}'/>
-												</disk>"
+							# create attach xml
+							attach_xml = XML::Document.new()
+							attach_xml.root = XML::Node.new("disk")
+							root = attach_xml.root
+							root["type"] = "file"
+							root["device"] = "cdrom"
+							root << driver = XML::Node.new("driver")
+							driver["name"] = "file"
+							root << source = XML::Node.new("source")
+							source["file"] = "#{Constants::NFS_MOUNT_PATH}/#{iso.filename}"
+							root << target = XML::Node.new("target")
+							target["dev"] = @target_device
+							target["bus"] = Constants::BUS_TYPE_IDE
+							root << readonly = XML::Node.new("readonly")
 
-							puts detach_xml
-							puts attach_xml
-							@domain.detach_device(detach_xml)
-							@domain.attach_device(attach_xml)
+							# detach & attach the previously defined device
+							@domain.detach_device(detach_xml.to_s)
+							@domain.attach_device(attach_xml.to_s)
 						end
 					end
 				end
 			
 
 			end
-			
-			# get the VNC Port already assigned to the VM and redefine the vm
-			#			vnc_port = get_vnc_port(@host)
-			#			conn.define_domain_xml(to_libvirt_xml(vnc_port.port))
 
 			# free the reference to the domain object
 			@domain.free

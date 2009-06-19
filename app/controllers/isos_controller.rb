@@ -39,26 +39,16 @@ class IsosController < ApplicationController
 
 	# POST /isos
 	def create
+		# collect all data from request
 		request_form_hash = request.headers["rack.request.form_hash"]
 		isopath = request_form_hash["isoPath"]
 		filename = isopath[:filename]
+		description = params[:description]
+		data = params[:isoPath]
 
 		@iso = Iso.new
-
-		@iso.filename = filename
-		@iso.description = params[:description]
-		data = params[:isoPath]
-		data.rewind
-
-    full_path = "#{Constants::NFS_SOURCE_PATH}/#{@iso.filename}"
-		File.open(full_path,"wb") do |file|
-			while buffer = data.read(4096)
-				file.write(buffer)
-			end
-		end
-
-		# set the size of the uploaded file in Megabytes
-		@iso.size = sprintf("%.2f", (File.size(full_path).to_f / 1024 / 1024).to_f)
+		# now save the data to the server!
+		@iso.upload_data(filename, description, data)
 
 		respond_to do |format|
 			if @iso.save
