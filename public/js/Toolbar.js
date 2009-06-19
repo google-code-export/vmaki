@@ -40,7 +40,7 @@ function ToolBar(){
              },{
                  text: 'About',
                  icon: '../images/icons/information.gif',
-                 handler: Util.about
+                 handler: ToolBar.showAboutWindow
              }
         ]
     })
@@ -271,6 +271,26 @@ ToolBar.prototype.setButtons = function(){
         }
 
     }
+}
+
+ToolBar.showAboutWindow = function(){
+
+    var aboutWindow = new Ext.Window({
+        title: 'About',
+        resizable: false,
+        draggable: false,
+        width: 300,
+        html: '<div align="center"; padding="20px"><img src="images/logo.png"></div>',
+        listeners:{
+                show: function(panel){
+                    Util.prototype.spot.show(panel.id);
+                },
+                close: function(panel){
+                    Util.prototype.spot.hide();
+                }
+            }
+    });
+    aboutWindow.show();
 }
 
 
