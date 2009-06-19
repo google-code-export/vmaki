@@ -45,7 +45,7 @@ function Tree(){
         dir: 'asc',
         sortType: function(node){
             return node.attributes.id
-        }
+        },
     })
 
 
