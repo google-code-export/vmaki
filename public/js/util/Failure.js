@@ -50,6 +50,9 @@ Failure.prototype.renameUser = 'Unable to rename user';
 
 // Snapshot Failure Messages
 Failure.prototype.snapshotAdd = 'Unable to add snapshot';
+Failure.prototype.snapshotRename = 'Unable to delete snapshot';
+Failure.prototype.snapshotAdd = 'Unable to restore snapshot';
+Failure.prototype.snapshotAdd = 'Unable to rename snapshot';
 
 
 
@@ -60,6 +63,9 @@ Failure.prototype.snapshotAdd = 'Unable to add snapshot';
 Failure.checkFailure = function(response, failure){
     if(response.status == 401){
         Util.logout();
+    }
+    else if(response.status == 413){
+        Ext.Msg.alert('Failure', 'There is not enough free space on the Volume')
     }
     else{
         if(failure){
