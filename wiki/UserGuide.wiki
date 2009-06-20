@@ -1,14 +1,20 @@
 #summary One-sentence summary of this page.
 #sidebar TableOfContents
 
-<wiki:toc max_depth="1" />
+
 
 = Introduction =
 
-Add your content here.
+This Page contains the user manual for *vmaki 1.0* and will help you using it effectively in your enviroment. 
+
+= Contents =
+
+<wiki:toc max_depth="1" />
 
 
 = Getting Started =
+
+Check out the Getting Started Guide to get vmaki running in your enviroment. 
 
 = User Management =
 
