@@ -9,19 +9,45 @@ class Snapshot < ActiveRecord::Base
 	before_update :manage_update
   before_destroy :manage_delete
 
+	attr_reader :not_enough_space
+	@not_enough_space = false
+
 	private
 	
 	def manage_create
 		vm = Vm.find_by_id(self.vm_id)
+		host = Host.find_by_id(vm.host_id)
+
+		# first, check if there's enough space available on the remote's machine filesystem on which the snapshots directory is located on
+		Net::SSH.start(host.name, host.username, :auth_methods => "publickey", :timeout => Constants::SSH_Timeout) do |ssh|
+			df_output = ssh.exec!("df #{Constants::SNAPSHOTS_PATH}")
+			lines_array = Array.new
+
+			df_output.each do |line|
+				lines_array << line.chomp
+			end
+
+			last_line = lines_array[lines_array.size - 1]
+			@available_gigabytes = ((last_line.split[2].to_f / 1024 / 1024) - 1).to_f
+		end
+
+		puts "@available_gigabytes: #{@available_gigabytes}"
+
 		snapshots = Snapshot.find(:all, :conditions => {:vm_id => self.vm_id} )
 		snapshot_nr = snapshots.size + 1
 		self.name = "#{vm.name}-snapshot-#{snapshot_nr}"
     self.display_date = Time.now.localtime.strftime("%Y-%m-%d %H:%M")
 
+		# get the volume object and check if there's enough size on the host left!
 		volume = Volume.find_by_id(vm.rootvolume_id)
-		pool = Pool.find_by_id(volume.pool_id)
-		
-		host = Host.find_by_id(vm.host_id)
+		if @available_gigabytes < volume.capacity
+			puts "NOT ENOUGH SPACE!"
+			# not enough space, cancel Snapshot creation
+			@not_enough_space = true
+			return false
+		end
+
+		pool = Pool.find_by_id(volume.pool_id)	
 
     threads = []
     snapshot_name = self.name

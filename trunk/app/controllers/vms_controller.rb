@@ -63,8 +63,6 @@ class VmsController < ApplicationController
     @vm = Vm.new(params[:vm])
     @vm.host_id = params[:host_id]
 
-		puts "not_enough_space: #{@vm.not_enough_space}"
-
     respond_to do |format|
       if @vm.save && (!@vm.not_enough_space)
 				Dblogger.log("Production", @current_user.name, "VM", "Created VM #{@vm.name} with id:#{@vm.id} and Params:#{params[:vm]}")
