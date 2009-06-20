@@ -28,7 +28,7 @@ vmaki has a build in user management which allows you to controll the access for
 
 A new user can be added via the Add User button. In the appearing pop-up menu the username, the userrole and the password have to be specified. The role of the new user can either be *Administrator* or *User*. If you define the new us as an Administrator he can also administer the user management while the role user doesn't allow this. Despite of that there are no differences the role Administrator and User.
 
-[http://vmaki.googlecode.com/files/user_tab.png]  
+[http://vmaki.googlecode.com/files/add_user_window.png]  
 
 = Host Management =
 
