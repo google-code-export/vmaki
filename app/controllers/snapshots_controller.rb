@@ -41,10 +41,14 @@ class SnapshotsController < ApplicationController
 		@snapshot.vm_id = params[:vm_id]
 
 		respond_to do |format|
-			if @snapshot.save
+			if @snapshot.save && (!@snapshot.not_enough_space)
 				Dblogger.log("Production", @current_user.name, "Snapshot", "Created Snapshot #{@snapshot.name} with id:#{@snapshot.id}")
 				format.xml { render :xml => @snapshot, :status => :created }
 				format.json { render :json => @snapshot.to_ext_json, :status => :created }
+			elsif @snapshot.not_enough_space
+				Dblogger.log("Production", @current_user.name, "Snapshot", "Could not create Snapshot #{@snapshot.name} with id:#{@snapshot.id} and Params:#{params[:Snapshot]}. Reason: Not enough space!")
+        format.xml { render :nothing => true, :status => "413" }
+				format.json { render :nothing => true, :status => "413" }
 			else
 				format.xml { render :xml => @snapshot.errors, :status => "422" }
 				format.json { render :json => @snapshot.errors.to_json, :status => "422" }

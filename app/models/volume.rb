@@ -46,15 +46,15 @@ class Volume < ActiveRecord::Base
 		@host = Host.find(@pool.host_id)
 		self.target_path = "#{@pool.name}/#{self.name}"
 
-		# refresh pool stats
-		@pool.update_pool_info
-
 		connection = ConnectionsManager.instance
 		connection_hash = connection.get(@host.name)
 		@conn = connection_hash[:conn]
 
 		# get a reference to the storage pool object
 		@pool_ref = @conn.lookup_storage_pool_by_name(@pool.name)
+
+		# refresh pool stats
+		@pool_ref.refresh
 
 		delta_size = (self.capacity.to_f - self.capacity_was.to_f).to_f
 		# keep at least 1G free for the Host operating system, so increate delta_size by 1 if it's positive
