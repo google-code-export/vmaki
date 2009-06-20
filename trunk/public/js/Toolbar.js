@@ -325,7 +325,7 @@ ToolBar.showAboutWindow = function(){
         cls: 'about-window',
         html: '<br><div align="center"><img src="images/logo.png"></div><br>\n\
                <p><b>Version 1.0</b></p><br>\n\
-               <p>(C)Copyright 2009 Martin Gajdos & Adrian von Allmen</p><br>\n\
+               <p>(C) Copyright 2009 Martin Gajdos & Adrian von Allmen</p><br>\n\
                <p>Released under the GNU Public License v3</p><br>\n\
                <div align="center"><a href="http://www.vmaki.org" target="_blank">www.vmaki.org</p></div><br>',
         listeners:{
