@@ -280,7 +280,12 @@ ToolBar.showAboutWindow = function(){
         resizable: false,
         draggable: false,
         width: 300,
-        html: '<div align="center"; padding="20px"><img src="images/logo.png"></div>',
+        cls: 'about-window',
+        html: '<br><div align="center"><img src="images/logo.png"></div><br>\n\
+               <p><b>Version x.x</b></p><br>\n\
+               <p>(C)Copyright 2009 Martin Gajdos & Adrian von Allmen</p><br>\n\
+               <p>Released under the GNU Public License v3</p><br>\n\
+               <div align="center"><a href="http://www.vmaki.org" target="_blank">www.vmaki.org</p></div><br>',
         listeners:{
                 show: function(panel){
                     Util.prototype.spot.show(panel.id);
