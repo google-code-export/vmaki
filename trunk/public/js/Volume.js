@@ -116,23 +116,30 @@ Volume.addVolumes = function(){
     });
 }
 
-Volume.deleteVolume = function(VolumeId){
-    poolId = 0;
-    // get the pool id
-    Ext.Ajax.request({
-        url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/pools.json',
-        method: 'GET',
-        success: function(response){
-            var jsonResponse = Ext.util.JSON.decode(response.responseText);
-            poolId = jsonResponse.pools[0].pool['id'];
-            // send delete request
-            Ext.Ajax.request({
+Volume.deleteVolume = function(VolumeId, poolId){
+    if(poolId){
+        Ext.Ajax.request({
                 url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/pools/' + poolId + '/volumes/' + VolumeId,
                 method: 'DELETE'
             })
-        }
-    });
-    
+    }
+    else{
+        poolId = 0;
+        // get the pool id
+        Ext.Ajax.request({
+            url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/pools.json',
+            method: 'GET',
+            success: function(response){
+                var jsonResponse = Ext.util.JSON.decode(response.responseText);
+                poolId = jsonResponse.pools[0].pool['id'];
+                // send delete request
+                Ext.Ajax.request({
+                    url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/pools/' + poolId + '/volumes/' + VolumeId,
+                    method: 'DELETE'
+                })
+            }
+        });
+    }
 }
 
 
