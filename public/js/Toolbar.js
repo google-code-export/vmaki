@@ -49,6 +49,43 @@ function ToolBar(){
     this.mainToolbar = new Ext.Toolbar({
         height: 250,
         items:[{
+            xtype: 'tbspacer'
+        },{
+            xtype: 'tbspacer'
+        },{
+            xtype: 'panel',
+            html: '<img src="/images/logo.png" width="53px" height="22px" />'
+        },{
+            xtype: 'tbspacer'
+        },{
+            xtype: 'tbspacer'
+        },{
+            xtype: 'tbspacer'
+        },{
+            xtype: 'tbspacer'
+        },{
+            xtype: 'tbspacer'
+        },{
+            xtype: 'tbspacer'
+        },{
+            xtype: 'tbspacer'
+        },{
+            xtype: 'tbspacer'
+        },{
+            xtype: 'tbspacer'
+        },{
+            xtype: 'tbspacer'
+        },{
+            xtype: 'tbspacer'
+        },{
+            xtype: 'tbspacer'
+        },{
+            xtype: 'tbspacer'
+        },{
+            xtype: 'tbspacer'
+        },{
+            xtype: 'tbspacer'
+        },{
             xtype: 'tbbutton',
             text: 'Host',
             menu: this.hostMenu
@@ -161,19 +198,6 @@ function ToolBar(){
             icon: 'images/icons/door.gif',
             text: 'Logout',
             handler: Util.logout
-        },{
-            xtype: 'tbspacer'
-        },{
-            xtype: 'tbspacer'
-        },{
-            xtype: 'tbseparator'
-        },{
-            xtype: 'tbspacer'
-        },{
-            xtype: 'tbspacer'
-        },{
-            xtype: 'panel',
-            html: '<img src="/images/logo.png" width="53px" height="22px" />'
         },{
             xtype: 'tbspacer'
         },{
