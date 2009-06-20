@@ -360,9 +360,9 @@ VM.addVmRequest = function(poolId, rootVolumeId, swapVolumeId){
         },
         failure: function(response){
             if(swapVolumeId){
-                Volume.deleteVolume(swapVolumeId);
+                Volume.deleteVolume(swapVolumeId, poolId);
             }
-            Volume.deleteVolume(rootVolumeId);
+            Volume.deleteVolume(rootVolumeId, poolId);
             Failure.checkFailure(response, Failure.prototype.vmAdd);
             // hides the mask
             vmMask.hide();
