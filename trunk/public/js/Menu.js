@@ -11,12 +11,12 @@ function Menu(){
     })
     this.hostDisconnectItem = new Ext.menu.Item({
         text: 'Disconnect',
-        icon: '../images/icons/disconnect.png',
+        icon: '../images/icons/disconnect.gif',
         handler: Host.disconnectHost
     })
     this.hostRemoveItem = new Ext.menu.Item({
         text: 'Remove',
-        icon: '../images/icons/server_delete.png',
+        icon: '../images/icons/server_delete.gif',
         handler: Host.removeHost
 
     // VM context menu items

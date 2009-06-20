@@ -83,7 +83,7 @@ SnapshotTab.prototype.getStore = function(panel){
         },{
             xtype: 'tbbutton',
             cls: 'x-btn-text-icon',
-            icon: 'images/icons/camera_go.png',
+            icon: 'images/icons/camera_go.gif',
             text: 'Restore Snapshot',
             handler: this.restoreSnapshot
         },{
