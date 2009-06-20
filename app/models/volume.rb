@@ -8,35 +8,46 @@ class Volume < ActiveRecord::Base
   belongs_to :pool
 	has_one :vm
 
-	#before_update :do_update if APP_CONFIG["libvirt_integration"]
-	before_save :do_save
-	before_update :do_update
+	before_save :manage_save
+	before_update :manage_update
 	before_destroy :remove if APP_CONFIG["libvirt_integration"]
 
-	def do_save
+	attr_reader :not_enough_space
+	@not_enough_space = false
+
+	def manage_save
 		# if the model already exists, go to do_update
 		if self.new_record? && APP_CONFIG["libvirt_integration"]
-			puts "Creating volume"
-
 			@pool = Pool.find(self.pool_id)
-			self.target_path = "#{@pool.name}/#{self.name}"
+			@pool.update_pool_info
+			# check if there's enough space
+			puts "capacity: #{@pool.available}"
+			puts "capacity: #{self.capacity}"
+			if @pool.available.to_f > (self.capacity + 1).to_f
+				puts "Creating volume"
+				self.target_path = "#{@pool.name}/#{self.name}"
+				# initialize libvirt part of the volume, but only if libvirt integration is enabled!
+				libvirt_init if APP_CONFIG["libvirt_integration"]
 
-			# initialize libvirt part of the volume, but only if libvirt integration is enabled!
-			libvirt_init if APP_CONFIG["libvirt_integration"]
-
-			# update volume stats
-			update_volume_info
+				# update volume stats
+				update_volume_info
+			else
+				@not_enough_space = true
+				return false
+			end
 		else
-			puts "Updating volume"
-			do_update
+			manage_update
 		end
 	end
 
-	def do_update
+	def manage_update
 		puts "Updating volume"
-		@pool = Pool.find(self.pool_id)
+		@pool = Pool.find(self.pool_id)	
 		@host = Host.find(@pool.host_id)
 		self.target_path = "#{@pool.name}/#{self.name}"
+
+		# refresh pool stats
+		@pool.update_pool_info
 
 		connection = ConnectionsManager.instance
 		connection_hash = connection.get(@host.name)
@@ -45,18 +56,24 @@ class Volume < ActiveRecord::Base
 		# get a reference to the storage pool object
 		@pool_ref = @conn.lookup_storage_pool_by_name(@pool.name)
 
+		delta_size = (self.capacity.to_f - self.capacity_was.to_f).to_f
+		# keep at least 1G free for the Host operating system, so increate delta_size by 1 if it's positive
+		if delta_size > 0 :	delta_size += 1	end
+
 		new_size_in_mb = (self.capacity * 1024).to_i
+
 		puts "New Size: #{new_size_in_mb}"
 		puts "Target Path: /dev/#{self.target_path}"
 		Net::SSH.start(@host.name, @host.username, :auth_methods => "publickey", :timeout => Constants::SSH_Timeout) do |ssh|
 
-			# check if volume contains a root filesystem and if yes, resize that as well
+			# check if volume contains a root filesystem and if yes, resize that as well (for PV Guests)
 			if self.mkfs
 				if self.vol_type == "root"
 					# TODO: Check if filesystem is mounted!
 
-					# check if volume is being grown or shrunk
-					if self.capacity > self.capacity_was
+					# check if volume is being grown or shrunk and if it's being grown, check if there's enough space available
+
+					if (delta_size > 0) && (delta_size < @pool.available)
 						# grow
 						puts "growing volume"
 						ssh.exec!("lvresize -L#{new_size_in_mb}M -n -f #{self.target_path}")
@@ -64,7 +81,7 @@ class Volume < ActiveRecord::Base
 						sleep 2
 						puts "growing filesystem"
 						return ssh.exec!("resize2fs -f /dev/#{self.target_path} #{new_size_in_mb}M")
-					elsif self.capacity < self.capacity_was
+					elsif delta_size < 0
 						# shrink
 						puts "shrinking filesystem"
 						ssh.exec!("resize2fs -f /dev/#{self.target_path} #{new_size_in_mb}M")
@@ -72,11 +89,31 @@ class Volume < ActiveRecord::Base
 						puts "shrinking volume"
 						ssh.exec!("lvresize -L#{new_size_in_mb}M -n -f #{self.target_path}")
 						@pool_ref.refresh
+					else
+						# there's not enough space!
+						puts "there's not enough space!"
+						@not_enough_space = true
+						return false
 					end
 				end
 			else
-				# resize LVM Volume
-				return ssh.exec!("lvresize -L#{new_size_in_mb}M -n -f #{self.target_path}")
+				puts "delta_size: #{delta_size}"
+				# resize LVM Volume (for HVM Guests)
+				# check if volume is being grown or shrunk and if it's being grown, check if there's enough space available
+				puts "capacity: #{self.capacity}"
+				puts "available: #{@pool.available}"
+				if (delta_size > 0) && (delta_size < @pool.available)
+					# grow
+					return ssh.exec!("lvresize -L#{new_size_in_mb}M -n -f #{self.target_path}")
+				elsif delta_size < 0
+					# shrink
+					return ssh.exec!("lvresize -L#{new_size_in_mb}M -n -f #{self.target_path}")
+				else
+					# there's not enough space!
+					puts "there's not enough space!"
+					@not_enough_space = true
+					return false
+				end
 			end
 
 		end

@@ -42,10 +42,14 @@ class VolumesController < ApplicationController
     @volume.pool_id = params[:pool_id]
 
     respond_to do |format|
-      if @volume.save
+      if @volume.save && (!@volume.not_enough_space)
 				Dblogger.log("Debug", @current_user.name, "Volume", "Created Volume #{@volume.name} with id:#{@volume.id} and Params:#{params[:volume]}")
         format.xml { render :xml => @volume, :status => :created }
 				format.json { render :json => @volume, :status => :created }
+			elsif @volume.not_enough_space
+				Dblogger.log("Production", @current_user.name, "Volume", "Could not create Volume #{@volume.name} with id:#{@volume.id} and Params:#{params[:volume]}. Reason: Not enough space!")
+        format.xml { render :nothing => true, :status => "413" }
+				format.json { render :nothing => true, :status => "413" }
       else
         format.xml { render :xml => @volume.errors, :status => "422" }
 				format.json { render :json => @volume.errors.to_json, :status => "422" }
@@ -58,10 +62,14 @@ class VolumesController < ApplicationController
     @volume = Volume.find(params[:id], :conditions => {:pool_id => params[:pool_id]})
 
     respond_to do |format|
-      if @volume.update_attributes(params[:volume])
+      if @volume.update_attributes(params[:volume]) && (!@volume.not_enough_space)
 				Dblogger.log("Debug", @current_user.name, "Volume", "Updated Volume #{@volume.name} with id:#{@volume.id} and Params:#{params[:volume]}")
         format.xml { render :nothing => true, :status => :ok }
 				format.json { render :nothing => true, :status => :ok }
+			elsif @volume.not_enough_space
+				Dblogger.log("Production", @current_user.name, "Volume", "Could not grow Volume #{@volume.name} with id:#{@volume.id} and Params:#{params[:volume]}. Reason: Not enough space!")
+        format.xml { render :nothing => true, :status => "413" }
+				format.json { render :nothing => true, :status => "413" }
       end
     end
   end
