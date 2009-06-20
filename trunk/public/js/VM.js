@@ -688,7 +688,7 @@ VM.getConfig = function(){
 VM.reconfigure = function(poolId, rootVolumeId){
 
     // gets the total memory of the host and takes 512MB away for the host itself
-    var maxMemory = hostTree.selectedNode.attributes.total_memory/1024 - 512;
+    var maxMemory = hostTree.selectedNode.parentNode.attributes.total_memory/1024 - 512;
     
     // simplestore for bootdevice dropdown menu
     bootDeviceStore = new Ext.data.SimpleStore({
