@@ -14,7 +14,9 @@ This Page contains the user manual for *vmaki 1.0* and will help you using it ef
 
 = Getting Started =
 
-Check out the Getting Started Guide to get vmaki running in your enviroment. 
+Check out the Getting Started Guide to get vmaki running in your enviroment.
+
+* GettingStarted 
 
 = User Management =
 
