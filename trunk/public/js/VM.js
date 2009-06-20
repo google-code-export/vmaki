@@ -740,8 +740,7 @@ VM.reconfigure = function(poolId, rootVolumeId){
             width: 80,
             value: volumeCapacity,
             strategy: new Ext.ux.form.Spinner.NumberStrategy({
-                minValue:'2.0',
-                maxValue:'15.0',
+                minValue:'1.0',
                 incrementValue: 0.5
             })
         }),new Ext.ux.SelectBox({
