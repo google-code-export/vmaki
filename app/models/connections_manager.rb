@@ -31,7 +31,7 @@ class ConnectionsManager
 
   def remove(name)
 		# doesn't work yet!
-		#@connections[name][conn].disconnect
+		#@connections[name][:conn].disconnect
 		@connections[name] = nil
 	end
 
