@@ -242,7 +242,7 @@ SnapshotTab.prototype.restoreSnapshot = function(){
                         success: function(){
                             hostTree.rootNode.reload();
                             snapshotStore.reload();
-                            SnapshotTab.checkSnapshotStatus(sel.data.id);
+                            myTabPanel.mySnapshotTab.checkSnapshotStatus(sel.data.id);
                         },
                         failure: function(response){
                             Failure.checkFailure(response, Failure.prototype.snapshotDelete);
