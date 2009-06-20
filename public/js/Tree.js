@@ -62,6 +62,13 @@ function Tree(){
     // fires when tree is loaded and triggers the setIcon handler
     this.treeLoader.on('load', function(treeloader, node, response){
         Tree.setHostIcon(node);
+
+//        if(hostTree.selectedNode){
+//            var n = hostTree.tree.getNodeById(hostTree.selectedNode.attributes.id);
+//            n.ensureVisible();
+//            var el = Ext.fly(n.getUI().getEl());
+//            el.select();
+        }
     });
 
 }
