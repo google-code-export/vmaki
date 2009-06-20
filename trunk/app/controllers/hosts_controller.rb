@@ -87,6 +87,7 @@ class HostsController < ApplicationController
 					xmlhost["status"] = host.connected.to_s
 					xmlhost["text"] = host.name.to_s
 					xmlhost["hvm_support"] = host.hvm_support.to_s
+					xmlhost["total_memory"] = host.total_memory.to_s
 
 					# only include VMs if host is connected
 					if host.connected == true
@@ -127,7 +128,7 @@ class HostsController < ApplicationController
 				@hosts.each do |host|
 					element_counter += 1;
 
-					jsontree << "\n  { id: '#{element_counter}', host_id: '#{host.id}', status: '#{host.connected}', text: '#{host.name}', hvm_support: '#{host.hvm_support}', "
+					jsontree << "\n  { id: '#{element_counter}', host_id: '#{host.id}', status: '#{host.connected}', text: '#{host.name}', hvm_support: '#{host.hvm_support}', total_memory: '#{host.total_memory}', "
 
 					# only include VMs if host is connected
 					if host.connected == true
@@ -211,6 +212,10 @@ class HostsController < ApplicationController
 
 		host_id = @host.id
 		host_name = @host.name
+
+#		connection = ConnectionsManager.instance
+#		connection.remove(host_name)
+
 		@host.destroy
 		
 		Dblogger.log("Production", @current_user.name, "Host", "Deleted Host #{host_name} with id:#{host_id}")
