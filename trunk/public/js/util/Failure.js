@@ -65,7 +65,8 @@ Failure.checkFailure = function(response, failure){
         Util.logout();
     }
     else if(response.status == 413){
-        if(failure == Failure.prototype.vmAdd){
+
+        if(failure == Failure.prototype.rootVolumeAdd || Failure.prototype.swapVolumeAdd){
             Ext.Msg.alert('Failure', 'There is not enough free space to create the VM');
         }
         if(failure == Failure.prototype.isoUpload){
