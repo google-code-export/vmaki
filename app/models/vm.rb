@@ -19,6 +19,9 @@ class Vm < ActiveRecord::Base
 	before_update :manage_libvirt_update if APP_CONFIG["libvirt_integration"]
 	before_destroy :manage_delete if APP_CONFIG["libvirt_integration"]
 
+	attr_reader :not_enough_space
+	@not_enough_space = false
+
 	def refresh_libvirt_status
 		# if status is 'provisioning', then do not refresh the libvirt state,
 		# but return true so the current one will be returned.
@@ -57,7 +60,7 @@ class Vm < ActiveRecord::Base
 		# set up target_device & target_bus for PV & HVM guests
 		self.ostype == "linux" ? @target_device = "hda" :  @target_device = "hdc"
 
-		# check if the model has been changed
+		# check if model has been changed
 		if self.changed? && self.status != "provisioning"
 			@host = Host.find(self.host_id)
 			connection = ConnectionsManager.instance
@@ -73,6 +76,14 @@ class Vm < ActiveRecord::Base
 			# update memory if attribute has changed
 			if self.memory_changed?
 				puts "CHANGING MEMORY"
+				# check available memory first
+				max_mem = (@host.total_memory / 1024) - 512
+				if self.memory > max_mem
+					puts "Not enough memory!"
+					# not enough memory, cancel VM creation
+					@not_enough_space = true
+					return false
+				end
 
 				# check if VM is HVM-based and make sure, it's not running
 				if self.ostype == Constants::HVM_TYPE
@@ -324,6 +335,18 @@ class Vm < ActiveRecord::Base
 
 	def define_vm
 		@host = Host.find(self.host_id)
+
+		# check available memory first
+		# at least 512 MB of memory should be available to the host operating system
+		max_mem = (@host.total_memory / 1024) - 512
+		puts "self.memory: #{self.memory}"
+		puts "max_mem: #{max_mem}"
+		if self.memory.to_f > max_mem.to_f
+			# not enough memory, cancel VM creation
+			@not_enough_space = true
+			return false
+		end
+
 		connection = ConnectionsManager.instance
 		connection_hash = connection.get(@host.name)
 		@conn = connection_hash[:conn]
