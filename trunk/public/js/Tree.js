@@ -45,7 +45,7 @@ function Tree(){
         dir: 'asc',
         sortType: function(node){
             return node.attributes.id
-        },
+        }
     })
 
 
@@ -68,7 +68,7 @@ function Tree(){
 //            n.ensureVisible();
 //            var el = Ext.fly(n.getUI().getEl());
 //            el.select();
-        }
+        
     });
 
 }
