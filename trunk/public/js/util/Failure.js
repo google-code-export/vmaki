@@ -65,15 +65,16 @@ Failure.checkFailure = function(response, failure){
         Util.logout();
     }
     else if(response.status == 413){
-        if(failure == Failure.prototype.vmAdd)
+        if(failure == Failure.prototype.vmAdd){
             Ext.Msg.alert('Failure', 'There is not enough free space to create the VM');
         }
-        if(failure == Failure.prototype.isoUpload)
+        if(failure == Failure.prototype.isoUpload){
             Ext.Msg.alert('Failure', 'There is not enough free space to upload the ISO file');
         }
-        if(failure == Failure.prototype.snapshotAdd)
+        if(failure == Failure.prototype.snapshotAdd){
             Ext.Msg.alert('Failure', 'There is not enough free space to create the snapshot');
         }
+    }
     else{
         if(failure){
             Ext.Msg.alert('Failure', failure);
