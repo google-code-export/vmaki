@@ -49,7 +49,7 @@ Volume.addSwapVolumeRequest = function(poolId){
             // sets the id of the root volume in the add vm form
             VM.prototype.vmForm.getForm().findField('swapvolume_id').setValue(volume_id);
             // calls the add root volume function
-            //Volume.addRootVolumeRequest(poolId);
+            Volume.addRootVolumeRequest(poolId, volume_id);
         },
         failure: function(response){
             Failure.checkFailure(response, Failure.prototype.swapVolumeAdd);
@@ -60,7 +60,7 @@ Volume.addSwapVolumeRequest = function(poolId){
 }
 
 // add root volume request
-Volume.addRootVolumeRequest = function(poolId){
+Volume.addRootVolumeRequest = function(poolId, swapVolumeId){
      // gets the values of the fields name (adds -root to the name) and root capacity of the add vm form
      var name = VM.prototype.vmForm.getForm().findField('name').getValue() + '-root';
      var capacity = VM.prototype.vmForm.getForm().findField('root_capacity').getValue();
@@ -86,10 +86,11 @@ Volume.addRootVolumeRequest = function(poolId){
             // sets the id of the root volume in the add vm form
             VM.prototype.vmForm.getForm().findField('rootvolume_id').setValue(volumeId);
             // calls the add vm request function
-            VM.addVmRequest();
+            VM.addVmRequest(poolId, volumeId, swapVolumeId);
             
         },
         failure: function(response){
+            Volume.deleteVolume(swapVolumeId);
             Failure.checkFailure(response, Failure.prototype.rootVolumeAdd);
             vmMask.hide();
         }
@@ -108,7 +109,9 @@ Volume.addVolumes = function(){
             if(ostype == 'PV'){
                 Volume.addSwapVolumeRequest(poolId);
             }
-            Volume.addRootVolumeRequest(poolId);
+            if(ostype == 'HVM'){
+                Volume.addRootVolumeRequest(poolId);
+            }
         }
     });
 }

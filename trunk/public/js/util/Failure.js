@@ -67,13 +67,13 @@ Failure.checkFailure = function(response, failure){
     else if(response.status == 413){
 
         if(failure == Failure.prototype.rootVolumeAdd || Failure.prototype.swapVolumeAdd){
-            Ext.Msg.alert('Failure', 'There is not enough free space to create the VM');
+            Ext.Msg.alert('Failure', 'There is not enough disk capacity to create the VM');
         }
         if(failure == Failure.prototype.isoUpload){
-            Ext.Msg.alert('Failure', 'There is not enough free space to upload the ISO file');
+            Ext.Msg.alert('Failure', 'There is not enough disk capacity to upload the ISO file');
         }
         if(failure == Failure.prototype.snapshotAdd){
-            Ext.Msg.alert('Failure', 'There is not enough free space to create the snapshot');
+            Ext.Msg.alert('Failure', 'There is not enough disk capacity to create the snapshot');
         }
     }
     else{
