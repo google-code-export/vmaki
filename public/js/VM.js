@@ -36,9 +36,6 @@ VM.prototype.ostypeStore = new Ext.data.SimpleStore({
     data : [['1','PV'],['2', 'HVM']]
 });
 
-
-
-
 /*
 * class methods
 */
@@ -148,6 +145,7 @@ VM.addVm = function(max_memory){
                 allowBlank: false,
                 width: 80,
                 value: 128,
+                //maxValue: maxMemory,
                 strategy: new Ext.ux.form.Spinner.NumberStrategy({
                     minValue:'128',
                     maxValue: maxMemory,
@@ -160,6 +158,8 @@ VM.addVm = function(max_memory){
                 displayField:'vcpu',
                 allowBlank: false,
                 width: 80,
+                maxLength: 1,
+                maskRe: /^[0-2]/,
                 value: 1,
                 strategy: new Ext.ux.form.Spinner.NumberStrategy({
                     minValue:'1',
@@ -302,7 +302,7 @@ VM.addVm = function(max_memory){
 
 // add vm request
 // which is called after root volume has successfully been created
-VM.addVmRequest = function(){
+VM.addVmRequest = function(poolId, rootVolumeId, swapVolumeId){
 
     // gets the value of field ostype
     ostype = VM.prototype.vmForm.getForm().findField('ostype').getValue();
@@ -359,6 +359,10 @@ VM.addVmRequest = function(){
 
         },
         failure: function(response){
+            if(swapVolumeId){
+                Volume.deleteVolume(swapVolumeId);
+            }
+            Volume.deleteVolume(rootVolumeId);
             Failure.checkFailure(response, Failure.prototype.vmAdd);
             // hides the mask
             vmMask.hide();
