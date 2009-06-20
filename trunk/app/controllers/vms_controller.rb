@@ -62,12 +62,18 @@ class VmsController < ApplicationController
   def create
     @vm = Vm.new(params[:vm])
     @vm.host_id = params[:host_id]
-	
+
+		puts "not_enough_space: #{@vm.not_enough_space}"
+
     respond_to do |format|
-      if @vm.save
+      if @vm.save && (!@vm.not_enough_space)
 				Dblogger.log("Production", @current_user.name, "VM", "Created VM #{@vm.name} with id:#{@vm.id} and Params:#{params[:vm]}")
         format.xml { render :xml => @vm, :status => :created }
 				format.json { render :json => @vm.to_ext_json, :status => :created }
+			elsif @vm.not_enough_space
+				Dblogger.log("Production", @current_user.name, "VM", "Could not create VM #{@vm.name} with id:#{@vm.id} and Params:#{params[:vm]}. Reason: Not enough memory!")
+        format.xml { render :nothing => true, :status => "413" }
+				format.json { render :nothing => true, :status => "413" }
       else
         format.xml { render :xml => @vm.errors, :status => "422" }
 				format.json { render :json => @vm.errors.to_json, :status => "422" }
@@ -88,19 +94,23 @@ class VmsController < ApplicationController
 			end
 		else
 			begin
-			respond_to do |format|
-				if @vm.update_attributes(params[:vm])
-					Dblogger.log("Production", @current_user.name, "VM", "Updated VM #{@vm.name} with id:#{@vm.id} and Params:#{params[:vm]}")
-					format.xml { render :nothing => true, :status => :ok }
-					format.json { render :nothing => true, :status => :ok }
+				respond_to do |format|
+					if @vm.update_attributes(params[:vm]) && (!@vm.not_enough_space)
+						Dblogger.log("Production", @current_user.name, "VM", "Updated VM #{@vm.name} with id:#{@vm.id} and Params:#{params[:vm]}")
+						format.xml { render :nothing => true, :status => :ok }
+						format.json { render :nothing => true, :status => :ok }
+					elsif @vm.not_enough_space
+						Dblogger.log("Production", @current_user.name, "VM", "Could not update VM #{@vm.name} with id:#{@vm.id} and Params:#{params[:volume]}. Reason: Not enough memory!")
+						format.xml { render :nothing => true, :status => "413" }
+						format.json { render :nothing => true, :status => "413" }
+					end
 				end
-			end
 			rescue
 				respond_to do |format|
 					Dblogger.log("Production", @current_user.name, "VM", "Could not update VM #{@vm.name} with id:#{@vm.id} and Params:#{params[:vm]}")
 					format.xml { render :nothing => true, :status => :forbidden }
 					format.json { render :nothing => true, :status => :forbidden }
-			end
+				end
 			end
 		end
   end
