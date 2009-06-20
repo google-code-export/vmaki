@@ -194,6 +194,9 @@ GeneralTab.prototype.setVmInformation = function(panel){
             if(this.vmStatus == 'nostate'){
                 this.vmStatus = 'running';
             }
+            if(this.vmStatus == 'running'){
+                this.vmStatus = '<span style="color:green;">running</span>'
+            }
             if(this.vmStatus == 'provisioning'){
                 this.vmStatus = '<span style="color:red;">provisioning</span>'
             }

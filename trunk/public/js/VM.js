@@ -43,26 +43,15 @@ VM.prototype.ostypeStore = new Ext.data.SimpleStore({
 * class methods
 */
 
-VM.addVm = function(){
-        Ext.Ajax.request({
-        url: Util.prototype.BASEURL + 'hosts/' + hostTree.selectedNodeId + '.json',
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        success: function(response){
-            var jsonResponse = Ext.util.JSON.decode(response.responseText);
-            // gets the name of the host out of the response text
-            max_memory = jsonResponse.data['host[total_memory]']/1024 - 512;
-            VM.addVmForm(max_memory);
-        }
-    })
-}
+
 
 // add vm function
 // creates the form and displays it in the add vm window
 // calls the add volumes request
-VM.addVmForm = function(max_memory){
+VM.addVm = function(max_memory){
+
+    // gets the total memory of the host and takes 512MB away for the host itself
+    var maxMemory = hostTree.selectedNode.attributes.total_memory/1024 - 512;
 
     // record model for the iso store
     isoRecord = Ext.data.Record.create([
@@ -161,7 +150,7 @@ VM.addVmForm = function(max_memory){
                 value: 128,
                 strategy: new Ext.ux.form.Spinner.NumberStrategy({
                     minValue:'128',
-                    maxValue: max_memory,
+                    maxValue: maxMemory,
                     incrementValue: 128
                 })
             }),
@@ -697,6 +686,9 @@ VM.getConfig = function(){
 // function to reconfigure the vm which is triggered after the current config
 // has been loaded by the get config function
 VM.reconfigure = function(poolId, rootVolumeId){
+
+    // gets the total memory of the host and takes 512MB away for the host itself
+    var maxMemory = hostTree.selectedNode.attributes.total_memory/1024 - 512;
     
     // simplestore for bootdevice dropdown menu
     bootDeviceStore = new Ext.data.SimpleStore({
@@ -722,7 +714,7 @@ VM.reconfigure = function(poolId, rootVolumeId){
             value: vmMemory,
             strategy: new Ext.ux.form.Spinner.NumberStrategy({
                 minValue:'128',
-                //maxValue:'2048',
+                maxValue:maxMemory,
                 incrementValue: 128
             })
         }),
@@ -893,6 +885,8 @@ VM.reconfigure = function(poolId, rootVolumeId){
 // has been loaded by the get config function
 VM.pvReconfigure = function(poolId, rootVolumeId){
 
+    // gets the total memory of the host and takes 512MB away for the host itself
+    var maxMemory = hostTree.selectedNode.parentNode.attributes.total_memory/1024 - 512;
 
     // form to reconfigure vm
     VM.prototype.reconfigureForm = new Ext.FormPanel({
@@ -912,7 +906,7 @@ VM.pvReconfigure = function(poolId, rootVolumeId){
             value: vmMemory,
             strategy: new Ext.ux.form.Spinner.NumberStrategy({
                 minValue:'128',
-                //maxValue:'2048',
+                maxValue: maxMemory,
                 incrementValue: 128
             })
         }),
@@ -926,7 +920,7 @@ VM.pvReconfigure = function(poolId, rootVolumeId){
             value: vmMaxMemory,
             strategy: new Ext.ux.form.Spinner.NumberStrategy({
                 minValue:'128',
-                //maxValue:'2048',
+                maxValue: maxMemory,
                 incrementValue: 128
             })
         }),

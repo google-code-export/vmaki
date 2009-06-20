@@ -245,7 +245,7 @@ SnapshotTab.prototype.restoreSnapshot = function(){
                             myTabPanel.mySnapshotTab.checkSnapshotStatus(sel.data.id);
                         },
                         failure: function(response){
-                            Failure.checkFailure(response, Failure.prototype.snapshotDelete);
+                            Failure.checkFailure(response, Failure.prototype.snapshotRestore);
                         }
                     })
                 }
@@ -294,7 +294,7 @@ SnapshotTab.prototype.renameSnapshot = function(){
                         method: 'PUT',
                         jsonData: {'snapshot':{'description': description}},
                         failure: function(response){
-                            Failure.checkFailure(response, Failure.prototype.isoUpdate);
+                            Failure.checkFailure(response, Failure.prototype.snapshotRename);
                         }
                     });
                     // closes window and reloads the store
