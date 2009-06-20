@@ -18,7 +18,7 @@ function ToolBar(){
     this.editMenu = new Ext.menu.Menu({
         id: 'editMenu',
         items:[{
-              text: 'VM Settings',
+              text: 'Reconfigure VM',
               icon: '../images/icons/computer_wrench.gif',
               handler: VM.getConfig
           },{

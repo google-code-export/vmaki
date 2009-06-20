@@ -122,24 +122,52 @@ Menu.prototype.treeContextHandler = function(node){
     if(node.attributes.vm_id){
         hostTree.treeMenu.vmContextMenu.show(node.ui.getAnchor());
         if(node.attributes.status == 'running'){
-            hostTree.treeMenu.vmStartItem.disable();
-            hostTree.treeMenu.vmSuspendItem.enable();
-            hostTree.treeMenu.vmResumeItem.disable();
-            hostTree.treeMenu.vmShutdownItem.enable();
-            hostTree.treeMenu.vmRebootItem.enable();
-            hostTree.treeMenu.vmKillItem.enable();
-            hostTree.treeMenu.vmDeleteItem.disable();
-            hostTree.treeMenu.vmMediaItem.enable();
+            if(node.attributes.type == 'hvm'){
+                hostTree.treeMenu.vmStartItem.disable();
+                hostTree.treeMenu.vmSuspendItem.enable();
+                hostTree.treeMenu.vmResumeItem.disable();
+                hostTree.treeMenu.vmShutdownItem.enable();
+                hostTree.treeMenu.vmRebootItem.enable();
+                hostTree.treeMenu.vmKillItem.enable();
+                hostTree.treeMenu.vmDeleteItem.disable();
+                hostTree.treeMenu.vmSettingsItem.disable();
+                hostTree.treeMenu.vmMediaItem.enable();
+            }
+            else{
+                hostTree.treeMenu.vmStartItem.disable();
+                hostTree.treeMenu.vmSuspendItem.enable();
+                hostTree.treeMenu.vmResumeItem.disable();
+                hostTree.treeMenu.vmShutdownItem.enable();
+                hostTree.treeMenu.vmRebootItem.enable();
+                hostTree.treeMenu.vmKillItem.enable();
+                hostTree.treeMenu.vmDeleteItem.disable();
+                hostTree.treeMenu.vmSettingsItem.enable();
+                hostTree.treeMenu.vmMediaItem.enable();
+            }
         }
         if(node.attributes.status == 'blocked'){
-            hostTree.treeMenu.vmStartItem.disable();
-            hostTree.treeMenu.vmSuspendItem.enable();
-            hostTree.treeMenu.vmResumeItem.disable();
-            hostTree.treeMenu.vmShutdownItem.enable();
-            hostTree.treeMenu.vmRebootItem.enable();
-            hostTree.treeMenu.vmKillItem.enable();
-            hostTree.treeMenu.vmDeleteItem.disable();
-            hostTree.treeMenu.vmMediaItem.enable();
+            if(node.attributes.type == 'hvm'){
+                hostTree.treeMenu.vmStartItem.disable();
+                hostTree.treeMenu.vmSuspendItem.enable();
+                hostTree.treeMenu.vmResumeItem.disable();
+                hostTree.treeMenu.vmShutdownItem.enable();
+                hostTree.treeMenu.vmRebootItem.enable();
+                hostTree.treeMenu.vmKillItem.enable();
+                hostTree.treeMenu.vmDeleteItem.disable();
+                hostTree.treeMenu.vmSettingsItem.disable();
+                hostTree.treeMenu.vmMediaItem.enable();
+            }
+            else{
+                hostTree.treeMenu.vmStartItem.disable();
+                hostTree.treeMenu.vmSuspendItem.enable();
+                hostTree.treeMenu.vmResumeItem.disable();
+                hostTree.treeMenu.vmShutdownItem.enable();
+                hostTree.treeMenu.vmRebootItem.enable();
+                hostTree.treeMenu.vmKillItem.enable();
+                hostTree.treeMenu.vmDeleteItem.disable();
+                hostTree.treeMenu.vmSettingsItem.enable();
+                hostTree.treeMenu.vmMediaItem.enable();
+            }
         }
         if(node.attributes.status == 'paused'){
             hostTree.treeMenu.vmStartItem.disable();
@@ -149,6 +177,7 @@ Menu.prototype.treeContextHandler = function(node){
             hostTree.treeMenu.vmRebootItem.disable();
             hostTree.treeMenu.vmKillItem.disable();
             hostTree.treeMenu.vmDeleteItem.disable();
+            hostTree.treeMenu.vmSettingsItem.enable();
             hostTree.treeMenu.vmMediaItem.enable();
         }
         if(node.attributes.status == 'shutoff'){
@@ -159,6 +188,7 @@ Menu.prototype.treeContextHandler = function(node){
             hostTree.treeMenu.vmRebootItem.disable();
             hostTree.treeMenu.vmKillItem.enable();
             hostTree.treeMenu.vmDeleteItem.enable();
+            hostTree.treeMenu.vmSettingsItem.enable();
             hostTree.treeMenu.vmMediaItem.enable();
         }
         if(node.attributes.status == 'crashed'){
@@ -169,6 +199,7 @@ Menu.prototype.treeContextHandler = function(node){
             hostTree.treeMenu.vmRebootItem.disable();
             hostTree.treeMenu.vmKillItem.enable();
             hostTree.treeMenu.vmDeleteItem.disable();
+            hostTree.treeMenu.vmSettingsItem.disable();
             hostTree.treeMenu.vmMediaItem.enable();
         }
         if(node.attributes.status == 'provisioning'){
@@ -202,6 +233,7 @@ Menu.prototype.treeContextHandler = function(node){
                 hostTree.treeMenu.vmRebootItem.enable();
                 hostTree.treeMenu.vmKillItem.enable();
                 hostTree.treeMenu.vmDeleteItem.disable();
+                hostTree.treeMenu.vmSettingsItem.disable();
                 hostTree.treeMenu.vmMediaItem.enable();
             }
             if(node.attributes.type == 'linux'){
@@ -212,6 +244,7 @@ Menu.prototype.treeContextHandler = function(node){
                 hostTree.treeMenu.vmRebootItem.disable();
                 hostTree.treeMenu.vmKillItem.enable();
                 hostTree.treeMenu.vmDeleteItem.disable();
+                 hostTree.treeMenu.vmSettingsItem.enable();
                 hostTree.treeMenu.vmMediaItem.enable();
             }
         }
