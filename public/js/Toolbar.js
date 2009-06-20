@@ -34,7 +34,7 @@ function ToolBar(){
         id: 'helpMenu',
         items:[{
                  text: 'Manual',
-                 icon: '../images/icons/book_open.png',
+                 icon: '../images/icons/book_open.gif',
                  handler: Util.openHelp
                  
              },{

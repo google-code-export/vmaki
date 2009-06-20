@@ -71,7 +71,7 @@ GeneralTab.prototype.setHostInformation = function(){
                 this.hostStatus = '../../images/icons/connect.gif'
             }
             if(this.hostStatus == false){
-                this.hostStatus = '../../images/icons/disconnect.png'
+                this.hostStatus = '../../images/icons/disconnect.gif'
             }
             // gets the amount of cores
             this.hostCores = jsonResponse.data['host[cores]'];
