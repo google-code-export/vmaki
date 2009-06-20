@@ -194,6 +194,12 @@ GeneralTab.prototype.setVmInformation = function(panel){
             if(this.vmStatus == 'nostate'){
                 this.vmStatus = 'running';
             }
+            if(this.vmStatus == 'provisioning'){
+                this.vmStatus = '<span style="color:red;">provisioning</span>'
+            }
+            if(this.vmStatus == 'restoring'){
+                this.vmStatus = '<span style="color:red;">restoring</span>'
+            }
             // gets the ostype of the vm
             this.vmOstype = jsonResponse.data['vm[ostype]'];
             if(this.vmOstype == 'linux'){

@@ -7,7 +7,6 @@ function Util(){
 }
 
 // Base URL for the requests
-//Util.prototype.BASEURL = 'http://localhost:3000/';
 Util.prototype.BASEURL = 'http://' + document.location.host + '/';
 
 // Session Manager
@@ -46,7 +45,7 @@ Util.prependRoot = function(root, string){
 // function to open wiki manual in new window
 Util.openHelp = function(){
     console.log('open manual');
-    window.open('http://code.google.com/p/vmaki/w/list');
+    window.open('http://code.google.com/p/vmaki/wiki/UserGuide');
 }
 
 

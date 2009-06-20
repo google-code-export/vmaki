@@ -43,10 +43,26 @@ VM.prototype.ostypeStore = new Ext.data.SimpleStore({
 * class methods
 */
 
+VM.addVm = function(){
+        Ext.Ajax.request({
+        url: Util.prototype.BASEURL + 'hosts/' + hostTree.selectedNodeId + '.json',
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        success: function(response){
+            var jsonResponse = Ext.util.JSON.decode(response.responseText);
+            // gets the name of the host out of the response text
+            max_memory = jsonResponse.data['host[total_memory]']/1024 - 512;
+            VM.addVmForm(max_memory);
+        }
+    })
+}
+
 // add vm function
 // creates the form and displays it in the add vm window
 // calls the add volumes request
-VM.addVm = function(){
+VM.addVmForm = function(max_memory){
 
     // record model for the iso store
     isoRecord = Ext.data.Record.create([
@@ -145,7 +161,7 @@ VM.addVm = function(){
                 value: 128,
                 strategy: new Ext.ux.form.Spinner.NumberStrategy({
                     minValue:'128',
-                    //maxValue: 2048,
+                    maxValue: max_memory,
                     incrementValue: 128
                 })
             }),
