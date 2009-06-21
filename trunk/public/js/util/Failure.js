@@ -64,6 +64,9 @@ Failure.checkFailure = function(response, failure){
     if(response.status == 401){
         Util.logout();
     }
+    else if(response.status == 409){
+        Ext.Msg.alert('Failure', 'Update Conflict');
+    }
     else if(response.status == 413){
 
         if(failure == Failure.prototype.rootVolumeAdd || Failure.prototype.swapVolumeAdd){

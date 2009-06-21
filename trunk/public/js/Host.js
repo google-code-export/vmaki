@@ -18,7 +18,8 @@ Host.prototype.hostRecord = Ext.data.Record.create([
     { name: 'name', mapping: 'host.name' },
     { name: 'connection_type', mapping: 'host.connection_type' },
     { name: 'username', mapping: 'host.username' },
-    { name: 'password', mapping: 'host.password' }
+    { name: 'password', mapping: 'host.password' },
+    { name: 'lock_version', mapping: 'host.lock_version' }
 ]);
 
 
@@ -194,7 +195,7 @@ Host.connectHost = function(){
     Ext.Ajax.request({
         url: Util.prototype.BASEURL + 'hosts/' + hostTree.selectedNodeId,
         method: 'PUT',
-        jsonData: '{"host":{"connect": true}}',
+        jsonData: '{"host":{"connect": true, "lock_version": ' + hostTree.selectedNode.attributes.lock_version + '}}',
         failure: function(response){
             Failure.checkFailure(response, Failure.prototype.hostConnect);
         }
@@ -209,7 +210,7 @@ Host.disconnectHost = function(){
     Ext.Ajax.request({
         url: Util.prototype.BASEURL + 'hosts/' + hostTree.selectedNodeId,
         method: 'PUT',
-        jsonData: '{"host":{"connect": false}}',
+        jsonData: '{"host":{"connect": false, "lock_version": ' + hostTree.selectedNode.attributes.lock_version + '}}',
         failure: function(response){
             Failure.checkFailure(response, Failure.prototype.hostDisconnect);
         }
