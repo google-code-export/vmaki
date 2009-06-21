@@ -195,7 +195,7 @@ Host.connectHost = function(){
     Ext.Ajax.request({
         url: Util.prototype.BASEURL + 'hosts/' + hostTree.selectedNodeId,
         method: 'PUT',
-        jsonData: '{"host":{"connect": true, "lock_version": ' + hostTree.selectedNode.attributes.lock_version + '}}',
+        jsonData: {"host":{ "lock_version": hostTree.selectedNode.attributes.lock_version ,"connect": true }},
         failure: function(response){
             Failure.checkFailure(response, Failure.prototype.hostConnect);
         }
@@ -210,7 +210,7 @@ Host.disconnectHost = function(){
     Ext.Ajax.request({
         url: Util.prototype.BASEURL + 'hosts/' + hostTree.selectedNodeId,
         method: 'PUT',
-        jsonData: '{"host":{"connect": false, "lock_version": ' + hostTree.selectedNode.attributes.lock_version + '}}',
+        jsonData: {"host":{ "lock_version": hostTree.selectedNode.attributes.lock_version , "connect": false}},
         failure: function(response){
             Failure.checkFailure(response, Failure.prototype.hostDisconnect);
         }
