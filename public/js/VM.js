@@ -175,7 +175,7 @@ VM.addVm = function(max_memory){
                 value: 3.0,
                 strategy: new Ext.ux.form.Spinner.NumberStrategy({
                     minValue:'2.0',
-                    maxValue:'15.0',
+                    maxValue:'100.0',
                     incrementValue: 0.5
                 })
             }),
@@ -359,6 +359,7 @@ VM.addVmRequest = function(poolId, rootVolumeId, swapVolumeId){
 
         },
         failure: function(response){
+            console.log('add VM failure');
             if(swapVolumeId){
                 Volume.deleteVolume(swapVolumeId, poolId);
             }
@@ -950,7 +951,7 @@ VM.pvReconfigure = function(poolId, rootVolumeId){
             value: volumeCapacity,
             strategy: new Ext.ux.form.Spinner.NumberStrategy({
                 minValue:'2.0',
-                maxValue:'15.0',
+                maxValue:'100.0',
                 incrementValue: 0.5
             })
         }),
