@@ -86,7 +86,9 @@ class VmsController < ApplicationController
 
 		@vm.current_user = @current_user
 
-		lock_version = params[:vm][:lock_version]
+		lock_version = params[:vm][:lock_version].to_i
+		puts "@vm.lock_version: #{@vm.lock_version}"
+		puts "lock_version: #{lock_version}"
 
 		if @vm.status == "provisioning"
 			respond_to do |format|
@@ -95,6 +97,7 @@ class VmsController < ApplicationController
 			end
 			# manual check for stale objects since Rails' check strangely doesn't seem to work here
 		elsif !(@vm.lock_version == lock_version)
+			puts "lock_version not identical!"
 			respond_to do |format|
 				format.xml { render :nothing => true, :status => :conflict }
 				format.json { render :nothing => true, :status => :conflict}
