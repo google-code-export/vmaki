@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090619141908) do
+ActiveRecord::Schema.define(:version => 20090621133332) do
 
   create_table "hosts", :force => true do |t|
     t.string   "name"
@@ -31,14 +31,16 @@ ActiveRecord::Schema.define(:version => 20090619141908) do
     t.integer  "threads"
     t.boolean  "hvm_support"
     t.string   "ip_address"
+    t.integer  "lock_version"
   end
 
   create_table "isos", :force => true do |t|
     t.string   "description"
     t.string   "filename"
+    t.decimal  "size"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "size"
+    t.integer  "lock_version"
   end
 
   create_table "log", :force => true do |t|
@@ -88,6 +90,7 @@ ActiveRecord::Schema.define(:version => 20090619141908) do
     t.datetime "updated_at"
     t.boolean  "restore"
     t.string   "display_date"
+    t.integer  "lock_version"
   end
 
   create_table "users", :force => true do |t|
@@ -96,6 +99,7 @@ ActiveRecord::Schema.define(:version => 20090619141908) do
     t.text     "role"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "lock_version"
   end
 
   create_table "vms", :force => true do |t|
@@ -118,6 +122,7 @@ ActiveRecord::Schema.define(:version => 20090619141908) do
     t.integer  "nic_id"
     t.integer  "iso_id"
     t.string   "cdrom",         :default => "phy"
+    t.integer  "lock_version"
   end
 
   create_table "vnc_ports", :force => true do |t|

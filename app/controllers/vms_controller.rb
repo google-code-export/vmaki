@@ -73,8 +73,8 @@ class VmsController < ApplicationController
         format.xml { render :nothing => true, :status => :request_entity_too_large }
 				format.json { render :nothing => true, :status => :request_entity_too_large }
       else
-        format.xml { render :xml => @vm.errors, :status => 	:unprocessable_entity }
-				format.json { render :json => @vm.errors.to_json, :status => 	:unprocessable_entity }
+        format.xml { render :xml => @vm.errors, :status => :unprocessable_entity }
+				format.json { render :json => @vm.errors.to_json, :status => :unprocessable_entity }
       end
     end
   end
@@ -87,8 +87,8 @@ class VmsController < ApplicationController
 
 		if @vm.status == "provisioning"
 			respond_to do |format|
-				format.xml { render :nothing => true, :status => 	:method_not_allowed }
-				format.json { render :nothing => true, :status => 	:method_not_allowed}
+				format.xml { render :nothing => true, :status => :method_not_allowed }
+				format.json { render :nothing => true, :status => :method_not_allowed}
 			end
 		else
 			#begin
