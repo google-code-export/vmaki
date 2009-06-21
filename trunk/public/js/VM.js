@@ -789,20 +789,30 @@ VM.reconfigure = function(poolId, rootVolumeId){
 
                 var newMemory = VM.prototype.reconfigureForm.getForm().findField('memory').getValue();
                 var newVcpu = VM.prototype.reconfigureForm.getForm().findField('vcpu').getValue();
+                var newVolumeCapacity = VM.prototype.reconfigureForm.getForm().findField('root_capacity').getValue();
+                var newBootDevice = VM.prototype.reconfigureForm.getForm().findField('boot_device').getValue();
+                var newNic = VM.prototype.reconfigureForm.getForm().findField('nic_id').getValue();
+
+                if(newBootDevice == 'CD-ROM'){
+                    newBootDevice = 'cdrom';
+                }
+                if(newBootDevice == 'HD'){
+                    newBootDevice = 'hd';
+                }
+                if(newBootDevice == 'PXE'){
+                    newBootDevice = 'network';
+                }
 
                 // checks if memory has been changed and calls reconfigure memory request if so
-                if(vmMemory != newMemory){
+                if(vmMemory != newMemory || vmVcpu != newVcpu || vmBootDevice != newBootDevice || nicName != newNic){
                     if(maxMemory < VM.prototype.reconfigureForm.getForm().findField('memory').getValue()){
                         Ext.Msg.alert('Failure', 'You specified to much Memory for the VM. The maximum value you can allocate is ' + maxMemory + ' MB !');
                     }
                     else{
-                        VM.reconfigureMemoryRequest(VM.prototype.reconfigureForm.getForm().findField('memory').getValue());
+                        VM.reconfigureRequest(newMemory, newVcpu, newBootDevice, newNic);
                     }
                 }
-                // checks if vcpu has been changed and calls reconfigure vcpu request if so
-                if(vmVcpu != VM.prototype.reconfigureForm.getForm().findField('vcpu').getValue()){
-                    VM.reconfigureVcpuRequest(VM.prototype.reconfigureForm.getForm().findField('vcpu').getValue());
-                }
+
                 // checks if volume capacity has been changed and calls reconfigure volume capacity request if so
                 if(volumeCapacity != VM.prototype.reconfigureForm.getForm().findField('root_capacity').getValue()){
                     // checks if volume has been decreased
@@ -824,28 +834,11 @@ VM.reconfigure = function(poolId, rootVolumeId){
                         VM.reconfigureCapacityRequest(VM.prototype.reconfigureForm.getForm().findField('root_capacity').getValue(), poolId, rootVolumeId);
                     }
                  }
-
-                // checks if boot device has been changed and calls reconfigure boot device request if so
-                if(vmBootDevice != VM.prototype.reconfigureForm.getForm().findField('boot_device').getValue() && hostTree.selectedNode.attributes.type == 'hvm'){
-                    if(VM.prototype.reconfigureForm.getForm().findField('boot_device').getValue() == 'CD-ROM'){
-                        vmBootDevice = 'cdrom';
-                    }
-                    if(VM.prototype.reconfigureForm.getForm().findField('boot_device').getValue() == 'HD'){
-                        vmBootDevice = 'hd';
-                    }
-                    if(VM.prototype.reconfigureForm.getForm().findField('boot_device').getValue() == 'PXE'){
-                        vmBootDevice = 'network';
-                    }                 
-                    VM.reconfigureBootDeviceRequest(vmBootDevice);
-                }
-                // checks if nic has changed and calls reconfigure nic request if so
-                if(nicName != VM.prototype.reconfigureForm.getForm().findField('nic_id').getValue()){
-                    VM.reconfigureNicRequest(VM.prototype.reconfigureForm.getForm().findField('nic_id').getValue());
-                }
                  // closes reconfigure window
                  VM.prototype.reconfigureVmWindow.close();                          
             }
         },{
+            
             text: 'Cancel',
             handler: function(){
                 VM.prototype.reconfigureVmWindow.close();
@@ -870,10 +863,6 @@ VM.reconfigure = function(poolId, rootVolumeId){
         VM.prototype.reconfigureForm.getComponent('rootCapacitySpinner').disable();
         VM.prototype.reconfigureForm.getComponent('bootDeviceSelect').disable();
         VM.prototype.reconfigureForm.getComponent('nicSelect').disable();
-    }
-    // checks if node is a pv vm and disables the boot device
-    if(node.attributes.type == 'linux'){
-        VM.prototype.reconfigureForm.getComponent('bootDeviceSelect').disable();
     }
    
     // Create new Window and render vmForm to it
@@ -989,19 +978,26 @@ VM.pvReconfigure = function(poolId, rootVolumeId){
             // request to add root volume which if successful triggers swap volume request
             // which if successful triggers the add vm request
             handler: function(){
+
+                var newMemory = VM.prototype.reconfigureForm.getForm().findField('memory').getValue();
+                var newMaxMemory = VM.prototype.reconfigureForm.getForm().findField('max_memory').getValue();
+                var newVcpu = VM.prototype.reconfigureForm.getForm().findField('vcpu').getValue();
+                var newVolumeCapacity = VM.prototype.reconfigureForm.getForm().findField('root_capacity').getValue();
+                var newNic = VM.prototype.reconfigureForm.getForm().findField('nic_id').getValue();
+
+
+
+
                 // checks if memory has been changed and calls reconfigure memory request if so
-                if(vmMemory != VM.prototype.reconfigureForm.getForm().findField('memory').getValue() || vmMaxMemory != VM.prototype.reconfigureForm.getForm().findField('max_memory').getValue()){
-                    VM.reconfigurePvMemoryRequest(VM.prototype.reconfigureForm.getForm().findField('memory').getValue(),VM.prototype.reconfigureForm.getForm().findField('max_memory').getValue());
+                if(vmMemory != newMemory || vmMaxMemory != newMaxMemory || vmVcpu != newVcpu || nicName != newNic){
+                    VM.reconfigurePvRequest(newMemory, newMaxMemory, newVcpu, newNic);
                 }
 
-                // checks if vcpu has been changed and calls reconfigure vcpu request if so
-                if(vmVcpu != VM.prototype.reconfigureForm.getForm().findField('vcpu').getValue()){
-                    VM.reconfigureVcpuRequest(VM.prototype.reconfigureForm.getForm().findField('vcpu').getValue());
-                }
+            
                 // checks if volume capacity has been changed and calls reconfigure volume capacity request if so
-                if(volumeCapacity != VM.prototype.reconfigureForm.getForm().findField('root_capacity').getValue()){
+                if(volumeCapacity != newVolumeCapacity){
                     // checks if volume has been decreased
-                    if(volumeCapacity > VM.prototype.reconfigureForm.getForm().findField('root_capacity').getValue()){
+                    if(volumeCapacity > newVolumeCapacity){
                         Ext.Msg.show({
                             title: 'Caution',
                             buttons: Ext.MessageBox.YESNO,
@@ -1020,11 +1016,6 @@ VM.pvReconfigure = function(poolId, rootVolumeId){
                     }
                  }
 
-               
-                // checks if nic has changed and calls reconfigure nic request if so
-                if(nicName != VM.prototype.reconfigureForm.getForm().findField('nic_id').getValue()){
-                    VM.reconfigureNicRequest(VM.prototype.reconfigureForm.getForm().findField('nic_id').getValue());
-                }
                  // closes reconfigure window
                  VM.prototype.reconfigureVmWindow.close();
             }
@@ -1081,13 +1072,14 @@ VM.pvReconfigure = function(poolId, rootVolumeId){
 
 
 // request to set new memory
-VM.reconfigureMemoryRequest = function(newMemory){
+VM.reconfigureRequest = function(newMemory, newVcpu, newBootDevice){
             Ext.Ajax.request({
                 url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId + '.json',
                 method: 'PUT',
                 headers: {'Content-Type': 'application/json'},
-                jsonData: {vm: {'memory': newMemory}},
+                jsonData: {vm: {'memory': newMemory, 'vcpu': newVcpu, 'boot_device': newBootDevice, 'lock_version': hostTree.selectedNode.attributes.lock_version}},
                 success: function(){
+                    hostTree.reload();
                     hostTree.selectedNodeChange();
                 },
                 failure: function(response){
@@ -1097,13 +1089,14 @@ VM.reconfigureMemoryRequest = function(newMemory){
 }
 
 // request to set new memory
-VM.reconfigurePvMemoryRequest = function(newMemory, newMaxMemory){
+VM.reconfigurePvRequest = function(newMemory, newMaxMemory, newVcpu){
             Ext.Ajax.request({
                 url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId + '.json',
                 method: 'PUT',
                 headers: {'Content-Type': 'application/json'},
-                jsonData: {vm: {'memory': newMemory, 'max_memory': newMaxMemory}},
+                jsonData: {vm: {'memory': newMemory, 'max_memory': newMaxMemory, 'vcpu': newVcpu, 'lock_version': hostTree.selectedNode.attributes.lock_version}},
                 success: function(){
+                    hostTree.reload();
                     hostTree.selectedNodeChange();
                 },
                 failure: function(response){
@@ -1112,21 +1105,7 @@ VM.reconfigurePvMemoryRequest = function(newMemory, newMaxMemory){
             })
 }
 
-// request to set new vcpu
-VM.reconfigureVcpuRequest = function(newVcpu){
-    Ext.Ajax.request({
-        url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId + '.json',
-        method: 'PUT',
-        headers: {'Content-Type': 'application/json'},
-        jsonData: {vm: {'vcpu': newVcpu}},
-        success: function(){
-            hostTree.selectedNodeChange();
-        },
-        failure: function(response){
-                Failure.checkFailure(response, Failure.prototype.vcpuReconfigure);
-            }
-    })
-}
+
 
 // request to set root volume capacity
 VM.reconfigureCapacityRequest = function(newCapacity, poolId, rootVolumeId){
@@ -1136,6 +1115,7 @@ VM.reconfigureCapacityRequest = function(newCapacity, poolId, rootVolumeId){
         headers: {'Content-Type': 'application/json'},
         jsonData: {volume: {'capacity': newCapacity}},
         success: function(){
+
             hostTree.selectedNodeChange();
         },
         failure: function(response){
@@ -1144,37 +1124,6 @@ VM.reconfigureCapacityRequest = function(newCapacity, poolId, rootVolumeId){
     })
 }
 
-// request to set boot device
-VM.reconfigureBootDeviceRequest = function(newBootDevice){
-    Ext.Ajax.request({
-        url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId + '.json',
-        method: 'PUT',
-        headers: {'Content-Type': 'application/json'},
-        jsonData: {vm: {'boot_device': newBootDevice}},
-        success: function(){
-            hostTree.selectedNodeChange();
-        },
-        failure: function(response){
-                Failure.checkFailure(response, Failure.prototype.bootdeviceReconfigure);
-            }
-    })
-}
-
-// request to set NIC
-VM.reconfigureNicRequest = function(newNic){
-    Ext.Ajax.request({
-        url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId + '.json',
-        method: 'PUT',
-        headers: {'Content-Type': 'application/json'},
-        jsonData: {vm: {'nic_id': newNic}},
-        success: function(){
-            hostTree.selectedNodeChange();
-        },
-        failure: function(response){
-                Failure.checkFailure(response, Failure.prototype.nicReconfigure);
-            }
-    })
-}
 
 // function to change the Media which will be attached to the vm
 VM.setMedia = function(){
