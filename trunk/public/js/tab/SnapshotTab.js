@@ -40,6 +40,7 @@ SnapshotTab.prototype.getStore = function(panel){
     snapshotStore = new Ext.data.JsonStore({
         url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId + '/snapshots.json',
         root: 'snapshots',
+        sortInfo: {field: 'id', direction: 'ASC'},
         fields: myTabPanel.mySnapshotTab.snapshotRecord
     });
     //initial load of the data store
@@ -55,11 +56,11 @@ SnapshotTab.prototype.getStore = function(panel){
         store: snapshotStore,
         autoExpandColumn: 'description',
         columns:[
-            {header: 'Name', dataIndex: 'name', width: 200},
-            {header: 'Description', dataIndex: 'description', id: 'description'},
-            {header: 'Creation Date', dataIndex: 'date'},
-            {header: 'Size [GB]', dataIndex: 'size'},
-            {header: 'Status', dataIndex: 'status', renderer: renderStatus}
+            {header: 'Name', dataIndex: 'name', width: 200, sortable: true},
+            {header: 'Description', dataIndex: 'description', id: 'description', sortable: true},
+            {header: 'Creation Date', dataIndex: 'date', sortable: true},
+            {header: 'Size [GB]', dataIndex: 'size', sortable: true},
+            {header: 'Status', dataIndex: 'status', renderer: renderStatus, sortable: true}
         ]
     })
 
