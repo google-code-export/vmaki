@@ -81,17 +81,26 @@ class VmsController < ApplicationController
 
   # PUT /vms/1
   def update
+
     @vm = Vm.find(params[:id], :conditions => {:host_id => params[:host_id]})
 
 		@vm.current_user = @current_user
+
+		lock_version = params[:vm][:lock_version]
 
 		if @vm.status == "provisioning"
 			respond_to do |format|
 				format.xml { render :nothing => true, :status => :method_not_allowed }
 				format.json { render :nothing => true, :status => :method_not_allowed}
 			end
+			# manual check for stale objects since Rails' check strangely doesn't seem to work here
+		elsif !(@vm.lock_version == lock_version)
+			respond_to do |format|
+				format.xml { render :nothing => true, :status => :conflict }
+				format.json { render :nothing => true, :status => :conflict}
+			end
 		else
-			#begin
+			begin
 				respond_to do |format|
 					if @vm.update_attributes(params[:vm]) && (!@vm.not_enough_space)
 						Dblogger.log("Production", @current_user.name, "VM", "Updated VM #{@vm.name} with id:#{@vm.id} and Params:#{params[:vm]}")
@@ -103,13 +112,13 @@ class VmsController < ApplicationController
 						format.json { render :nothing => true, :status => :request_entity_too_large }
 					end
 				end
-#			rescue
-#			respond_to do |format|
-#				Dblogger.log("Production", @current_user.name, "VM", "Could not update VM #{@vm.name} with id:#{@vm.id} and Params:#{params[:vm]}")
-#				format.xml { render :nothing => true, :status => :forbidden }
-#				format.json { render :nothing => true, :status => :forbidden }
-#			end
-#		end
+			rescue
+				respond_to do |format|
+					Dblogger.log("Production", @current_user.name, "VM", "Could not update VM #{@vm.name} with id:#{@vm.id} and Params:#{params[:vm]}")
+					format.xml { render :nothing => true, :status => :forbidden }
+					format.json { render :nothing => true, :status => :forbidden }
+				end
+			end
 		end
   end
 
