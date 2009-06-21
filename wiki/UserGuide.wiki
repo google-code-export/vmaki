@@ -42,6 +42,12 @@ A new user can be added via the Add User button. In the appearing pop-up menu th
 
 == Connect VNC Console of a Guest System ==
 
+To connect the VNC console of a guest system you simply need to click on the VNC link which can be found in the console tab. After clicking on the vnc link you will be promted to choose which VNC viewer will be used to connect the console. Therefore it is mendatory to have a VNC viewer installed on your system. Here are some links to download a VNC viewer which can be used for vmaki:
+
+[http://www.tightvnc.com/download.html ThightVNC (Linux / Windows)]
+
+[http://www.realvnc.com/products/download.html RealVNC (Linux / Windows)]
+
 === Registering VNC Protocol on Windows ===
 
 If you are using a Windows operating system you need to register the VNC protocol in order to be able to choose your VNC viewer when clicking on the vnc link in vmaki. This can be done by adding an entry to the Windows registery. To simplify this we recommend to use the customURL tool which can be downloaded here:
