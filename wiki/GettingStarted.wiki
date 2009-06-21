@@ -1,18 +1,20 @@
 #summary How to set up & run vmaki on your own host
 
-= Introduction =
+= Management Node =
+
+== Introduction ==
 This document describes the steps needed to take in order to set up a host running the vmaki management node including Xen Hypervisor support.
 
-= Prerequisites =
+== Prerequisites ==
 Install Debian Lenny on a physical host using LVM volumes. Make sure there is enough free space within the volume pool for the creation of guest volumes. For client machines the Firefox browser is highly recommended.
 
-= Getting vmaki =
+== Getting vmaki ==
 Check out vmaki's trunk:
 {{{
 # svn checkout http://vmaki.googlecode.com/svn/trunk/ vmaki
 }}}
 
-= Linux =
+== Linux ==
 Install required packages via apt & RubyGems:
 {{{
 # sudo apt-get install make gcc ruby ruby-dev rubygems irb libvirt-bin libvirt-dev libxml-ruby postgresql postgresql-server-dev-8.3 sqlite3 libsqlite3-dev libopenssl-ruby libxml2-dev libxslt-ruby libxslt1-dev ssh-askpass-gnome openssh-server nfs-kernel-server
@@ -37,7 +39,7 @@ download http://vmaki.googlecode.com/svn/trunk/ruby-libvirt/pkg/ruby-libvirt-0.1
 # sudo gem install ruby-libvirt-0.1.1.gem
 }}}
 
-= Xen =
+== Xen ==
 Edit "/etc/xen/xend-config.sxp" and add the following line:
 {{{
 (xend-unix-server yes)
@@ -55,8 +57,8 @@ Create a symlink called "xen" pointing to the lib folder of the xen installation
 ln -sf /usr/lib64/xen-3.2-1 /usr/lib64/xen
 }}}
 
-= PostgreSQL =
-== PostgreSQL Settings ==
+== PostgreSQL ==
+=== PostgreSQL Settings ===
 
 Change password of the postgres admin user:
 {{{
@@ -105,7 +107,7 @@ local all all ident sameuser
 local all all md5
 }}}
 
-== Create new vmaki User ==
+=== Create new vmaki User ===
 
 {{{
 # sudo -u postgres createuser --superuser vmaki
@@ -115,7 +117,7 @@ vmaki=# alter user vmaki with password 'virtual_M0nk83!';
 \q
 }}}
 
-= NFS =
+== NFS ==
 
 Install NFS Server & create directories:
 {{{
@@ -135,7 +137,7 @@ Now export the filesystem and mount it:
 # sudo mount IP:/isos /mnt/tmp
 }}}
 
-= Final Steps =
+== Final Steps ==
 Set up the database (change into vmaki's directory):
 {{{
 # rake db:migrate
