@@ -566,7 +566,7 @@ VM.reboot = function(){
                         setTimeout('hostTree.rootNode.reload();', 10000);
                     },
                     failure: function(response){
-                        Failure.checkFailure(response, Failure.prototype.vmReboot);
+                        Failure.checkFailure(response, Failure.prototype.vmRestart);
                     }
                 })
             }
@@ -1083,7 +1083,7 @@ VM.reconfigureRequest = function(newMemory, newVcpu, newBootDevice){
                     hostTree.selectedNodeChange();
                 },
                 failure: function(response){
-                    Failure.checkFailure(response, Failure.prototype.memoryReconfigure);
+                    Failure.checkFailure(response, Failure.prototype.vmReconfigure);
                 }
             })
 }
@@ -1100,7 +1100,7 @@ VM.reconfigurePvRequest = function(newMemory, newMaxMemory, newVcpu){
                     hostTree.selectedNodeChange();
                 },
                 failure: function(response){
-                    Failure.checkFailure(response, Failure.prototype.memoryReconfigure);
+                    Failure.checkFailure(response, Failure.prototype.vmReconfigure);
                 }
             })
 }
@@ -1115,7 +1115,7 @@ VM.reconfigureCapacityRequest = function(newCapacity, poolId, rootVolumeId){
         headers: {'Content-Type': 'application/json'},
         jsonData: {volume: {'capacity': newCapacity}},
         success: function(){
-
+            hostTree.reload();
             hostTree.selectedNodeChange();
         },
         failure: function(response){
@@ -1192,32 +1192,7 @@ VM.setMedia = function(){
                 triggerAction: 'all',
                 store: isoStore,
                 width: 200
-        }),
-//        {
-//                xtype: 'radio',
-//                labelSeparator: '',
-//                boxLabel: 'NFS',
-//                name: 'media',
-//                listeners:{
-//                    //fires when button is cheched or unchecked
-//                    check: function(checkbox, checked){
-//                        if(checked == true){
-//                            VM.prototype.mediaForm.getComponent('nfs').enable();
-//                        }
-//                        else{
-//                            VM.prototype.mediaForm.getComponent('nfs').disable();
-//                            VM.prototype.mediaForm.getComponent('nfs').reset();
-//                        }
-//                    }
-//                }
-//            },{
-//                xtype: 'textfield',
-//                name: 'nfs',
-//                id: 'nfs',
-//                disabled: true,
-//                labelSeparator: '',
-//                width: 200
-//            }
+        })
         ],
         buttons: [{
             text: 'Save',
@@ -1276,8 +1251,9 @@ VM.prototype.setMediaRequest = function(){
         url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId + '.json',
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
-        jsonData: {vm: {'cdrom': media, 'iso_id': iso_id}},
+        jsonData: {vm: { 'lock_version': hostTree.selectedNode.attributes.lock_version, 'cdrom': media, 'iso_id': iso_id}},
         success: function(){
+            hostTree.reload();
             hostTree.selectedNodeChange();
         },
         failure: function(response){
