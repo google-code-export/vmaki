@@ -39,11 +39,11 @@ class Vm < ActiveRecord::Base
 			@domain = conn.lookup_domain_by_uuid(self.uuid)
 			info = @domain.info
 
-			# To take a look at the current XML description of the VM, uncomment the following line:
-			# Dblogger.log("Debug", "system", "VM", @domain.xml_desc)
 			mapped_status = map_status(info.state)
 
 			self.status = mapped_status
+			puts "self.lock_version: #{self.lock_version}"
+			#self.lock_version = self.lock_version
 			self.save
 			@domain.free
 		rescue
