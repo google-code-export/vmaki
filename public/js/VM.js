@@ -467,7 +467,7 @@ VM.start = function(){
     Ext.Ajax.request({
         url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId,
         method: 'PUT',
-        jsonData: '{vm: {"action": "start"}}',
+        jsonData: '{vm: {"action": "start", "lock_version": ' + hostTree.selectedNode.attributes.lock_version + '}}',
         success: function(){
             // sets time of 5s to reload the tree
             setTimeout('hostTree.rootNode.reload();', 5000);
@@ -491,7 +491,7 @@ VM.suspend = function(){
                 Ext.Ajax.request({
                     url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId,
                     method: 'PUT',
-                    jsonData: '{vm: {"action": "suspend"}}',
+                    jsonData: '{vm: {"action": "suspend", "lock_version": ' + hostTree.selectedNode.attributes.lock_version + '}}',
                     success: function(){
                         setTimeout('hostTree.rootNode.reload();', 5000);
                     },
@@ -510,7 +510,7 @@ VM.resume = function(){
     Ext.Ajax.request({
         url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId,
         method: 'PUT',
-        jsonData: '{vm: {"action": "resume"}}',
+        jsonData: '{vm: {"action": "resume", "lock_version": ' + hostTree.selectedNode.attributes.lock_version + '}}',
         success: function(){
             setTimeout('hostTree.rootNode.reload();', 5000);
         },
@@ -534,7 +534,7 @@ VM.shutdown = function(){
                 Ext.Ajax.request({
                     url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId,
                     method: 'PUT',
-                    jsonData: '{vm: {"action": "shutdown"}}',
+                    jsonData: '{vm: {"action": "shutdown", "lock_version": ' + hostTree.selectedNode.attributes.lock_version + '}}',
                     success: function(){
                         setTimeout('hostTree.rootNode.reload();', 10000);
                     },
@@ -561,7 +561,7 @@ VM.reboot = function(){
                 Ext.Ajax.request({
                     url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId,
                     method: 'PUT',
-                    jsonData: '{vm: {"action": "reboot"}}',
+                    jsonData: '{vm: {"action": "reboot", "lock_version": ' + hostTree.selectedNode.attributes.lock_version + '}}',
                     success: function(){
                         setTimeout('hostTree.rootNode.reload();', 10000);
                     },
@@ -588,7 +588,7 @@ VM.kill = function(){
                 Ext.Ajax.request({
                     url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId,
                     method: 'PUT',
-                    jsonData: '{vm: {"action": "kill"}}',
+                    jsonData: '{vm: {"action": "kill", "lock_version": ' + hostTree.selectedNode.attributes.lock_version + '}}',
                     success: function(){
                         hostTree.rootNode.reload();
                     },
@@ -787,8 +787,11 @@ VM.reconfigure = function(poolId, rootVolumeId){
             // which if successful triggers the add vm request
             handler: function(){
 
+                var newMemory = VM.prototype.reconfigureForm.getForm().findField('memory').getValue();
+                var newVcpu = VM.prototype.reconfigureForm.getForm().findField('vcpu').getValue();
+
                 // checks if memory has been changed and calls reconfigure memory request if so
-                if(vmMemory != VM.prototype.reconfigureForm.getForm().findField('memory').getValue()){
+                if(vmMemory != newMemory){
                     if(maxMemory < VM.prototype.reconfigureForm.getForm().findField('memory').getValue()){
                         Ext.Msg.alert('Failure', 'You specified to much Memory for the VM. The maximum value you can allocate is ' + maxMemory + ' MB !');
                     }
