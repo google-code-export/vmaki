@@ -42,6 +42,12 @@ A new user can be added via the Add User button. In the appearing pop-up menu th
 
 == Connect VNC Console of a Guest System ==
 
+=== Registering VNC Protocol on Windows ===
+
+If you are using a Windows operating system you need to register the VNC protocol in order to be able to choose your VNC viewer when clicking on the vnc link in vmaki. This can be done by adding an entry to the Windows registery. To simplify this we recommend to use the customURL tool which can be downloaded here:
+
+[http://customurl.codeplex.com/Release/ProjectReleases.aspx?ReleaseId=15090#ReleaseFiles customURL]
+
 = ISO Management =
 
 = Snapshot Management =
