@@ -88,6 +88,7 @@ class HostsController < ApplicationController
 					xmlhost["text"] = host.name.to_s
 					xmlhost["hvm_support"] = host.hvm_support.to_s
 					xmlhost["total_memory"] = host.total_memory.to_s
+					xmlhost["lock_version"] = host.lock_version.to_s
 
 					# only include VMs if host is connected
 					if host.connected == true
@@ -107,6 +108,7 @@ class HostsController < ApplicationController
 								xmlvm["text"] = vm.name.to_s
 								xmlvm["type"] = vm.ostype.to_s
 								xmlvm["status"] = vm.status.to_s
+								xmlvm["lock_version"] = vm.lock_version.to_s
 								xmlvm["leaf"] = "true"
 							end
 						else
@@ -128,7 +130,7 @@ class HostsController < ApplicationController
 				@hosts.each do |host|
 					element_counter += 1;
 
-					jsontree << "\n  { id: '#{element_counter}', host_id: '#{host.id}', status: '#{host.connected}', text: '#{host.name}', hvm_support: '#{host.hvm_support}', total_memory: '#{host.total_memory}', "
+					jsontree << "\n  { id: '#{element_counter}', host_id: '#{host.id}', status: '#{host.connected}', text: '#{host.name}', hvm_support: '#{host.hvm_support}', total_memory: '#{host.total_memory}', lock_version: '#{host.lock_version}', "
 
 					# only include VMs if host is connected
 					if host.connected == true
@@ -149,6 +151,7 @@ class HostsController < ApplicationController
                     text: '#{vm.name}',
 										type: '#{vm.ostype.to_s}',
 										status: '#{vm.status}',
+										lock_version: '#{vm.lock_version}',
                     leaf: true
                 }"
 								jsontree << "," if @vms.index(vm) < (@vms.length - 1)
