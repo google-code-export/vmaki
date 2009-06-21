@@ -41,11 +41,10 @@ VM.prototype.ostypeStore = new Ext.data.SimpleStore({
 */
 
 
-
 // add vm function
 // creates the form and displays it in the add vm window
 // calls the add volumes request
-VM.addVm = function(max_memory){
+VM.addVm = function(){
 
     // gets the total memory of the host and takes 512MB away for the host itself
     var maxMemory = hostTree.selectedNode.attributes.total_memory/1024 - 512;
@@ -145,7 +144,6 @@ VM.addVm = function(max_memory){
                 allowBlank: false,
                 width: 80,
                 value: 128,
-                //maxValue: maxMemory,
                 strategy: new Ext.ux.form.Spinner.NumberStrategy({
                     minValue:'128',
                     maxValue: maxMemory,
@@ -292,7 +290,7 @@ VM.addVm = function(max_memory){
                 }
             },
             items: [
-                VM.prototype.vmForm
+            VM.prototype.vmForm
             ]
         });
         // shows window
@@ -322,12 +320,12 @@ VM.addVmRequest = function(poolId, rootVolumeId, swapVolumeId){
 
     // get media type and set the cdrom field corresponding to it
     if(VM.prototype.vmForm.getComponent('media_fieldset').getComponent('cdrom_radio').getValue() == true){
-         VM.prototype.vmForm.getForm().findField('cdrom').setValue('phy');
+        VM.prototype.vmForm.getForm().findField('cdrom').setValue('phy');
     }
     if(VM.prototype.vmForm.getComponent('media_fieldset').getComponent('iso_radio').getValue() == true){
-         VM.prototype.vmForm.getForm().findField('cdrom').setValue('iso');
-         iso_id = VM.prototype.vmForm.getComponent('media_fieldset').getComponent('iso').getValue();
-         VM.prototype.vmForm.getForm().findField('iso_id').setValue(iso_id);
+        VM.prototype.vmForm.getForm().findField('cdrom').setValue('iso');
+        iso_id = VM.prototype.vmForm.getComponent('media_fieldset').getComponent('iso').getValue();
+        VM.prototype.vmForm.getForm().findField('iso_id').setValue(iso_id);
     }
 
     // close the window
@@ -348,7 +346,9 @@ VM.addVmRequest = function(poolId, rootVolumeId, swapVolumeId){
     Ext.Ajax.request({
         url: Util.prototype.BASEURL + 'hosts/' + hostId + '/vms.json',
         method: 'POST',
-        headers: { 'Content-Type': 'application/json'},
+        headers: { 
+            'Content-Type': 'application/json'
+        },
         jsonData: jsonString,
         success: function(response) {
             // reloads tree
@@ -384,7 +384,9 @@ VM.checkVmStatus = function(vmId, hostId){
     Ext.Ajax.request({
         url: Util.prototype.BASEURL + 'hosts/' + hostId + '/vms/' + vmId + '.json',
         method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+            'Content-Type': 'application/json'
+        },
         success: function(response){
             var jsonResponse = Ext.util.JSON.decode(response.responseText);
             status = jsonResponse.data['vm[status]'];
@@ -614,7 +616,9 @@ VM.getConfig = function(){
         Ext.Ajax.request({
             url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/pools.json',
             method: 'GET',
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+                'Content-Type': 'application/json'
+            },
             success: function(response){
                 var jsonResponse = Ext.util.JSON.decode(response.responseText);
                 poolId = jsonResponse.pools[0].pool['id'];
@@ -624,7 +628,9 @@ VM.getConfig = function(){
         Ext.Ajax.request({
             url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId + '.json',
             method: 'GET',
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+                'Content-Type': 'application/json'
+            },
             success: function(response){
                 var jsonResponse = Ext.util.JSON.decode(response.responseText);
                 // sets the vm attributes
@@ -648,8 +654,15 @@ VM.getConfig = function(){
 
                 // record model for the nic store
                 nicRecord = Ext.data.Record.create([
-                    {name: 'id', mapping: 'nic.id'},
-                    {name: 'name', mapping: 'nic.name'}
+                {
+                    name: 'id',
+                    mapping: 'nic.id'
+                },
+
+                {
+                    name: 'name',
+                    mapping: 'nic.name'
+                }
                 ])
 
 
@@ -667,7 +680,9 @@ VM.getConfig = function(){
                             Ext.Ajax.request({
                                 url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/pools/ ' + poolId + '/volumes/' + rootVolumeId + '.json',
                                 method: 'GET',
-                                headers: {'Content-Type': 'application/json'},
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
                                 success: function(response){
                                     var jsonResponse = Ext.util.JSON.decode(response.responseText);
                                     volumeCapacity = jsonResponse.data['volume[capacity]'];
@@ -833,9 +848,9 @@ VM.reconfigure = function(poolId, rootVolumeId){
                     else{
                         VM.reconfigureCapacityRequest(VM.prototype.reconfigureForm.getForm().findField('root_capacity').getValue(), poolId, rootVolumeId);
                     }
-                 }
-                 // closes reconfigure window
-                 VM.prototype.reconfigureVmWindow.close();                          
+                }
+                // closes reconfigure window
+                VM.prototype.reconfigureVmWindow.close();
             }
         },{
             
@@ -881,7 +896,7 @@ VM.reconfigure = function(poolId, rootVolumeId){
             }
         },
         items: [
-            VM.prototype.reconfigureForm
+        VM.prototype.reconfigureForm
         ]
     });
     VM.prototype.reconfigureVmWindow.show();
@@ -1014,10 +1029,10 @@ VM.pvReconfigure = function(poolId, rootVolumeId){
                     else{
                         VM.reconfigureCapacityRequest(VM.prototype.reconfigureForm.getForm().findField('root_capacity').getValue(), poolId, rootVolumeId);
                     }
-                 }
+                }
 
-                 // closes reconfigure window
-                 VM.prototype.reconfigureVmWindow.close();
+                // closes reconfigure window
+                VM.prototype.reconfigureVmWindow.close();
             }
         },{
             text: 'Cancel',
@@ -1063,7 +1078,7 @@ VM.pvReconfigure = function(poolId, rootVolumeId){
             }
         },
         items: [
-            VM.prototype.reconfigureForm
+        VM.prototype.reconfigureForm
         ]
     });
     VM.prototype.reconfigureVmWindow.show();
@@ -1073,36 +1088,54 @@ VM.pvReconfigure = function(poolId, rootVolumeId){
 
 // request to set new memory
 VM.reconfigureRequest = function(newMemory, newVcpu, newBootDevice){
-            Ext.Ajax.request({
-                url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId + '.json',
-                method: 'PUT',
-                headers: {'Content-Type': 'application/json'},
-                jsonData: {vm: {'memory': newMemory, 'vcpu': newVcpu, 'boot_device': newBootDevice, 'lock_version': hostTree.selectedNode.attributes.lock_version}},
-                success: function(){
-                    hostTree.reload();
-                    hostTree.selectedNodeChange();
-                },
-                failure: function(response){
-                    Failure.checkFailure(response, Failure.prototype.vmReconfigure);
+    Ext.Ajax.request({
+        url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId + '.json',
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        jsonData: {
+            vm: {
+                'memory': newMemory,
+                'vcpu': newVcpu,
+                'boot_device': newBootDevice,
+                'lock_version': hostTree.selectedNode.attributes.lock_version
                 }
-            })
+            },
+        success: function(){
+            hostTree.reload();
+            hostTree.selectedNodeChange();
+        },
+        failure: function(response){
+            Failure.checkFailure(response, Failure.prototype.vmReconfigure);
+        }
+    })
 }
 
 // request to set new memory
 VM.reconfigurePvRequest = function(newMemory, newMaxMemory, newVcpu){
-            Ext.Ajax.request({
-                url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId + '.json',
-                method: 'PUT',
-                headers: {'Content-Type': 'application/json'},
-                jsonData: {vm: {'memory': newMemory, 'max_memory': newMaxMemory, 'vcpu': newVcpu, 'lock_version': hostTree.selectedNode.attributes.lock_version}},
-                success: function(){
-                    hostTree.reload();
-                    hostTree.selectedNodeChange();
-                },
-                failure: function(response){
-                    Failure.checkFailure(response, Failure.prototype.vmReconfigure);
+    Ext.Ajax.request({
+        url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId + '.json',
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        jsonData: {
+            vm: {
+                'memory': newMemory,
+                'max_memory': newMaxMemory,
+                'vcpu': newVcpu,
+                'lock_version': hostTree.selectedNode.attributes.lock_version
                 }
-            })
+            },
+        success: function(){
+            hostTree.reload();
+            hostTree.selectedNodeChange();
+        },
+        failure: function(response){
+            Failure.checkFailure(response, Failure.prototype.vmReconfigure);
+        }
+    })
 }
 
 
@@ -1112,15 +1145,21 @@ VM.reconfigureCapacityRequest = function(newCapacity, poolId, rootVolumeId){
     Ext.Ajax.request({
         url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/pools/ ' + poolId + '/volumes/' + rootVolumeId + '.json',
         method: 'PUT',
-        headers: {'Content-Type': 'application/json'},
-        jsonData: {volume: {'capacity': newCapacity}},
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        jsonData: {
+            volume: {
+                'capacity': newCapacity
+            }
+            },
         success: function(){
             hostTree.reload();
             hostTree.selectedNodeChange();
         },
         failure: function(response){
-                Failure.checkFailure(response, Failure.prototype.volumeReconfigure);
-            }
+            Failure.checkFailure(response, Failure.prototype.volumeReconfigure);
+        }
     })
 }
 
@@ -1133,27 +1172,34 @@ VM.setMedia = function(){
     }
     // if a vm is selected
     else{
-    // record model for the iso store
-    var isoRecord = Ext.data.Record.create([
-        {name: 'id', mapping: 'iso.id'},
-        {name: 'filename', mapping: 'iso.filename'}
-    ])
+        // record model for the iso store
+        var isoRecord = Ext.data.Record.create([
+        {
+            name: 'id',
+            mapping: 'iso.id'
+        },
 
-    // json store for isos
-    var isoStore = new Ext.data.JsonStore({
-        url: Util.prototype.BASEURL + 'isos.json',
-        root: 'isos',
-        fields: isoRecord,
-        autoLoad: true
-    });
+        {
+            name: 'filename',
+            mapping: 'iso.filename'
+        }
+        ])
 
-    // form to set media for a vm
-    VM.prototype.mediaForm = new Ext.FormPanel({
-        frame: true,
-        autoHeight: true,
-        autoWidth: true,
-        bodyStyle: 'padding:10px;',
-        monitorValid: true,
+        // json store for isos
+        var isoStore = new Ext.data.JsonStore({
+            url: Util.prototype.BASEURL + 'isos.json',
+            root: 'isos',
+            fields: isoRecord,
+            autoLoad: true
+        });
+
+        // form to set media for a vm
+        VM.prototype.mediaForm = new Ext.FormPanel({
+            frame: true,
+            autoHeight: true,
+            autoWidth: true,
+            bodyStyle: 'padding:10px;',
+            monitorValid: true,
             items:[{
                 xtype: 'radio',
                 id: 'cdrom_radio',
@@ -1192,73 +1238,81 @@ VM.setMedia = function(){
                 triggerAction: 'all',
                 store: isoStore,
                 width: 200
-        })
-        ],
-        buttons: [{
-            text: 'Save',
-            formBind: true,
-            handler: function(){
-                VM.prototype.setMediaRequest();
-            }
-        },{
-            text: 'Cancel',
-            handler: function(){
-                VM.prototype.vmMediaWindow.close();
-            }
-        }]
-    });
+            })
+            ],
+            buttons: [{
+                text: 'Save',
+                formBind: true,
+                handler: function(){
+                    VM.prototype.setMediaRequest();
+                }
+            },{
+                text: 'Cancel',
+                handler: function(){
+                    VM.prototype.vmMediaWindow.close();
+                }
+            }]
+        });
 
-    // Create new Window and add render mediaForm to it
-    VM.prototype.vmMediaWindow = new Ext.Window({
-        layout: 'fit',
-        title: 'Attach Media',
-        resizable: false,
-        draggable: false,
-        width: 360,
-        items: VM.prototype.mediaForm,
-        listeners:{
-            show: function(panel){
-                Util.prototype.spot.show(panel.id);
-            },
-            close: function(panel){
-                Util.prototype.spot.hide();
+        // Create new Window and add render mediaForm to it
+        VM.prototype.vmMediaWindow = new Ext.Window({
+            layout: 'fit',
+            title: 'Attach Media',
+            resizable: false,
+            draggable: false,
+            width: 360,
+            items: VM.prototype.mediaForm,
+            listeners:{
+                show: function(panel){
+                    Util.prototype.spot.show(panel.id);
+                },
+                close: function(panel){
+                    Util.prototype.spot.hide();
+                }
             }
+        });
+        // show window
+        VM.prototype.vmMediaWindow.show();
+    }
+
+
+    // function to send request to change attached media
+    VM.prototype.setMediaRequest = function(){
+
+        // get media type and set the cdrom field corresponding to it
+        if(VM.prototype.mediaForm.getComponent('cdrom_radio').getValue() == true){
+            media = 'phy';
+            iso_id = '';
         }
-    });
-    // show window
-    VM.prototype.vmMediaWindow.show();
-}
+        if(VM.prototype.mediaForm.getComponent('iso_radio').getValue() == true){
+            media = 'iso';
+            iso_id = VM.prototype.mediaForm.getComponent('iso').getValue();
+        }
 
+        // closes the window
+        VM.prototype.vmMediaWindow.close();
 
-// function to send request to change attached media
-VM.prototype.setMediaRequest = function(){
-
-    // get media type and set the cdrom field corresponding to it
-    if(VM.prototype.mediaForm.getComponent('cdrom_radio').getValue() == true){
-         media = 'phy';
-         iso_id = '';
-    }
-    if(VM.prototype.mediaForm.getComponent('iso_radio').getValue() == true){
-         media = 'iso';
-         iso_id = VM.prototype.mediaForm.getComponent('iso').getValue();
-    }
-
-    // closes the window
-    VM.prototype.vmMediaWindow.close();
-
-    //ajax request to change attached media
-    Ext.Ajax.request({
-        url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId + '.json',
-        method: 'PUT',
-        headers: {'Content-Type': 'application/json'},
-        jsonData: {vm: { 'lock_version': hostTree.selectedNode.attributes.lock_version, 'cdrom': media, 'iso_id': iso_id}},
-        success: function(){
-            hostTree.reload();
-            hostTree.selectedNodeChange();
-        },
-        failure: function(response){
+        //ajax request to change attached media
+        Ext.Ajax.request({
+            url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId + '.json',
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            jsonData: {
+                vm: {
+                    'lock_version': hostTree.selectedNode.attributes.lock_version,
+                    'cdrom': media,
+                    'iso_id': iso_id
+                }
+                },
+            success: function(){
+                hostTree.reload();
+                hostTree.selectedNodeChange();
+            },
+            failure: function(response){
                 Failure.checkFailure(response, Failure.prototype.mediaReconfigure);
             }
-    })
-}
+        })
+    }
 }

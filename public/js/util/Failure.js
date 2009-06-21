@@ -64,8 +64,20 @@ Failure.checkFailure = function(response, failure){
     }
     // lock_version out of date
     else if(response.status == 409){
+        // Host connect
+        if(failure == Failure.prototype.hostConnect){
+            Ext.Msg.alert('Out of Date', 'The Host could not be connected because the status of the Host has been changed in the meantime. \n\
+            It has been updated to the current version now.');
+            hostTree.reload();
+        }
+        // Host connect
+        if(failure == Failure.prototype.hostDisconnect){
+            Ext.Msg.alert('Out of Date', 'The Host could not be disconnected because the status of the Host has been changed in the meantime. \n\
+            It has been updated to the current version now.');
+            hostTree.reload();
+        }
+
         // VM start
-        console.log(failure);
         if(failure == Failure.prototype.vmStart){
             Ext.Msg.alert('Out of Date', 'The VM could not be started because the status of the VM has been changed in the meantime. \n\
             It has been updated to the current version now.');
