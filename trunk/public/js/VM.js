@@ -244,9 +244,14 @@ VM.addVm = function(max_memory){
             // request to add root volume which if successful triggers swap volume request
             // which if successful triggers the add vm request
             handler: function(){
-                Volume.addVolumes();
-                vmMask.show();
-                VM.prototype.addVmWindow.close();
+                if(maxMemory < VM.prototype.vmForm.getForm().findField('memory').getValue()){
+                    Ext.Msg.alert('Failure', 'You specified to much Memory for the VM. The maximum value you can allocate is ' + maxMemory + ' MB !');
+                }
+                else{
+                    Volume.addVolumes();
+                    vmMask.show();
+                    VM.prototype.addVmWindow.close();
+                }
             }
         },{
             text: 'Cancel',
@@ -780,10 +785,16 @@ VM.reconfigure = function(poolId, rootVolumeId){
             formBind: true,
             // request to add root volume which if successful triggers swap volume request
             // which if successful triggers the add vm request
-            handler: function(){               
+            handler: function(){
+
                 // checks if memory has been changed and calls reconfigure memory request if so
                 if(vmMemory != VM.prototype.reconfigureForm.getForm().findField('memory').getValue()){
-                    VM.reconfigureMemoryRequest(VM.prototype.reconfigureForm.getForm().findField('memory').getValue());
+                    if(maxMemory < VM.prototype.reconfigureForm.getForm().findField('memory').getValue()){
+                        Ext.Msg.alert('Failure', 'You specified to much Memory for the VM. The maximum value you can allocate is ' + maxMemory + ' MB !');
+                    }
+                    else{
+                        VM.reconfigureMemoryRequest(VM.prototype.reconfigureForm.getForm().findField('memory').getValue());
+                    }
                 }
                 // checks if vcpu has been changed and calls reconfigure vcpu request if so
                 if(vmVcpu != VM.prototype.reconfigureForm.getForm().findField('vcpu').getValue()){
@@ -976,10 +987,7 @@ VM.pvReconfigure = function(poolId, rootVolumeId){
             // which if successful triggers the add vm request
             handler: function(){
                 // checks if memory has been changed and calls reconfigure memory request if so
-                if(vmMemory != VM.prototype.reconfigureForm.getForm().findField('memory').getValue()){
-                    VM.reconfigurePvMemoryRequest(VM.prototype.reconfigureForm.getForm().findField('memory').getValue(),VM.prototype.reconfigureForm.getForm().findField('max_memory').getValue());
-                }
-                if(vmMaxMemory != VM.prototype.reconfigureForm.getForm().findField('max_memory').getValue()){
+                if(vmMemory != VM.prototype.reconfigureForm.getForm().findField('memory').getValue() || vmMaxMemory != VM.prototype.reconfigureForm.getForm().findField('max_memory').getValue()){
                     VM.reconfigurePvMemoryRequest(VM.prototype.reconfigureForm.getForm().findField('memory').getValue(),VM.prototype.reconfigureForm.getForm().findField('max_memory').getValue());
                 }
 
