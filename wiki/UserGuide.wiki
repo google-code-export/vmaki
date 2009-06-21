@@ -5,7 +5,7 @@
 
 = Introduction =
 
-This Page contains the user manual for *vmaki 1.0* and will help you using it effectively in your enviroment. 
+This page contains the User Guide for *vmaki 1.0* and will help you using it effectively in your enviroment. 
 
 = Contents =
 
