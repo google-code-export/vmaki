@@ -1,9 +1,9 @@
 #summary How to set up & run vmaki on your own host
 
-= Management Node =
+= Introduction =
+This document describes in the first part the steps needed to take in order to set up a host running the vmaki management node including Xen Hypervisor support. The second part describes how to set up a so called "Xen Host", which is only being used as a container for Xen DomUs but does not provide any management functionality or host vmaki itself.
 
-== Introduction ==
-This document describes the steps needed to take in order to set up a host running the vmaki management node including Xen Hypervisor support.
+= Management Node =
 
 == Prerequisites ==
 Install Debian Lenny on a physical host using LVM volumes. Make sure there is enough free space within the volume pool for the creation of guest volumes. For client machines the Firefox browser is highly recommended.
@@ -147,3 +147,13 @@ Start the vmaki process (also insides vmaki's directory):
 {{{
 # script/server
 }}}
+
+= Xen Node =
+
+== Install all Packages ==
+
+# sudo apt-get install xen-linux-system-2.6.26-2-xen-amd64 libvirt-bin openssh-server
+
+== Xen ==
+
+== SSH ==
