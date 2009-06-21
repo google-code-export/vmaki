@@ -25,11 +25,8 @@ Failure.prototype.vmResume = ' Unable to resume the selected VM';
 Failure.prototype.vmShutdown = ' Unable to shut down the selected VM';
 Failure.prototype.vmRestart = 'Unable to restart the selected VM';
 Failure.prototype.vmKill = ' Unable to kill the selected VM';
-Failure.prototype.memoryReconfigure = ' Unable to reconfigure Memory';
-Failure.prototype.vcpuReconfigure = ' Unable to reconfigure VCPU';
+Failure.prototype.vmReconfigure = ' Unable to reconfigure VM';
 Failure.prototype.volumeReconfigure = ' Unable to reconfigure Volume';
-Failure.prototype.bootdeviceReconfigure = ' Unable to reconfigure boot device';
-Failure.prototype.bootdeviceReconfigure = ' Unable to reconfigure NIC';
 Failure.prototype.mediaReconfigure = ' Unable to set Media';
 
 
@@ -65,7 +62,59 @@ Failure.checkFailure = function(response, failure){
         Util.logout();
     }
     else if(response.status == 409){
-        Ext.Msg.alert('Failure', 'Update Conflict');
+        // VM start
+        console.log(failure);
+        if(failure == Failure.prototype.vmStart){
+            Ext.Msg.alert('Out of Date', 'The VM could not be started because the status of the VM has been changed in the meantime. \n\
+            It has been updated to the current version now.');
+            hostTree.reload();
+        }
+        // VM suspend
+        if(failure == Failure.prototype.vmSuspend){
+            Ext.Msg.alert('Out of Date', 'The VM could not be suspended because the status of the VM has been changed in the meantime. \n\
+            It has been updated to the current version now.');
+            hostTree.reload();
+        }
+        // VM resume
+        if(failure == Failure.prototype.vmResume){
+            Ext.Msg.alert('Out of Date', 'The VM could not be resumed because the status of the VM has been changed in the meantime. \n\
+            It has been updated to the current version now.');
+            hostTree.reload();
+        }
+        // VM shutdown
+        if(failure == Failure.prototype.vmShutdown){
+            Ext.Msg.alert('Out of Date', 'The VM could not be shut down because the status of the VM has been changed in the meantime. \n\
+            It has been updated to the current version now.');
+            hostTree.reload();
+        }
+        // VM restart
+        if(failure == Failure.prototype.vmRestart){
+            Ext.Msg.alert('Out of Date', 'The VM could not be restarted because the status of the VM has been changed in the meantime. \n\
+            It has been updated to the current version now.');
+            hostTree.reload();
+        }
+        // VM kill
+        if(failure == Failure.prototype.vmKill){
+            Ext.Msg.alert('Out of Date', 'The VM could not be killed because the status of the VM has been changed in the meantime.\n\
+            It has been updated to the current version now.');
+            hostTree.reload();
+        }
+        // VM reconfigure
+        if(failure == Failure.prototype.vmReconfigure){
+            Ext.Msg.alert('Out of Date', 'The VM could not be reconfigured because the configuration has been changed in the meantime. \n\
+            It has been updated now. Please try again');
+            hostTree.reload();
+        }
+        // VM media
+        if(failure == Failure.prototype.mediaReconfigure){
+            Ext.Msg.alert('Out of Date', 'The media for the VM could not be reconfigured because the configuration has been changed in the meantime. \n\
+            It has been updated now. Please try again');
+            hostTree.reload();
+        }
+        // ISO File update
+        if(failure == Failure.prototype.isoUpdate){
+            Ext.Msg.alert('Out of Date', 'Your ISO File could not be updated because it has been changed in the meantime. It has been updated to the current version now.');
+        }
     }
     else if(response.status == 413){
 

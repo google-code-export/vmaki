@@ -37,7 +37,8 @@ function UserTab(){
         {name: 'id', mapping: 'user.id'},
         {name: 'name', mapping: 'user.name'},
         {name: 'password', mapping: 'user.password'},
-        {name: 'role', mapping: 'user.role'}
+        {name: 'role', mapping: 'user.role'},
+        {name: 'lock_version', mapping: 'user.lock_version'}
     ]);
 
     // user store
@@ -105,7 +106,7 @@ UserTab.prototype.renameHandler = function(){
     // checks if a user is selectd
     if(sm.hasSelection()){
         // calls function with selected user id
-        myUser.renameUser(sel.data.id);
+        myUser.renameUser(sel.data.id, sel.data.lock_version);
     }
     else{
         // message which is shown if no user is selected
@@ -121,7 +122,7 @@ UserTab.prototype.resetHandler = function(){
     // chechs if a user is selected
     if(sm.hasSelection()){
         // calls function with selected user id
-        myUser.resetPassword(sel.data.id);
+        myUser.resetPassword(sel.data.id, sel.data.lock_version);
     }
     else{
         // message which is shown if no user is selected
@@ -236,7 +237,7 @@ UserTab.prototype.deleteUser = function(id){
 }
 
 // rename user function
-UserTab.prototype.renameUser = function(id){
+UserTab.prototype.renameUser = function(id, lockVersion){
 
     //form to rename user
     var renameUserForm = new Ext.FormPanel({
@@ -244,7 +245,8 @@ UserTab.prototype.renameUser = function(id){
         autoHeight: true,
         autoWidth: true,
         bodyStyle: 'padding:10px;',
-        items: [{
+        items: [
+        {
             xtype: 'textfield',
             fieldLabel: 'Username',
             name: 'username',
@@ -261,7 +263,7 @@ UserTab.prototype.renameUser = function(id){
                 Ext.Ajax.request({
                     url: Util.prototype.BASEURL + 'users/' + id,
                     method: 'PUT',
-                    jsonData: {'user':{'name': username }},
+                    jsonData: {'user':{'name': username, 'lock_version':  lockVersion}},
                     failure: function(response){
                         Failure.checkFailure(response, Failure.prototype.userRename);
                     }
@@ -298,7 +300,7 @@ UserTab.prototype.renameUser = function(id){
 }
 
 // reset password function
-UserTab.prototype.resetPassword = function(id){
+UserTab.prototype.resetPassword = function(id, lockVersion){
     // form to reset password
     var resetPasswordForm = new Ext.FormPanel({
         frame: true,
@@ -335,7 +337,8 @@ UserTab.prototype.resetPassword = function(id){
                         method: 'PUT',
                         jsonData: {
                             'user':{
-                                'password': password
+                                'password': password,
+                                'lock_version':  lockVersion
                             }
                         },
                         failure: function(response){

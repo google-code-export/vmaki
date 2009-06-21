@@ -44,7 +44,10 @@ function IsoTab(){
 	{
 		name: 'size',
 		mapping: 'iso.size'
-	}
+	},{
+        name: 'lock_version',
+        mapping: 'iso.lock_version'
+    }
 	]);
 
 	// iso store
@@ -129,7 +132,7 @@ IsoTab.prototype.addIso = function(){
                         myTabPanel.myIsoTab.isoStore.reload();
                     },
                     failure: function(response){
-						Failure.checkFailure(response, Failure.prototype.isoUpload);
+						Failure.checkFailure(response, Failure.prototype.isoUpload, 'isoUpdate');
                     }
 
 				});
@@ -235,7 +238,7 @@ IsoTab.prototype.updateIso = function(){
                 Ext.Ajax.request({
                     url: Util.prototype.BASEURL + 'isos/' + sel.data.id,
                     method: 'PUT',
-                    jsonData: {'iso':{'description': description, 'filename': filename }},
+                    jsonData: {'iso':{'description': description, 'filename': filename, 'lock_version': sel.data.lock_version }},
                     failure: function(response){
                         Failure.checkFailure(response, Failure.prototype.isoUpdate);
                     }

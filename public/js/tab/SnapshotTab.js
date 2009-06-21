@@ -13,6 +13,7 @@ SnapshotTab = function(){
         {name: 'description', mapping: 'snapshot.description'},
         {name: 'status', mapping: 'snapshot.status'},
         {name: 'date', mapping: 'snapshot.display_date'},
+        {name: 'lock_version', mapping: 'snapshot.lock_version'}
     ]);
 
 }
@@ -239,7 +240,7 @@ SnapshotTab.prototype.restoreSnapshot = function(){
                     Ext.Ajax.request({
                         url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId + '/snapshots/' + sel.data.id,
                         method: 'PUT',
-                        jsonData: {'snapshot':{'restore': true}},
+                        jsonData: {'snapshot':{'restore': true, 'lock_version': sel.data.lock_version}},
                         success: function(){
                             hostTree.rootNode.reload();
                             snapshotStore.reload();
@@ -293,7 +294,7 @@ SnapshotTab.prototype.renameSnapshot = function(){
                     Ext.Ajax.request({
                         url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId + '/snapshots/' + sel.data.id,
                         method: 'PUT',
-                        jsonData: {'snapshot':{'description': description}},
+                        jsonData: {'snapshot':{'lock_version': sel.data.lock_version, 'description': description}},
                         failure: function(response){
                             Failure.checkFailure(response, Failure.prototype.snapshotRename);
                         }
