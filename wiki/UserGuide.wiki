@@ -48,7 +48,7 @@ To connect the VNC console of a guest system you simply need to click on the VNC
 
 [http://vmaki.googlecode.com/files/vnc_console_debian_small.png]
 
-Therefore it is mendatory to have a VNC viewer installed on your system. Here are some links to download a VNC viewer which can be used for vmaki:
+There has to be a VNC viewer installed on your system in order to use the VNC link. Here are some links to download a VNC viewer which can be used for vmaki. ThightVNC also provides a Java version of its viewer which doesn't have to be installed, in case you don't have permission on the system to do so.
 
 [http://www.tightvnc.com/download.html ThightVNC (Linux / Windows)]
 
