@@ -42,7 +42,13 @@ A new user can be added via the Add User button. In the appearing pop-up menu th
 
 == Connect VNC Console of a Guest System ==
 
-To connect the VNC console of a guest system you simply need to click on the VNC link which can be found in the console tab. After clicking on the vnc link you will be promted to choose which VNC viewer will be used to connect the console. Therefore it is mendatory to have a VNC viewer installed on your system. Here are some links to download a VNC viewer which can be used for vmaki:
+To connect the VNC console of a guest system you simply need to click on the VNC link which can be found in the console tab. After clicking on the vnc link you will be promted to choose which VNC viewer will be used to connect the console.
+
+[http://vmaki.googlecode.com/files/vnc_link.png]
+
+[http://vmaki.googlecode.com/files/vnc_console_debian_small.png]
+
+Therefore it is mendatory to have a VNC viewer installed on your system. Here are some links to download a VNC viewer which can be used for vmaki:
 
 [http://www.tightvnc.com/download.html ThightVNC (Linux / Windows)]
 
