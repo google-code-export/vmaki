@@ -56,8 +56,8 @@ class IsosController < ApplicationController
 				format.xml { render :nothing => true, :status => :created }
 				format.json { render :nothing => true, :status => :created }
 			else
-				format.xml { render :nothing => true, :status => "422" }
-				format.json { render :nothing => true, :status => "422" }
+				format.xml { render :nothing => true, :status => :unprocessable_entity }
+				format.json { render :nothing => true, :status =>	:unprocessable_entity }
 			end
 		end
 	end

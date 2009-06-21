@@ -48,11 +48,11 @@ class VolumesController < ApplicationController
 				format.json { render :json => @volume, :status => :created }
 			elsif @volume.not_enough_space
 				Dblogger.log("Production", @current_user.name, "Volume", "Could not create Volume #{@volume.name} with id:#{@volume.id} and Params:#{params[:volume]}. Reason: Not enough space!")
-        format.xml { render :nothing => true, :status => "413" }
-				format.json { render :nothing => true, :status => "413" }
+        format.xml { render :nothing => true, :status => :request_entity_too_large }
+				format.json { render :nothing => true, :status => :request_entity_too_large }
       else
-        format.xml { render :xml => @volume.errors, :status => "422" }
-				format.json { render :json => @volume.errors.to_json, :status => "422" }
+        format.xml { render :xml => @volume.errors, :status =>	:unprocessable_entity }
+				format.json { render :json => @volume.errors.to_json, :status => :unprocessable_entity }
       end
     end
   end
@@ -68,8 +68,8 @@ class VolumesController < ApplicationController
 				format.json { render :nothing => true, :status => :ok }
 			elsif @volume.not_enough_space
 				Dblogger.log("Production", @current_user.name, "Volume", "Could not grow Volume #{@volume.name} with id:#{@volume.id} and Params:#{params[:volume]}. Reason: Not enough space!")
-        format.xml { render :nothing => true, :status => "413" }
-				format.json { render :nothing => true, :status => "413" }
+        format.xml { render :nothing => true, :status => :request_entity_too_large }
+				format.json { render :nothing => true, :status => :request_entity_too_large }
       end
     end
   end
