@@ -51,7 +51,7 @@ function IsoTab(){
 	this.isoStore = new Ext.data.JsonStore({
 		url: Util.prototype.BASEURL + 'isos.json',
 		root: 'isos',
-        sortInfo: {field: 'id', direction: 'ASC'},
+        sortInfo: {field: 'description', direction: 'ASC'},
 		fields: this.isoRecord
 	});
 

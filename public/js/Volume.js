@@ -90,7 +90,7 @@ Volume.addRootVolumeRequest = function(poolId, swapVolumeId){
             
         },
         failure: function(response){
-            Volume.deleteVolume(swapVolumeId);
+            Volume.deleteVolume(swapVolumeId, poolId);
             Failure.checkFailure(response, Failure.prototype.rootVolumeAdd);
             vmMask.hide();
         }
