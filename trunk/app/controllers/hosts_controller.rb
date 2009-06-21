@@ -184,8 +184,8 @@ class HostsController < ApplicationController
 				format.xml { render :xml => @host, :status => :created }
 				format.json { render :json => @host.to_ext_json, :status => :created }
 			else
-				format.xml { render :xml => @host.errors, :status => "422" }
-				format.json { render :json => @host.errors.to_json, :status => "422" }
+				format.xml { render :xml => @host.errors, :status => :unprocessable_entity }
+				format.json { render :json => @host.errors.to_json, :status => :unprocessable_entity}
 			end
 		end
 	end

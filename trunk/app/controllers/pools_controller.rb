@@ -54,8 +54,8 @@ class PoolsController < ApplicationController
         format.xml { render :xml => @pool, :status => :created }
 				format.json { render :json => @pool.to_ext_json, :status => :created }
       else
-        format.xml { render :xml => @pool.errors, :status => "422" }
-				format.json { render :json => @pool.errors.to_json, :status => "422" }
+        format.xml { render :xml => @pool.errors, :status => :unprocessable_entity }
+				format.json { render :json => @pool.errors.to_json, :status => :unprocessable_entity }
       end
     end
   end

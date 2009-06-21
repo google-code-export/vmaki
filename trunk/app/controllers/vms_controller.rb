@@ -70,11 +70,11 @@ class VmsController < ApplicationController
 				format.json { render :json => @vm.to_ext_json, :status => :created }
 			elsif @vm.not_enough_space
 				Dblogger.log("Production", @current_user.name, "VM", "Could not create VM #{@vm.name} with id:#{@vm.id} and Params:#{params[:vm]}. Reason: Not enough memory!")
-        format.xml { render :nothing => true, :status => "413" }
-				format.json { render :nothing => true, :status => "413" }
+        format.xml { render :nothing => true, :status => :request_entity_too_large }
+				format.json { render :nothing => true, :status => :request_entity_too_large }
       else
-        format.xml { render :xml => @vm.errors, :status => "422" }
-				format.json { render :json => @vm.errors.to_json, :status => "422" }
+        format.xml { render :xml => @vm.errors, :status => 	:unprocessable_entity }
+				format.json { render :json => @vm.errors.to_json, :status => 	:unprocessable_entity }
       end
     end
   end
@@ -87,11 +87,11 @@ class VmsController < ApplicationController
 
 		if @vm.status == "provisioning"
 			respond_to do |format|
-				format.xml { render :nothing => true, :status => :conflict }
-				format.json { render :nothing => true, :status => :conflict}
+				format.xml { render :nothing => true, :status => 	:method_not_allowed }
+				format.json { render :nothing => true, :status => 	:method_not_allowed}
 			end
 		else
-			begin
+			#begin
 				respond_to do |format|
 					if @vm.update_attributes(params[:vm]) && (!@vm.not_enough_space)
 						Dblogger.log("Production", @current_user.name, "VM", "Updated VM #{@vm.name} with id:#{@vm.id} and Params:#{params[:vm]}")
@@ -99,17 +99,17 @@ class VmsController < ApplicationController
 						format.json { render :nothing => true, :status => :ok }
 					elsif @vm.not_enough_space
 						Dblogger.log("Production", @current_user.name, "VM", "Could not update VM #{@vm.name} with id:#{@vm.id} and Params:#{params[:volume]}. Reason: Not enough memory!")
-						format.xml { render :nothing => true, :status => "413" }
-						format.json { render :nothing => true, :status => "413" }
+						format.xml { render :nothing => true, :status => :request_entity_too_large }
+						format.json { render :nothing => true, :status => :request_entity_too_large }
 					end
 				end
-			rescue
-				respond_to do |format|
-					Dblogger.log("Production", @current_user.name, "VM", "Could not update VM #{@vm.name} with id:#{@vm.id} and Params:#{params[:vm]}")
-					format.xml { render :nothing => true, :status => :forbidden }
-					format.json { render :nothing => true, :status => :forbidden }
-				end
-			end
+#			rescue
+#			respond_to do |format|
+#				Dblogger.log("Production", @current_user.name, "VM", "Could not update VM #{@vm.name} with id:#{@vm.id} and Params:#{params[:vm]}")
+#				format.xml { render :nothing => true, :status => :forbidden }
+#				format.json { render :nothing => true, :status => :forbidden }
+#			end
+#		end
 		end
   end
 
