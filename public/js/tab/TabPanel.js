@@ -108,6 +108,7 @@ function TabPanel(){
             listeners: {
                 activate: function(panel){
                     panel.add(myTabPanel.myIsoTab.isoGrid);
+                    myTabPanel.myIsoTab.isoStore.reload();
                     panel.doLayout();
                 }
             }
@@ -119,6 +120,7 @@ function TabPanel(){
             items: myUser.userGrid,
             listeners: {
                 activate: function(panel){
+                    myUser.userStore.reload();
                     panel.doLayout();
                 }
             }

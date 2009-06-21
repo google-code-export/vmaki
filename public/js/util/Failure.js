@@ -48,8 +48,8 @@ Failure.prototype.renameUser = 'Unable to rename user';
 // Snapshot Failure Messages
 Failure.prototype.snapshotAdd = 'Unable to add snapshot';
 Failure.prototype.snapshotRename = 'Unable to delete snapshot';
-Failure.prototype.snapshotAdd = 'Unable to restore snapshot';
-Failure.prototype.snapshotAdd = 'Unable to rename snapshot';
+Failure.prototype.snapshotRestore = 'Unable to restore snapshot';
+Failure.prototype.snapshotRename = 'Unable to rename snapshot';
 
 
 
@@ -58,9 +58,11 @@ Failure.prototype.snapshotAdd = 'Unable to rename snapshot';
 // Function called when failure during a ajax request occurs
 // analyses the failure status and sets the according failure message
 Failure.checkFailure = function(response, failure){
+    // session expired
     if(response.status == 401){
         Util.logout();
     }
+    // lock_version out of date
     else if(response.status == 409){
         // VM start
         console.log(failure);
@@ -102,20 +104,45 @@ Failure.checkFailure = function(response, failure){
         // VM reconfigure
         if(failure == Failure.prototype.vmReconfigure){
             Ext.Msg.alert('Out of Date', 'The VM could not be reconfigured because the configuration has been changed in the meantime. \n\
-            It has been updated now. Please try again');
+            It has been updated to the current version now. Please try again');
             hostTree.reload();
         }
         // VM media
         if(failure == Failure.prototype.mediaReconfigure){
             Ext.Msg.alert('Out of Date', 'The media for the VM could not be reconfigured because the configuration has been changed in the meantime. \n\
-            It has been updated now. Please try again');
+            It has been updated to the current version now. Please try again');
             hostTree.reload();
         }
+
+        // snapshot restore
+        if(failure == Failure.prototype.snapshotRestore){
+            Ext.Msg.alert('Out of Date', 'The snapshot can not be restored because the status has been changed in the meantime. The status has been updated now to the current version now.');
+            hostTree.reload();
+        }
+        // snapshot restore
+        if(failure == Failure.prototype.snapshotRename){
+            Ext.Msg.alert('Out of Date', 'The snapshot can not be renamed because it has been changed in the meantime. The snapshot has been updated now to the current version now.');
+        }
+
+
         // ISO File update
         if(failure == Failure.prototype.isoUpdate){
-            Ext.Msg.alert('Out of Date', 'Your ISO File could not be updated because it has been changed in the meantime. It has been updated to the current version now.');
+            Ext.Msg.alert('Out of Date', 'The ISO File could not be updated because it has been changed in the meantime. It has been updated to the current version now.');
+        }
+
+        // User rename
+        if(failure == Failure.prototype.renameUser){
+           Ext.Msg.alert('Out of Date', 'The user could not be renamed because the user configuration has changed in the meantime. It has been updated to the current version now.');
+           myUser.userStore.reload();
+        }
+        // Password Reset
+        if(failure == Failure.prototype.passwordReset){
+            Ext.Msg.alert('Out of Date', 'The password could not be reseted because the user configuration has changed in the meantime. It has been updated to the current version now.');
+            myUser.userStore.reload();
         }
     }
+
+    // not enough capacity
     else if(response.status == 413){
 
         if(failure == Failure.prototype.rootVolumeAdd || Failure.prototype.swapVolumeAdd){
