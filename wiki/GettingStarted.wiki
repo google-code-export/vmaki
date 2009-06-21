@@ -152,6 +152,8 @@ Start the vmaki process (also insides vmaki's directory):
 
 == Install all Packages ==
 
+* Check if NFS client has to be installed *
+
 # sudo apt-get install xen-linux-system-2.6.26-2-xen-amd64 libvirt-bin openssh-server
 
 == Xen ==
