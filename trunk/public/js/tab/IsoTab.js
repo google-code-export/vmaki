@@ -70,7 +70,8 @@ function IsoTab(){
 		columns:[
 		{
 			header: 'Description',
-			dataIndex: 'description'
+			dataIndex: 'description',
+            width: 150
 		},
 
 		{

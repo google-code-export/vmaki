@@ -168,6 +168,7 @@ Host.addHostRequest = function(){
         headers: {
             'Content-Type': 'application/json'
         },
+        timeout: 60000,
         jsonData: jsonString,
         success: function(response) {
             // gets the response text and decodes the json string to a object

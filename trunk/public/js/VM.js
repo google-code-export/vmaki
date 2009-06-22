@@ -1318,8 +1318,8 @@ VM.setMedia = function(){
                 }
                 },
             success: function(){
-                hostTree.reload();
                 hostTree.selectedNodeChange();
+                hostTree.reload();
             },
             failure: function(response){
                 Failure.checkFailure(response, Failure.prototype.mediaReconfigure);
