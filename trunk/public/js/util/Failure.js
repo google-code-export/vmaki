@@ -89,37 +89,37 @@ Failure.checkFailure = function(response, failure){
         if(failure == Failure.prototype.vmStart){
             Ext.Msg.alert('Out of Date', 'The VM could not be started because the status of the VM has been changed in the meantime. \n\
             It has been updated to the current version now.');
-            setTimeout('hostTree.reload();', 20000);
+            setTimeout('hostTree.reload();', 2000);
         }
         // VM suspend
         if(failure == Failure.prototype.vmSuspend){
             Ext.Msg.alert('Out of Date', 'The VM could not be suspended because the status of the VM has been changed in the meantime. \n\
             It has been updated to the current version now.');
-            setTimeout('hostTree.reload();', 20000);
+            setTimeout('hostTree.reload();', 2000);
         }
         // VM resume
         if(failure == Failure.prototype.vmResume){
             Ext.Msg.alert('Out of Date', 'The VM could not be resumed because the status of the VM has been changed in the meantime. \n\
             It has been updated to the current version now.');
-            setTimeout('hostTree.reload();', 20000);
+            setTimeout('hostTree.reload();', 2000);
         }
         // VM shutdown
         if(failure == Failure.prototype.vmShutdown){
             Ext.Msg.alert('Out of Date', 'The VM could not be shut down because the status of the VM has been changed in the meantime. \n\
             It has been updated to the current version now.');
-            setTimeout('hostTree.reload();', 20000);
+            setTimeout('hostTree.reload();', 2000);
         }
         // VM restart
         if(failure == Failure.prototype.vmRestart){
             Ext.Msg.alert('Out of Date', 'The VM could not be restarted because the status of the VM has been changed in the meantime. \n\
             It has been updated to the current version now.');
-            setTimeout('hostTree.reload();', 20000);
+            setTimeout('hostTree.reload();', 2000);
         }
         // VM kill
         if(failure == Failure.prototype.vmKill){
             Ext.Msg.alert('Out of Date', 'The VM could not be killed because the status of the VM has been changed in the meantime.\n\
             It has been updated to the current version now.');
-            setTimeout('hostTree.reload();', 20000);
+            setTimeout('hostTree.reload();', 2000);
         }
         // VM reconfigure
         if(failure == Failure.prototype.vmReconfigure){
