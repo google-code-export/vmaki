@@ -33,6 +33,7 @@ Failure.prototype.mediaReconfigure = ' Unable to set Media';
 // Volume Failure Messages
 Failure.prototype.swapVolumeAdd = ' Unable to add the swap volume';
 Failure.prototype.rootVolumeAdd = ' Unable to add the root volume';
+Failure.prototype.volumeDelete = 'Unable to delete the volume';
 
 // iso Failure Messages
 Failure.prototype.isoDelete = 'Unable to delete ISO File';
@@ -62,6 +63,13 @@ Failure.checkFailure = function(response, failure){
     if(response.status == 401){
         Util.logout();
     }
+
+    else if(response.status == 404){
+        if(failure == Failure.prototype.volumeDelete){
+            VM.deleteVmRequest();
+        }
+    }
+
     // lock_version out of date
     else if(response.status == 409){
         // Host connect
@@ -167,6 +175,8 @@ Failure.checkFailure = function(response, failure){
             Ext.Msg.alert('Failure', 'There is not enough disk capacity to create the snapshot');
         }
     }
+
+    // else
     else{
         if(failure){
             Ext.Msg.alert('Failure', failure);
