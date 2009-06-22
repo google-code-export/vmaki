@@ -13,9 +13,8 @@ Rails::Initializer.run do |config|
 	config.gem "uuid"
 	config.gem "net-ssh"
 	config.gem "net-sftp"
-	config.gem "postgres "
+	config.gem "postgres"
 	config.gem "libxml-ruby"
-	config.gem "../ruby-libvirt/pkg/ruby-libvirt-0.1.1.gem"
 
 	# set session store to active record
 	config.action_controller.session_store = :active_record_store
