@@ -118,7 +118,10 @@ class Host < ActiveRecord::Base
 	end
 
 	def retrieve_nics
-		Nic.retrieve(self.id)
+    # retrieve new nics only if this host is being created
+    if self.new_record?
+      Nic.retrieve(self.id)
+    end
 	end
 
 	def delete_nics

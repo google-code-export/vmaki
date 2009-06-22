@@ -12,7 +12,6 @@ class Nic < ActiveRecord::Base
 			nics = ssh.exec!("ifconfig | grep ^eth | cut -c1-5")
 			nics.each { |s| nics_array << s.chomp.chop }
 		end
-		puts nics_array
 		nics_array.each do |nic|
 			self.create(:name => nic, :host_id => host_id)
 		end
