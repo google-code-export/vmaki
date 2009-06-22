@@ -44,7 +44,7 @@ function Tree(){
         folderSort: true,
         dir: 'asc',
         sortType: function(node){
-            return node.attributes.id
+            return parseInt (node.attributes.id, 10);
         }
     })
 
