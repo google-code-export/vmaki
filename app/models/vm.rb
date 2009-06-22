@@ -43,7 +43,7 @@ class Vm < ActiveRecord::Base
 
 			self.status = mapped_status
 			puts "self.lock_version: #{self.lock_version}"
-			#self.lock_version = self.lock_version
+			self.lock_version = self.lock_version_was
 			self.save
 			@domain.free
 		rescue
