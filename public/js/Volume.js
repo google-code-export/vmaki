@@ -120,8 +120,11 @@ Volume.deleteVolume = function(VolumeId, poolId){
     if(poolId){
         Ext.Ajax.request({
                 url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/pools/' + poolId + '/volumes/' + VolumeId,
-                method: 'DELETE'
-            })
+                method: 'DELETE',
+                failure: function(response){
+                    Failure.checkFailure(response, Failure.prototype.volumeDelete);
+                }
+        })
     }
     else{
         poolId = 0;
@@ -135,7 +138,10 @@ Volume.deleteVolume = function(VolumeId, poolId){
                 // send delete request
                 Ext.Ajax.request({
                     url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/pools/' + poolId + '/volumes/' + VolumeId,
-                    method: 'DELETE'
+                    method: 'DELETE',
+                    failure: function(response){
+                        Failure.checkFailure(response, Failure.prototype.volumeDelete);
+                    }
                 })
             }
         });
