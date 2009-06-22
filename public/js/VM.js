@@ -465,6 +465,7 @@ VM.deleteVmRequest = function(){
 
 // function to start the vm
 VM.start = function(){
+    hostTree.selectedNode.getUI().addClass('vm-reloading-node');
     // sends the start request to the server
     Ext.Ajax.request({
         url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId,
@@ -476,6 +477,7 @@ VM.start = function(){
         },
         failure: function(response){
             Failure.checkFailure(response, Failure.prototype.vmStart);
+            hostTree.rootNode.reload();
         }
     })
 }
@@ -489,6 +491,7 @@ VM.suspend = function(){
         msg: 'Are you sure you want to suspend VM ' + '<b>' + hostTree.selectedNodeName + '</b> ?',
         fn: function(btn){
             if (btn == 'yes'){
+                hostTree.selectedNode.getUI().addClass('vm-reloading-node');
                 // sends the start request to the server
                 Ext.Ajax.request({
                     url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId,
@@ -499,6 +502,7 @@ VM.suspend = function(){
                     },
                     failure: function(response){
                         Failure.checkFailure(response, Failure.prototype.vmSuspend);
+                        hostTree.rootNode.reload();
                     }
                 })
             }
@@ -508,6 +512,7 @@ VM.suspend = function(){
 
 // function to resume a vm
 VM.resume = function(){
+    hostTree.selectedNode.getUI().addClass('vm-reloading-node');
     // sends the start request to the server
     Ext.Ajax.request({
         url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId,
@@ -518,6 +523,7 @@ VM.resume = function(){
         },
         failure: function(response){
             Failure.checkFailure(response, Failure.prototype.vmResume);
+            hostTree.rootNode.reload();
         }
     })
 }
@@ -532,6 +538,7 @@ VM.shutdown = function(){
         msg: 'Are you sure you want to shut down VM ' + '<b>' + hostTree.selectedNodeName + '</b> ?',
         fn: function(btn){
             if (btn == 'yes'){
+                hostTree.selectedNode.getUI().addClass('vm-reloading-node');
                 // sends the start request to the server
                 Ext.Ajax.request({
                     url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId,
@@ -542,6 +549,7 @@ VM.shutdown = function(){
                     },
                     failure: function(response){
                         Failure.checkFailure(response, Failure.prototype.vmShutdown);
+                        hostTree.rootNode.reload();
                     }
                 })
             }
@@ -559,16 +567,19 @@ VM.reboot = function(){
         msg: 'Are you sure you want to reboot VM ' + '<b>' + hostTree.selectedNodeName + '</b> ?',
         fn: function(btn){
             if (btn == 'yes'){
+                hostTree.selectedNode.getUI().addClass('vm-reloading-node');
                 // sends the start request to the server
                 Ext.Ajax.request({
                     url: Util.prototype.BASEURL + 'hosts/' + hostTree.parentNodeId + '/vms/' + hostTree.selectedNodeId,
                     method: 'PUT',
                     jsonData: '{vm: {"action": "reboot", "lock_version": ' + hostTree.selectedNode.attributes.lock_version + '}}',
                     success: function(){
+                        
                         setTimeout('hostTree.rootNode.reload();', 10000);
                     },
                     failure: function(response){
                         Failure.checkFailure(response, Failure.prototype.vmRestart);
+                        hostTree.rootNode.reload();
                     }
                 })
             }

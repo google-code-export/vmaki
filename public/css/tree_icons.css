@@ -31,3 +31,6 @@
             .vm-crashed-node .x-tree-node-icon{
                 background-image:url(../images/icons/computer_error.gif) !important;
             }
+            .vm-reloading-node .x-tree-node-icon{
+                background-image:url(../images/icons/computer_hourglass.png) !important;
+            }
