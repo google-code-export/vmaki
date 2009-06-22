@@ -76,7 +76,7 @@ function TabPanel(){
 
             }
         },{
-            title: 'Snapshot',
+            title: 'Snapshots',
             iconCls: 'snapshot',
             id: 'snapshotTab',
             items: [

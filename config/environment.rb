@@ -10,11 +10,18 @@ require File.join(File.dirname(__FILE__), 'boot')
 require 'yaml'
 
 Rails::Initializer.run do |config|
+	config.gem "uuid"
+	config.gem "net-ssh"
+	config.gem "net-sftp"
+	config.gem "postgres "
+	config.gem "libxml-ruby"
+	config.gem "../ruby-libvirt/pkg/ruby-libvirt-0.1.1.gem"
+
 	# set session store to active record
 	config.action_controller.session_store = :active_record_store
 
   # Load Virtual Monkey Custom Configuration File
-  APP_CONFIG = YAML::load(File.open("#{RAILS_ROOT}/config/virtualmonkey_config.yml"))
+  APP_CONFIG = YAML::load(File.open("#{RAILS_ROOT}/config/vmaki_config.yml"))
 	if APP_CONFIG["libvirt_integration"]
 		puts "libvirt integration ENABLED"
 	else
