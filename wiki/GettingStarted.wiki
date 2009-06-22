@@ -119,22 +119,21 @@ vmaki=# alter user vmaki with password 'virtual_M0nk83!';
 
 == NFS ==
 
-Install NFS Server & create directories:
+Install NFS Server & create directory:
 {{{
-# mkdir /isos
-# chmod 777 /isos
+# chmod 777 /var/vmaki/isos
 # mkdir -p /mnt/tmp
 }}}
 
 Add the following line to "/etc/exports":
 {{{
-/isos *(ro,sync,insecure,no_root_squash,no_subtree_check)
+/var/vmaki/isos *(ro,sync,insecure,no_root_squash,no_subtree_check)
 }}}
 
 Now export the filesystem and mount it:
 {{{
 # sudo exportfs -ra
-# sudo mount IP:/isos /mnt/tmp
+# sudo mount IP:/var/vmaki/isos /mnt/tmp
 }}}
 
 == Final Steps ==
