@@ -17,7 +17,7 @@ class Constants
 	DRIVER_NAME = "phy"
 	NFS_MOUNT_PATH = "/mnt/tmp"
   NFS_SOURCE_PATH = "/var/vmaki/isos"
-	NFS_SHARE_NAME = "/isos"
+	NFS_SHARE_NAME = NFS_SOURCE_PATH
 	SNAPSHOTS_PATH = "/var/vmaki/snapshots"
 	BUS_TYPE = "scsi"
   BUS_TYPE_IDE = "ide"
