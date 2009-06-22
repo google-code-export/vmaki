@@ -62,12 +62,11 @@ function Tree(){
     // fires when tree is loaded and triggers the setIcon handler
     this.treeLoader.on('load', function(treeloader, node, response){
         Tree.setHostIcon(node);
-
-//        if(hostTree.selectedNode){
-//            var n = hostTree.tree.getNodeById(hostTree.selectedNode.attributes.id);
-//            n.ensureVisible();
-//            var el = Ext.fly(n.getUI().getEl());
-//            el.select();
+        if(hostTree.selectedNode){
+            var n = hostTree.tree.getNodeById(hostTree.selectedNode.attributes.id);
+            n.unselect();
+            n.select();
+        }
         
     });
 
@@ -136,7 +135,7 @@ Tree.prototype.selectedNodeChange = function(){
     myToolBar.setButtons();
 
     // calls the active tab and reactivates it
-    activeTab = myTabPanel.tabPanel.getActiveTab()
+    activeTab = myTabPanel.tabPanel.getActiveTab();
     myTabPanel.tabPanel.render(activeTab);
 
 
