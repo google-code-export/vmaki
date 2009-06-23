@@ -1,11 +1,10 @@
 #summary How to manage your virtual enviroment using vmaki
-#sidebar TableOfContents
 
 
 
 = Introduction =
 
-This page contains the User Guide for *vmaki 1.0* and will help you using it effectively in your enviroment. 
+This page contains the user guide for *vmaki 1.0* and will help you using it effectively in your enviroment. 
 
 = Contents =
 
@@ -14,13 +13,11 @@ This page contains the User Guide for *vmaki 1.0* and will help you using it eff
 
 = Getting Started =
 
-Check out the Getting Started Guide to get vmaki running in your enviroment.
-
-* GettingStarted 
+Check out the [GettingStarted Getting Started Guide] to get vmaki running in your enviroment.
 
 = Login =
 
-If vmaki is set up as described in the Getting Started Guide you can connect to it using your browser (Firefox is highly recommended) entering the URI of the host on which vmaki is installed from any workstation in your network. vmaki is running on Port 8000, therefore you have to make sure to specifiy the port in the URI. Have a look at the example below.
+If _vmaki_ is set up as described in the [GettingStarted Getting Started Guide] you can connect to it using your browser (Firefox is highly recommended) entering the URI of the host on which _vmaki_ is installed from any workstation in your network. vmaki is running on *Port 8000*, therefore you have to make sure to specify the port in the URI. Have a look at the example below.
 
 [http://vmaki.googlecode.com/files/url.png]
 
@@ -31,22 +28,17 @@ You will then be promted to enter the username and password. If you log in for t
 
 After you successfully logged in with the admin user account you should create a new user account and change the admin's password. Have a look at [UserGuide#User_Management User Management] to see how that is done.
 
-
-= User Management =
-
-vmaki has a build in user management which allows you to controll the access for vmaki. The user management can be accessed via the User tab. It allows you to create a new user or delete or rename an existing one. Also the password of an existing user can be reseted.
-
-[http://vmaki.googlecode.com/files/user_tab.png]
-
-== Creating a new User ==
-
-A new user can be added via the Add User button. In the appearing pop-up menu the username, the userrole and the password have to be specified. The role of the new user can either be *Administrator* or *User*. If you define the new us as an Administrator he can also administer the user management while the role user doesn't allow this. Despite of that there are no differences the role Administrator and User.
-
-[http://vmaki.googlecode.com/files/add_user_window.png]  
-
 = Host Management =
 
-You can add one or several Xen host to vmaki. In order to make sure they can be connected you have to set up the Xen host as discribed To add a Xen host to vmaki you simply click on the host menu on the top toolbar and choose the item Add Host. A pop-up will appear and ask you for some paramenters:
+You can add one or several Xen host to _vmaki_. The local Xen host on the system _vmaki_ has been installed can be added right away without any further modifications. In order to connect remote Xen Hosts running on an other system than _vmaki_ itself, you have to set up the Xen host as discribed in the [UserGuide#Xen_Node Getting Started Guide].
+
+== Adding a Xen Host ==
+
+To add a Xen host to vmaki you simply click on the _Host Menu_ on the top toolbar and choose the item _Add Host_. A pop-up will appear and ask you for some paramenters:
+
+[http://vmaki.googlecode.com/files/add_host_menu.png]
+
+[http://vmaki.googlecode.com/files/add_host_menu.png]
 
 ==== Host Name ====
 
@@ -96,3 +88,15 @@ If you are using a Windows operating system you need to register the VNC protoco
 = ISO Management =
 
 = Snapshot Management =
+
+= User Management =
+
+vmaki has a build in user management which allows you to controll the access for vmaki. The user management can be accessed via the User tab. It allows you to create a new user or delete or rename an existing one. Also the password of an existing user can be reseted.
+
+[http://vmaki.googlecode.com/files/user_tab.png]
+
+== Creating a new User ==
+
+A new user can be added via the Add User button. In the appearing pop-up menu the username, the userrole and the password have to be specified. The role of the new user can either be *Administrator* or *User*. If you define the new us as an Administrator he can also administer the user management while the role user doesn't allow this. Despite of that there are no differences the role Administrator and User.
+
+[http://vmaki.googlecode.com/files/add_user_window.png]  
