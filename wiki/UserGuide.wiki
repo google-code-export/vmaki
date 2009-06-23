@@ -144,7 +144,7 @@ This parameter can only be set for _PV_ VMs and specifies the maximum value the 
 The size of the root partition can be incread or decreased. Be aware that decreasing the partition may cause data loss. This parameter can only be changed if the VM is shut down.
 
 ==== Boot Device ====
-Here you can change the boot device of the VM. Since a _PV_ does not specify a boot device this can only be changed for _HVM_ VMs.
+Here you can change the boot device of the VM. Since a _PV_ VMs does not specify a boot device this can only be changed for _HVM_ VMs.
 
 ==== NIC ====
 
