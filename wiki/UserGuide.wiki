@@ -24,8 +24,8 @@ If vmaki is set up as described in the Getting Started Guide you can connect to 
 
 You will then be promted to enter the username and password. If you log in for the first time you will have to use the predefined user account:
 
-* *username: admin*
-* *password: admin*
+  * *username: admin*
+  * *password: admin*
 
 
 
