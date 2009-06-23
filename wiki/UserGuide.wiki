@@ -44,10 +44,13 @@ A new user can be added via the Add User button. In the appearing pop-up menu th
 
 = Host Management =
 
-To add a Xen host to vmaki you simply click on the host menu on the top toolbar and choose the item Add Host. A pop-up will appear and ask you for some paramenters:
+You can add one or several Xen host to vmaki. In order to make sure they can be connected you have to set up the Xen host as discribed To add a Xen host to vmaki you simply click on the host menu on the top toolbar and choose the item Add Host. A pop-up will appear and ask you for some paramenters:
 
 ==== Host Name ==== 
-
+==== Connection ==== 
+==== User ====
+==== Password ====
+==== LVM Pool Name ====   
 
 = VM Management =
 
