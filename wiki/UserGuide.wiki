@@ -74,7 +74,7 @@ A pop-up window will appear where you can enter the desired configuration for th
 Enter the name for the VM
 
 ==== Type ====
-There are two different virtualization modes that supported by Xen:
+There are two different virtualization modes supported by Xen:
 
 ===== para-virtualized (PV) =====
 
