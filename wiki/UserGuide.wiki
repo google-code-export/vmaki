@@ -44,6 +44,8 @@ A new user can be added via the Add User button. In the appearing pop-up menu th
 
 = Host Management =
 
+To add a Xen host to vmaki you 
+
 = VM Management =
 
 == Creating a Guest System ==
