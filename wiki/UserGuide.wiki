@@ -34,7 +34,7 @@ You can add one or several Xen host to _vmaki_. The local Xen host on the system
 
 == Adding a Xen Host ==
 
-To add a Xen host to vmaki you simply click on the _Host Menu_ on the top toolbar and choose the item _Add Host_. A pop-up will appear and ask you for some paramenters:
+To add a Xen host to _vmaki_ you simply click on the _Host Menu_ on the top toolbar and choose the item _Add Host_. A pop-up will appear and ask you for some paramenters:
 
 [http://vmaki.googlecode.com/files/add_host_menu.png]
 
@@ -42,26 +42,60 @@ To add a Xen host to vmaki you simply click on the _Host Menu_ on the top toolba
 
 ==== Host Name ====
 
-This field expects the name of the host under which it can be reached in the network. You can either enter the IP Adress or the DNS name of the host. It is not recommended to use localhost as the host name for the local Xen host because the hostname will alos be used for the VNC link which is needed to access the console of a VM and could not be used then.
- 
+This field expects the name of the host on which the Xen host is installed. You can either enter the IP Adress or the DNS name of the host. It is not recommended to use localhost as the host name for the local Xen host because the hostname will alos be used for the VNC link which is needed to access the console of a VM and could not be used in that case.
+
 ==== Connection ==== 
-This field sets the protocol which is used to establish the connection to the Xen host. In the current version of vmaki only ssh connections are supported, therefore this entry can not be changed.
+This field sets the protocol which is used to establish the connection to the Xen host. In the current version of _vmaki_ only ssh connections are supported, therefore this entry can not be changed.
 
 ==== User ====
+This field specifies the user wich is used to connect to the Xen host. 
 
 
 ==== Password ====
 Here you have to enter the password of the user specified above.
 
 ==== LVM Pool Name ====
-It is mandatory to have set up your Xen host using LVM as described in the Getting Started Guide. In this field you have to enter the LVM pool name of your Xen host. If you don't now the LVM pool name visit the [GettingStarted Getting Started Guide] to see how that is done.
+It is mandatory to have set up your Xen host using LVM as described in the [GettingStarted Getting Started Guide]. In this field you have to enter the LVM pool name of the Xen host. 
    
 
 = VM Management =
 
 == Creating a VM ==
 
-== Controll a VM ==
+To create a VM you have to select the host on which you want the VM to be created. If the correct Xen host is selected you can simply click on the _Add VM_ button on the top toolbar.
+
+[http://vmaki.googlecode.com/files/add_vm_button.png]
+
+A pop-up window will appear where you can enter the desired configuration for the VM.
+
+[http://vmaki.googlecode.com/files/add_vm_button.png]
+
+==== VM Name ====
+Enter the name for the VM
+
+==== Type ====
+There are two different virtualization modes that supported by Xen:
+
+===== para-virtualized (PV) =====
+
+===== HVM =====
+
+
+==== Memory ====
+Here you can enter how much of the physical memory of the Xen host is going to be used by the VM.
+
+==== VCPU ====
+This field sets the amount of virtual CPUs that are going to be used by the VM
+
+==== Root Parition Capacity ====
+
+
+==== NIC ====
+
+==== Media ====
+
+
+== Managing a VM ==
 
 == Reconfigure a Guest System ==
 
