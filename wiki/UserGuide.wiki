@@ -123,11 +123,30 @@ Further you have to configure the boot device of the VM. By default the CD-ROM d
 
 == Controlling a VM ==
 
-A VM can be controlled via the top toolbar or the VM context menu, which can be opened by right clicking on the VM.
+A VM can be controlled via the top toolbar or the VM context menu, which can be opened by right clicking on the VM. 
 
 [http://vmaki.googlecode.com/files/vm_context.png]
 
+
 == Reconfigure a VM ==
+
+To reconfigure the VM settings you can either use the _Reconfigure VM_ item in the _Edit Menu_ from the top toolbar or from the context menu of the selected VM. After clicking on the _Reconfigure VM_ item a pop-up window is shown with the current configuration of the VM.
+
+[http://vmaki.googlecode.com/files/reconfigure_vm.png]
+
+==== Memory ====
+Here you can change the how much of the physical memory of the Xen host is used by the VM. For _HVM_ VMs this can only be changed when the VM is shut down. The memory for _PV_ VMs can be changed at runtime but may not exceed the _Maximumg Memory_ value.
+
+==== Maximum Memory ====
+This parameter can only be set for _PV_ VMs and specifies the maximum value the memory of the VM can be extended at runtime. The maximum memory value should never be smaller than the memory value.
+
+==== Root Partition Capacity ====
+The size of the root partition can be incread or decreased. Be aware that decreasing the partition may cause data loss. This parameter can only be changed if the VM is shut down.
+
+==== Boot Device ====
+Here you can change the boot device of the VM. Since a _PV_ does not specify a boot device this can only be changed for _HVM_ VMs.
+
+==== NIC ====
 
 == Change the attached Media of a VM ==
 
