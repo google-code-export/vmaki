@@ -100,16 +100,36 @@ Here you can enter how much of the physical memory of the Xen host is going to b
 This field sets the amount of virtual CPUs that are going to be used by the VM
 
 ==== Root Parition Capacity ====
+Here you can enter the size of the locigal volume for the VM. The size may not be larger than the available capacity left on the LVM pool.
 
 
 ==== NIC ====
+In this drop down menu you can choose which network interface of the Xen Host is going to be mapped to the VM. 
 
 ==== Media ====
+Here you can specify wich media is attached to the VM. You can either choose _CD-ROM_ for the physical drive of the Xen host or _ISO File_ to attach a ISO file which has been uploaded to _vmaki_. Have a look at [UserGuide#ISO_Management ISO Management] to see how an ISO file is uploaded to _vmaki_.
+
+== Installing the Guest Operating System ==
 
 
-== Managing a VM ==
+==== PV ====
+On PV VMs Debian Lenny gets installed fully automated. The operating system is executable as soon as the provisioning is terminated.
 
-== Reconfigure a Guest System ==
+==== HVM ====
+To install the guest operating system on HVM VMs you need to provide the installation media. You can either attach the physical CD-ROM drive or an ISO file. If not changed when adding the VM, the CD-ROM drive is attached by default. Have a look at [userGuide#Change_the attached_Media_of_a_VM Change attached Media] to see how you can change the attached media of a VM.
+
+Further you have to configure the boot device of the VM. By default the CD-ROM drive is set as the boot device. Alternative boot devices are HD (logical volume) and Network (PXE). [userGuide#Reconfigure_a_VM] shows you how you can change the boot device of a vm.
+
+
+== Controlling a VM ==
+
+A VM can be controlled via the top toolbar or the VM context menu, which can be opened by right clicking on the VM.
+
+[http://vmaki.googlecode.com/files/vm_context.png]
+
+== Reconfigure a VM ==
+
+== Change the attached Media of a VM ==
 
 == Connect VNC Console of a Guest System ==
 
