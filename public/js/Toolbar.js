@@ -47,15 +47,14 @@ function ToolBar(){
        
     // Toolbar
     this.mainToolbar = new Ext.Toolbar({
-        height: 250,
         items:[{
             xtype: 'tbspacer'
         },{
             xtype: 'tbspacer'
-        },{
-            xtype: 'panel',
-            html: '<img src="/images/logo_app_small.gif" />'
-        },{
+        },new Ext.BoxComponent({autoEl: {tag: 'img', src:'../images/logo_app_small.png'}})
+
+
+        ,{
             xtype: 'tbspacer'
         },{
             xtype: 'tbspacer'
