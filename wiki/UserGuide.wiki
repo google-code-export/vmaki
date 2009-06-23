@@ -30,7 +30,7 @@ After you successfully logged in with the admin user account you should create a
 
 = Host Management =
 
-You can add one or several Xen host to _vmaki_. The local Xen host on the system _vmaki_ has been installed can be added right away without any further modifications. In order to connect remote Xen Hosts running on an other system than _vmaki_ itself, you have to set up the Xen host as discribed in the [GettingStartedGuide#Xen_Node Getting Started Guide].
+You can add one or several Xen host to _vmaki_. The local Xen host on the system _vmaki_ has been installed can be added right away without any further modifications. In order to connect remote Xen Hosts running on an other system than _vmaki_ itself, you have to set up the Xen host as discribed in the [GettingStarted#Xen_Node Getting Started Guide].
 
 == Adding a Xen Host ==
 
