@@ -60,7 +60,7 @@ This field sets the protocol which is used to establish the connection to the Xe
 Here you have to enter the password of the user specified above.
 
 ==== LVM Pool Name ====
-It is mandatory to have set up your Xen host using LVM as described in the Getting Started Guide. In this field you have to enter the LVM pool name of your Xen host. If you don't now the LVM pool name visit the [GettingStartedGetting Started Guide] to see how that is done.
+It is mandatory to have set up your Xen host using LVM as described in the Getting Started Guide. In this field you have to enter the LVM pool name of your Xen host. If you don't now the LVM pool name visit the [GettingStarted Getting Started Guide] to see how that is done.
    
 
 = VM Management =
