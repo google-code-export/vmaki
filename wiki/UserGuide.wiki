@@ -77,6 +77,11 @@ Enter the name for the VM
 There are two different virtualization modes supported by Xen:
 
 ===== para-virtualized (PV) =====
+A guest operating system on a para-virtualized VM must be _virtualization aware_ which means that it has to provide an interface to the Xen hypervisor. Therefore the kernel of the guest operating system has to be modified. This virtualization method has compared to other virtualization methods a better performance. The disadvantage is that only operating systems with a modified kernel can be installed. Also the installation process is more complex to other methods.
+
+_vmaki_ supports the fully automated provisioning of a Debian Lenny system. Choose type PV and you get a fully executable Debian Lenny System! PV is your choise if you want a VM with good performance.
+
+[http://vmaki.googlecode.com/files/provisioning.png]    
 
 ===== HVM =====
 
