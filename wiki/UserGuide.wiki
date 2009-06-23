@@ -38,7 +38,7 @@ To add a Xen host to vmaki you simply click on the _Host Menu_ on the top toolba
 
 [http://vmaki.googlecode.com/files/add_host_menu.png]
 
-[http://vmaki.googlecode.com/files/add_host_menu.png]
+[http://vmaki.googlecode.com/files/add_host.png]
 
 ==== Host Name ====
 
