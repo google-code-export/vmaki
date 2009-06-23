@@ -81,11 +81,18 @@ A guest operating system on a para-virtualized VM must be _virtualization aware_
 
 _vmaki_ supports the fully automated provisioning of a Debian Lenny system. Choose type PV and you get a fully executable Debian Lenny System! PV is your choise if you want a VM with good performance.
 
+After a PV VM has been created the provisioning of Debian Lenny automatically starts and the status of the VM in the tree and on the general tab are set to provisioning. The provisioning can take a couple of minutes, you will that the provisioning is done when the status of the VM has been updatad to shutoff.
+
 [http://vmaki.googlecode.com/files/provisioning.png]    
 
 ===== HVM =====
 
+On a HVM based VM the virtualization functionality is implemented in the hardware. The guest operating system has not to be aware that it is virtualized, therefore its kernel does not have to be modified.
 
+To be able to run HVM VMs the CPU of the Xen host must provide HVM support (Intel VT-x/VT-i / AMD Pacifica). Also the HVM support must be activated on the mainboard. You can check on the _General Tab_ in _vmaki_ if HVM is supported for the selected Xen host.
+
+[http://vmaki.googlecode.com/files/hvm_support.png]
+ 
 ==== Memory ====
 Here you can enter how much of the physical memory of the Xen host is going to be used by the VM.
 
