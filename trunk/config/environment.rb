@@ -10,12 +10,6 @@ require File.join(File.dirname(__FILE__), 'boot')
 require 'yaml'
 
 Rails::Initializer.run do |config|
-	config.gem "mongrel_cluster"
-	config.gem "uuid"
-	config.gem "net-ssh"
-	config.gem "net-sftp"
-	config.gem "postgres"
-	config.gem "libxml-ruby"
 
 	# set session store to active record
 	config.action_controller.session_store = :active_record_store

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090621133332) do
+ActiveRecord::Schema.define(:version => 20090623092416) do
 
   create_table "hosts", :force => true do |t|
     t.string   "name"

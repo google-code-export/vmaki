@@ -157,7 +157,7 @@ Failure.checkFailure = function(response, failure){
         }
         // Password Reset
         if(failure == Failure.prototype.passwordReset){
-            Ext.Msg.alert('Out of Date', 'The password could not be reseted because the user configuration has changed in the meantime. It has been updated to the current version now.');
+            Ext.Msg.alert('Out of Date', 'The password could not been reset because the user configuration has changed in the meantime. It has been updated to the current version now.');
             myUser.userStore.reload();
         }
     }
