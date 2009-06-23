@@ -18,6 +18,17 @@ Check out the Getting Started Guide to get vmaki running in your enviroment.
 
 * GettingStarted 
 
+= Login =
+
+If vmaki is set up as described in the Getting Started Guide you can connect to it using your browser (Firefox is highly recommended) entering the url of the host on which vmaki is installed from any workstation in your network. 
+
+You will then be promted to enter the username and password. If you log in for the first time you will have to use the predefined user account:
+
+* *username: admin*
+* *password: admin*
+
+
+
 = User Management =
 
 vmaki has a build in user management which allows you to controll the access for vmaki. The user management can be accessed via the User tab. It allows you to create a new user or delete or rename an existing one. Also the password of an existing user can be reseted.
