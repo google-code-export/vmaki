@@ -54,7 +54,7 @@ function ToolBar(){
             xtype: 'tbspacer'
         },{
             xtype: 'panel',
-            html: '<img src="/images/logo.png" width="53px" height="22px" />'
+            html: '<img src="/images/logo_app_small.gif" />'
         },{
             xtype: 'tbspacer'
         },{
