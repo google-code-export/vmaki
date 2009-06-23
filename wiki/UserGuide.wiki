@@ -68,7 +68,7 @@ To create a VM you have to select the host on which you want the VM to be create
 
 A pop-up window will appear where you can enter the desired configuration for the VM.
 
-[http://vmaki.googlecode.com/files/add_vm_button.png]
+[http://vmaki.googlecode.com/files/add_vm.png]
 
 ==== VM Name ====
 Enter the name for the VM
