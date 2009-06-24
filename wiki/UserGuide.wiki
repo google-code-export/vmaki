@@ -32,7 +32,7 @@ If _vmaki_ is set up as described in the [GettingStarted Getting Started Guide] 
 
 [http://vmaki.googlecode.com/files/url.png]
 
-You will then be promted to enter the username and password. If you log in for the first time you will have to use the predefined admin user account:
+You will then be prompted to enter the username and password. If you log in for the first time you will have to use the predefined admin user account:
 
   * *username: admin*
   * *password: admin*
@@ -46,6 +46,7 @@ After you successfully logged in with the admin user account you should create a
 
 You can add one or several Xen host to _vmaki_. The local Xen host on the system _vmaki_ has been installed can be added right away without any further modifications. In order to connect remote Xen Hosts running on an other system than _vmaki_ itself, you have to set up the Xen host as discribed in the [GettingStarted#Xen_Node Getting Started Guide].
 
+
 == Adding a Xen Host ==
 
 To add a Xen host to _vmaki_ you simply click on the _Host Menu_ on the top toolbar and choose the item _Add Host_. A pop-up will appear and ask you for some paramenters:
@@ -55,10 +56,9 @@ To add a Xen host to _vmaki_ you simply click on the _Host Menu_ on the top tool
 [http://vmaki.googlecode.com/files/add_host.png]
 
 
-
 ==== Host Name ====
 
-This field expects the name of the host on which the Xen host is installed. You can either enter the IP Adress or the DNS name of the host. It is not recommended to use localhost as the host name for the local Xen host because the hostname will alos be used for the VNC link which is needed to access the console of a VM and could not be used in that case.
+This field expects the name of the host on which Xen is installed. You can either enter the IP Adress or the DNS name of the host. It is not recommended to use localhost as the host name for the local Xen host because the hostname will alos be used for the VNC link which is needed to access the console of a VM and could not be used in that case.
 
 ==== Connection ==== 
 This field sets the protocol which is used to establish the connection to the Xen host. In the current version of _vmaki_ only ssh connections are supported, therefore this entry can not be changed.
@@ -84,26 +84,26 @@ To create a VM you have to select the host on which you want the VM to be create
 
 [http://vmaki.googlecode.com/files/add_vm_button.png]
 
-A pop-up window will appear where you can enter the desired configuration for the VM.
+A pop-up window will appear in which you can enter the desired configuration for the VM.
 
 [http://vmaki.googlecode.com/files/add_vm.png]
 
-==== VM Name ====
+=== VM Name ===
 Enter the name for the VM
 
-==== Type ====
-There are two different virtualization modes supported by Xen:
+=== Type ===
+There are two different virtualization types offered by Xen. _vmaki_ supports both of them:
 
-===== para-virtualized (PV) =====
-A guest operating system on a para-virtualized VM must be _virtualization aware_ which means that it has to provide an interface to the Xen hypervisor. Therefore the kernel of the guest operating system has to be modified. This virtualization method has compared to other virtualization methods a better performance. The disadvantage is that only operating systems with a modified kernel can be installed. Also the installation process is more complex to other methods.
+==== para-virtualized (PV) ====
+A guest operating system on a para-virtualized VM must be _virtualization aware_ which means that it has to provide an interface to the Xen hypervisor. Therefore the kernel of the guest operating system has to be modified. This virtualization method has compared to other virtualization methods a better performance. The disadvantage is that only operating systems with a modified kernel can be installed. Also the installation process is more complex compared to other methods.
 
 _vmaki_ supports the fully automated provisioning of a Debian Lenny system. Choose type PV and you get a fully executable Debian Lenny System! PV is your choise if you want a VM with good performance.
 
-After a PV VM has been created the provisioning of Debian Lenny automatically starts and the status of the VM in the tree and on the general tab are set to provisioning. The provisioning can take a couple of minutes, you will that the provisioning is done when the status of the VM has been updatad to shutoff.
+After a PV VM has been created the provisioning of Debian Lenny automatically starts and the status of the VM in the _Tree_ and on the _General Tab_ are set to _provisioning_. The provisioning can take a couple of minutes, you will see that the provisioning is done when the status of the VM has been updatad to shutoff.
 
 [http://vmaki.googlecode.com/files/provisioning.png]    
 
-===== HVM =====
+==== HVM ====
 
 On a HVM based VM the virtualization functionality is implemented in the hardware. The guest operating system has not to be aware that it is virtualized, therefore its kernel does not have to be modified.
 
@@ -111,29 +111,28 @@ To be able to run HVM VMs the CPU of the Xen host must provide HVM support (Inte
 
 [http://vmaki.googlecode.com/files/hvm_support.png]
  
-==== Memory ====
+=== Memory ===
 Here you can enter how much of the physical memory of the Xen host is going to be used by the VM.
 
-==== VCPU ====
-This field sets the amount of virtual CPUs that are going to be used by the VM
+=== VCPU ===
+This field sets the amount of virtual CPUs that are going to be used by the VM.
 
-==== Root Parition Capacity ====
+=== Root Partition Capacity ===
 Here you can enter the size of the locigal volume for the VM. The size may not be larger than the available capacity left on the LVM pool.
 
-
-==== NIC ====
+=== NIC ===
 In this drop down menu you can choose which network interface of the Xen Host is going to be mapped to the VM. 
 
-==== Media ====
-Here you can specify wich media is attached to the VM. You can either choose _CD-ROM_ for the physical drive of the Xen host or _ISO File_ to attach a ISO file which has been uploaded to _vmaki_. Have a look at [UserGuide#ISO_Management ISO Management] to see how an ISO file is uploaded to _vmaki_.
+=== Media ===
+Here you can specify which media is attached to the VM. You can either choose _CD-ROM_ for the physical drive of the Xen host or _ISO File_ to attach an ISO file which has been uploaded to _vmaki_. Have a look at [UserGuide#ISO_Management ISO Management] to see how an ISO file is uploaded.
 
 == Installing the Guest Operating System ==
 
 
-==== PV ====
+=== PV ===
 On PV VMs Debian Lenny gets installed fully automated. The operating system is executable as soon as the provisioning is terminated.
 
-==== HVM ====
+=== HVM ===
 To install the guest operating system on HVM VMs you need to provide the installation media. You can either attach the physical CD-ROM drive or an ISO file. If not changed when adding the VM, the CD-ROM drive is attached by default. Have a look at [userGuide#Change_the attached_Media_of_a_VM Change attached Media] to see how you can change the attached media of a VM.
 
 Further you have to configure the boot device of the VM. By default the CD-ROM drive is set as the boot device. Alternative boot devices are HD (logical volume) and Network (PXE). [userGuide#Reconfigure_a_VM] shows you how you can change the boot device of a vm.
