@@ -153,6 +153,12 @@ In this drop down menu you can change whick network interface from the Xen host 
 
 == Change the attached Media of a VM ==
 
+To change the attached media of a VM you can click on the _Media Item_ in the context menu of the VM or in the _Edit Menu_ of the top toolbar. A pop-up window will appear where you can either select the physical CD-ROM drive of the Xen host or a ISO file which has been updated to _vmaki_.
+
+[http://vmaki.googlecode.com/files/media_item.png]
+
+[http://vmaki.googlecode.com/files/attach_iso.png]
+
 == Connect VNC Console of a Guest System ==
 
 To connect the VNC console of a guest system you simply need to click on the VNC link which can be found in the console tab. After clicking on the vnc link you will be promted to choose which VNC viewer will be used to connect the console.
