@@ -133,7 +133,7 @@ Here you can specify which media is attached to the VM. You can either choose _C
 On PV VMs Debian Lenny gets installed fully automated. The operating system is executable as soon as the provisioning is terminated.
 
 === HVM ===
-To install the guest operating system on HVM VMs you need to provide the installation media. You can either attach the physical CD-ROM drive or an ISO file. If not changed when adding the VM, the CD-ROM drive is attached by default. Have a look at [UserGuide#Change_the attached_Media_of_a_VM Change attached Media] to see how you can change the attached media of a VM.
+To install the guest operating system on HVM VMs you need to provide the installation media. You can either attach the physical CD-ROM drive or an ISO file. If not changed when adding the VM, the CD-ROM drive is attached by default. Have a look at [UserGuide#Change_the_attached_Media_of_a_VM Change attached Media] to see how you can change the attached media of a VM.
 
 Further you have to configure the boot device of the VM. By default the CD-ROM drive is set as the boot device. Alternative boot devices are HD (logical volume) and Network (PXE). [UserGuide#Reconfigure_a_VM Reconfigure a VM] shows you how you can change the boot device of a vm.
 
