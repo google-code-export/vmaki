@@ -29,7 +29,7 @@ Installation is just as simple, enter:
 {{{
 apt-get install vmaki
 }}}
-Answer all questions with _yes_. After the package has been installed, reboot the system. A Xen kernel has been installed and it should have been configured as the default kernel. After rebooting, vmaki and all of its components will start up automatically.
+Answer all questions with _yes_. After the package has been installed, reboot the system. A Xen kernel has been installed and should now be set as the default kernel. After rebooting, vmaki and all of its components will start up automatically.
 
 = Xen Node =
 
