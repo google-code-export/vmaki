@@ -192,13 +192,20 @@ To take a snapshot of a VM you simply select the VM you want to backup and click
 
 [http://vmaki.googlecode.com/files/add_snapshot.png]
 
-As soon as you commit the snapshot is being taken and writen into the file.
+As soon as you commit, the snapshot is being taken and writen into the file. This can take a couple of minutes depending on the size of the logical volume of the VM. You can check the status of the snapshot in the panel of the _Snapshot Tab_.
 
 [http://vmaki.googlecode.com/files/creating_snapshot.png]
 
 [http://vmaki.googlecode.com/files/ready_snapshot.png]  
 
 == Restoring a Snapshot ==
+
+To restore a snapshot you have to select the snapshot which has to be restored. Simply click on the _Restore Snapshot_ button in the toolbar. Make sure the VM is not runnig. The status of the snapshot and the VM is changed to restoring. After the restore is done the status will change back to ready.
+
+
+[http://vmaki.googlecode.com/files/restoring_snapshot.png] 
+
+[http://vmaki.googlecode.com/files/restoring_snapshot_node.png] 
 
 = User Management =
 
