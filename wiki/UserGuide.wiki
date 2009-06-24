@@ -137,7 +137,7 @@ To reconfigure the VM settings you can either use the _Reconfigure VM_ item in t
 [http://vmaki.googlecode.com/files/reconfigure_vm.png]
 
 ==== Memory ====
-Here you can change the how much of the physical memory of the Xen host is used by the VM. For _HVM_ VMs this can only be changed when the VM is shut down. The memory for _PV_ VMs can be changed at runtime but may not exceed the _Maximumg Memory_ value.
+Here you can change how much of the physical memory of the Xen host is used by the VM. For _HVM_ VMs this can only be changed when the VM is shut down. The memory for _PV_ VMs can be changed at runtime but may not exceed the _Maximumg Memory_ value.
 
 ==== Maximum Memory ====
 This parameter can only be set for _PV_ VMs and specifies the maximum value the memory of the VM can be extended at runtime. The maximum memory value should never be smaller than the memory value.
@@ -149,6 +149,7 @@ The size of the root partition can be incread or decreased. Be aware that decrea
 Here you can change the boot device of the VM. Since a _PV_ VMs does not specify a boot device this can only be changed for _HVM_ VMs.
 
 ==== NIC ====
+In this drop down menu you can change whick network interface from the Xen host is used by the VM.
 
 == Change the attached Media of a VM ==
 
@@ -173,6 +174,11 @@ If you are using a Windows operating system you need to register the VNC protoco
 [http://customurl.codeplex.com/Release/ProjectReleases.aspx?ReleaseId=15090#ReleaseFiles customURL]
 
 = ISO Management =
+
+You can upload ISO files to _vmaki_ which can be attached to the VMs. Click on the _ISO Tab_ to get to the overview of all ISO files that are currently available. You can then add a new ISO file, delete or rename an existing one. 
+
+[http://vmaki.googlecode.com/files/iso_toolbar.png]
+
 
 = Snapshot Management =
 
