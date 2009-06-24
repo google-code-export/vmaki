@@ -6,7 +6,7 @@ development:
   database: vmakidb
   pool: 5
   username: vmakidb
-  password: virtual_M0nk83!
+  password: virtual_M0nk83
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -17,7 +17,7 @@ test:
   database: vmakidb
   pool: 5
   username: vmakidb
-  password: virtual_M0nk83!
+  password: virtual_M0nk83
 
 production:
   adapter: postgresql
@@ -25,5 +25,5 @@ production:
   database: vmakidb
   pool: 5
   username: vmakidb
-  password: virtual_M0nk83!
+  password: virtual_M0nk83
 
