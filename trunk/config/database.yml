@@ -3,9 +3,9 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: vmaki
+  database: vmakidb
   pool: 5
-  username: vmaki
+  username: vmakidb
   password: virtual_M0nk83!
 
 # Warning: The database defined as "test" will be erased and
@@ -14,16 +14,16 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: vmaki
+  database: vmakidb
   pool: 5
-  username: vmaki
+  username: vmakidb
   password: virtual_M0nk83!
 
 production:
   adapter: postgresql
   encoding: unicode
-  database: vmaki
+  database: vmakidb
   pool: 5
-  username: vmaki
+  username: vmakidb
   password: virtual_M0nk83!
 
