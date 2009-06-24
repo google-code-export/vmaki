@@ -188,6 +188,10 @@ To backup a VM you can take a snapshot of it which stores the current state of t
 
 == Taking a Snapshot ==
 
+To take a snapshot of a VM you simply select the VM you want to backup and click on the _Add Snapshot_ button. This can be done while the VM is running.
+
+[http://vmaki.googlecode.com/files/add_snapshot.png]
+
 == Restoring a Snapshot ==
 
 = User Management =
