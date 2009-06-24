@@ -140,7 +140,7 @@ Further you have to configure the boot device of the VM. By default the CD-ROM d
 
 == Controlling a VM ==
 
-A VM can be controlled via the top toolbar or the VM context menu, which can be opened by right clicking on the VM. 
+A VM can be controlled via the top toolbar or the VM context menu, which can be opened by right clicking on the VM. A VM can be started, suspended, resumed, restarted, shut down or killed. You can only select an action that is possible to be applied to the current status of a VM. 
 
 [http://vmaki.googlecode.com/files/vm_context.png]
 
@@ -152,23 +152,23 @@ To reconfigure the VM settings you can either use the _Reconfigure VM_ item in t
 [http://vmaki.googlecode.com/files/reconfigure_vm.png]
 
 ==== Memory ====
-Here you can change how much of the physical memory of the Xen host is used by the VM. For _HVM_ VMs this can only be changed when the VM is shut down. The memory for _PV_ VMs can be changed at runtime but may not exceed the _Maximumg Memory_ value.
+Here you can change how much of the physical memory of the Xen host is used by the VM. For _HVM_ VMs this can only be changed if the VM is shut down. The memory for _PV_ VMs can be changed at runtime but may not exceed the _Maximumg Memory_ value.
 
 ==== Maximum Memory ====
-This parameter can only be set for _PV_ VMs and specifies the maximum value the memory of the VM can be extended at runtime. The maximum memory value should never be smaller than the memory value.
+This parameter can only be set for _PV_ VMs and specifies the maximum value the memory of the VM can be extended to at runtime. The maximum memory value may never be smaller than the memory value.
 
 ==== Root Partition Capacity ====
-The size of the root partition can be incread or decreased. Be aware that decreasing the partition may cause data loss. This parameter can only be changed if the VM is shut down.
+The size of the root partition can be increased or decreased. Be aware that decreasing the partition may cause data loss. This parameter can only be changed if the VM is shut down.
 
 ==== Boot Device ====
 Here you can change the boot device of the VM. Since a _PV_ VMs does not specify a boot device this can only be changed for _HVM_ VMs.
 
 ==== NIC ====
-In this drop down menu you can change whick network interface from the Xen host is used by the VM.
+In this drop down menu you can change which network interface from the Xen host is used by the VM.
 
 == Change the attached Media of a VM ==
 
-To change the attached media of a VM you can click on the _Media Item_ in the context menu of the VM or in the _Edit Menu_ of the top toolbar. A pop-up window will appear where you can either select the physical CD-ROM drive of the Xen host or a ISO file which has been updated to _vmaki_.
+To change the attached media of a VM you can click on the _Media_ item in the context menu of the VM or in the _Edit Menu_ of the top toolbar. A pop-up window will appear in which you can either select the physical CD-ROM drive of the Xen host or a ISO file which has been uploaded to _vmaki_.
 
 [http://vmaki.googlecode.com/files/media_item.png]
 
@@ -176,13 +176,13 @@ To change the attached media of a VM you can click on the _Media Item_ in the co
 
 == Connect VNC Console of a VM ==
 
-To connect the VNC console of a guest system you simply need to click on the VNC link which can be found in the console tab. After clicking on the vnc link you will be promted to choose which VNC viewer will be used to connect the console.
+To connect the VNC console of a VM you simply need to click on the VNC link which can be found in the _Console Tab_. After clicking on the VNC link you will be prompted to choose which VNC viewer will be used to connect the console.
 
 [http://vmaki.googlecode.com/files/vnc_link.png]
 
 [http://vmaki.googlecode.com/files/vnc_console_debian_small.png]
 
-There has to be a VNC viewer installed on your system in order to use the VNC link. Here are some links to download a VNC viewer which can be used for vmaki. ThightVNC also provides a Java version of its viewer which doesn't have to be installed, in case you don't have permission on the system to do so.
+There has to be a VNC viewer installed on your system in order to use the VNC link. Here are some links to download a VNC viewer which can be used for _vmaki_. ThightVNC also provides a Java version of its viewer which doesn't have to be installed, in case you don't have permission on the system to do so.
 
 [http://www.tightvnc.com/download.html ThightVNC (Linux / Windows)]
 
@@ -208,13 +208,13 @@ You can upload ISO files to _vmaki_ which can be attached to the VMs. Click on t
 
 = Snapshot Management =
 
-To backup a VM you can take a snapshot of it which stores the current state of the VM and writes it to an image file. Click on the _Snapshot Tab_ to get to overview of the current snapshots of a VM.
+To backup a VM you can take a snapshot of it which stores the current state of the VM and writes it to an image file. Click on the _Snapshot Tab_ to get to the overview panel of the current snapshots of a VM.
 
 [http://vmaki.googlecode.com/files/toolbar_snapshot.png]
 
 == Taking a Snapshot ==
 
-To take a snapshot of a VM you simply select the VM you want to backup and click on the _Add Snapshot_ button. This can be done while the VM is running. After clicking on the _Add Snapshot_ button you will be promted to enter a description of the snapshot. 
+To take a snapshot of a VM you simply select the VM you want to backup and click on the _Add Snapshot_ button. This can be done while the VM is running. After clicking on the _Add Snapshot_ button you will be prompted to enter a description of the snapshot. 
 
 [http://vmaki.googlecode.com/files/add_snapshot.png]
 
@@ -226,7 +226,7 @@ As soon as you commit, the snapshot is being taken and writen into the file. Thi
 
 == Restoring a Snapshot ==
 
-To restore a snapshot you have to select the snapshot which has to be restored. Simply click on the _Restore Snapshot_ button in the toolbar. Make sure the VM is not runnig. The status of the snapshot and the VM is changed to restoring. After the restore is done the status will change back to ready. This can take a couple of minutes depending on the size of the snapshot that has to be restored.
+To restore a snapshot you have to select the snapshot which has to be restored. Simply click on the _Restore Snapshot_ button in the toolbar. Make sure the VM is not runnig. The status of the snapshot and the VM is changed to _restoring_. After the restore is done the status will change back to ready. This can take a couple of minutes depending on the size of the snapshot that has to be restored.
 
 
 [http://vmaki.googlecode.com/files/restoring_snapshot.png] 
@@ -238,12 +238,12 @@ To restore a snapshot you have to select the snapshot which has to be restored. 
 
 = User Management =
 
-vmaki has a build in user management which allows you to controll the access for vmaki. The user management can be accessed via the User tab. It allows you to create a new user or delete or rename an existing one. Also the password of an existing user can be reseted.
+_vmaki_ has a build in user management which allows you to controll the access to _vmaki_. The user management can be accessed via the _User tab_. It allows you to create a new user and delete or rename an existing one. Also the password of an existing user can be reseted.
 
 [http://vmaki.googlecode.com/files/user_tab.png]
 
 == Creating a new User ==
 
-A new user can be added via the Add User button. In the appearing pop-up menu the username, the userrole and the password have to be specified. The role of the new user can either be *Administrator* or *User*. If you define the new us as an Administrator he can also administer the user management while the role user doesn't allow this. Despite of that there are no differences the role Administrator and User.
+A new user can be added via the Add User button. In the appearing pop-up menu the username, the userrole and the password have to be specified. The role of the new user can either be _Administrator_ or _User_. If you define the new user as _Administrator_ he can also administer the user management while the role _User_ doesn't allow this. Despite of that there are no differences between the role _Administrator_ and _User_.
 
 [http://vmaki.googlecode.com/files/add_user_window.png]  
