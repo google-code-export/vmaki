@@ -184,7 +184,7 @@ You can upload ISO files to _vmaki_ which can be attached to the VMs. Click on t
 
 To backup a VM you can take a snapshot of it which stores the current state of the VM and writes it to an image file. Click on the _Snapshot Tab_ to get to overview of the current snapshots of a VM.
 
-[http://vmaki.googlecode.com/files/snapshot_toolbar.png]
+[http://vmaki.googlecode.com/files/toolbar_snapshot.png]
 
 == Taking a Snapshot ==
 
