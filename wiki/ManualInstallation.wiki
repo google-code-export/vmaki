@@ -153,7 +153,7 @@ Install a host using Debian Lenny and LVM. Make sure the root volume doesn't tak
 
 == Install all Packages ==
 
-# sudo apt-get install xen-linux-system-2.6.26-2-xen-amd64 libvirt-bin openssh-server 
+# sudo apt-get install xen-linux-system-2.6.26-2-xen-amd64 libvirt-bin openssh-server nfs-common portmap
 
 == Xen ==
 Edit "/etc/xen/xend-config.sxp" and add the following lines:
