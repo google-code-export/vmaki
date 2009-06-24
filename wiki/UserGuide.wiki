@@ -182,6 +182,14 @@ You can upload ISO files to _vmaki_ which can be attached to the VMs. Click on t
 
 = Snapshot Management =
 
+To backup a VM you can take a snapshot of it which stores the current state of the VM and writes it to an image file. Click on the _Snapshot Tab_ to get to overview of the current snapshots of a VM.
+
+[http://vmaki.googlecode.com/files/snapshot_toolbar.png]
+
+== Taking a Snapshot ==
+
+== Restoring a Snapshot ==
+
 = User Management =
 
 vmaki has a build in user management which allows you to controll the access for vmaki. The user management can be accessed via the User tab. It allows you to create a new user or delete or rename an existing one. Also the password of an existing user can be reseted.
