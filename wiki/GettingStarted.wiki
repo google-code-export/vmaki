@@ -33,6 +33,10 @@ Answer all questions with _yes_. After the package has been installed, reboot th
 
 = Xen Node =
 
+== Prerequisites ==
+
+Install Debian Lenny on a physical host using LVM volumes. Also make sure there is enough free space within the volume pool for the creation of guest volumes.
+
 == Install all Packages ==
 
 * Check if NFS client has to be installed *
