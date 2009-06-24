@@ -36,7 +36,9 @@ You can add one or several Xen host to _vmaki_. The local Xen host on the system
 
 To add a Xen host to _vmaki_ you simply click on the _Host Menu_ on the top toolbar and choose the item _Add Host_. A pop-up will appear and ask you for some paramenters:
 
-[http://vmaki.googlecode.com/files/add_host_menu.png][http://vmaki.googlecode.com/files/add_host.png]
+[http://vmaki.googlecode.com/files/add_host_menu.png]
+
+[http://vmaki.googlecode.com/files/add_host.png]
 
 
 
