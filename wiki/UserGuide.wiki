@@ -6,14 +6,25 @@
 
 This page contains the user guide for *vmaki 1.0* and will help you using it effectively in your enviroment. 
 
+
+
+
+
 = Contents =
 
 <wiki:toc max_depth="2" />
 
 
+
+
+
+
 = Getting Started =
 
 Check out the [GettingStarted Getting Started Guide] to get vmaki running in your enviroment.
+
+
+
 
 = Login =
 
@@ -27,6 +38,9 @@ You will then be promted to enter the username and password. If you log in for t
   * *password: admin*
 
 After you successfully logged in with the admin user account you should create a new user account and change the admin's password. Have a look at [UserGuide#User_Management User Management] to see how that is done.
+
+
+
 
 = Host Management =
 
@@ -58,6 +72,8 @@ Here you have to enter the password of the user specified above.
 
 ==== LVM Pool Name ====
 It is mandatory to have set up your Xen host using LVM as described in the [GettingStarted Getting Started Guide]. In this field you have to enter the LVM pool name of the Xen host. 
+
+
    
 
 = VM Management =
@@ -179,11 +195,16 @@ If you are using a Windows operating system you need to register the VNC protoco
 
 [http://customurl.codeplex.com/Release/ProjectReleases.aspx?ReleaseId=15090#ReleaseFiles customURL]
 
+
+
+
 = ISO Management =
 
 You can upload ISO files to _vmaki_ which can be attached to the VMs. Click on the _ISO Tab_ to get to the overview of all ISO files that are currently available. You can then add a new ISO file, delete or rename an existing one. 
 
 [http://vmaki.googlecode.com/files/iso_toolbar.png]
+
+
 
 
 = Snapshot Management =
@@ -212,6 +233,9 @@ To restore a snapshot you have to select the snapshot which has to be restored. 
 [http://vmaki.googlecode.com/files/restoring_snapshot.png] 
 
 [http://vmaki.googlecode.com/files/restoring_snapshot_node.png] 
+
+
+
 
 = User Management =
 
