@@ -3,6 +3,8 @@
 = Introduction =
 This document describes in the first part the steps needed to take in order to set up a host running the vmaki management node including Xen Hypervisor support. The second part describes how to set up a so called "Xen Host", which is only being used as a container for Xen DomUs but does not provide any management functionality or host vmaki itself.
 
+You can also resize an existing root volume if you have to, which is described [http://code.google.com/p/vmaki/wiki/ResizeRootVolume here].
+
 = Manual Installation: Management Node =
 
 == Prerequisites ==
@@ -149,7 +151,7 @@ Start the vmaki process (also insides vmaki's directory):
 
 = Xen Node =
 
-Install a host using Debian Lenny and LVM. Make sure the root volume doesn't take up all the space that's available within the volume group. You can also resize an existing root volume if you have to, which is described here. 
+Install a host using Debian Lenny and LVM. Make sure the root volume doesn't take up all the space that's available within the volume group. You can also resize an existing root volume if you have to, which is described [http://code.google.com/p/vmaki/wiki/ResizeRootVolume here]. 
 
 == Install all Packages ==
 
