@@ -1,10 +1,10 @@
-#summary How to manage your virtual enviroment using vmaki
+#summary How to manage your virtual environment using vmaki
 
 
 
 = Introduction =
 
-This page contains the user guide for *vmaki 1.0* and will help you using it effectively in your enviroment. 
+This page contains the user guide for *vmaki 1.0* and will help you using it effectively in your environment. 
 
 
 
@@ -21,7 +21,7 @@ This page contains the user guide for *vmaki 1.0* and will help you using it eff
 
 = Getting Started =
 
-Check out the [GettingStarted Getting Started Guide] to get vmaki running in your enviroment.
+Check out the [GettingStarted Getting Started Guide] to get vmaki running in your environment.
 
 
 
@@ -44,12 +44,12 @@ After you successfully logged in with the admin user account you should create a
 
 = Host Management =
 
-You can add one or several Xen host to _vmaki_. The local Xen host on the system _vmaki_ has been installed can be added right away without any further modifications. In order to connect remote Xen Hosts running on an other system than _vmaki_ itself, you have to set up the Xen host as discribed in the [GettingStarted#Xen_Node Getting Started Guide].
+You can add one or several Xen host to _vmaki_. The local Xen host on the system _vmaki_ has been installed can be added right away without any further modifications. In order to connect remote Xen Hosts running on an other system than _vmaki_ itself, you have to set up the Xen host as described in the [GettingStarted#Xen_Node Getting Started Guide].
 
 
 == Adding a Xen Host ==
 
-To add a Xen host to _vmaki_ you simply click on the _Host Menu_ on the top toolbar and choose the item _Add Host_. A pop-up will appear and ask you for some paramenters:
+To add a Xen host to _vmaki_ you simply click on the _Host Menu_ on the top toolbar and choose the item _Add Host_. A pop-up will appear and ask you for some parameters:
 
 [http://vmaki.googlecode.com/files/add_host_menu.png]
 
@@ -58,13 +58,13 @@ To add a Xen host to _vmaki_ you simply click on the _Host Menu_ on the top tool
 
 ==== Host Name ====
 
-This field expects the name of the host on which Xen is installed. You can either enter the IP Adress or the DNS name of the host. It is not recommended to use localhost as the host name for the local Xen host because the hostname will alos be used for the VNC link which is needed to access the console of a VM and could not be used in that case.
+This field expects the name of the host on which Xen is installed. You can either enter the IP address or the DNS name of the host. It is not recommended to use localhost as the host name for the local Xen host because the hostname will also be used for the VNC link which is needed to access the console of a VM and could not be used in that case.
 
 ==== Connection ==== 
-This field sets the protocol which is used to establish the connection to the Xen host. In the current version of _vmaki_ only ssh connections are supported, therefore this entry can not be changed.
+This field sets the protocol which is used to establish the connection to the Xen host. In the current version of _vmaki_ only SSH connections are supported, therefore this entry can not be changed.
 
 ==== User ====
-This field specifies the user wich is used to connect to the Xen host. 
+This field specifies the user which is used to connect to the Xen host. 
 
 
 ==== Password ====
@@ -97,9 +97,9 @@ There are two different virtualization types offered by Xen. _vmaki_ supports bo
 ==== para-virtualized (PV) ====
 A guest operating system on a para-virtualized VM must be _virtualization aware_ which means that it has to provide an interface to the Xen hypervisor. Therefore the kernel of the guest operating system has to be modified. This virtualization method has compared to other virtualization methods a better performance. The disadvantage is that only operating systems with a modified kernel can be installed. Also the installation process is more complex compared to other methods.
 
-_vmaki_ supports the fully automated provisioning of a Debian Lenny system. Choose type PV and you get a fully executable Debian Lenny System! PV is your choise if you want a VM with good performance.
+_vmaki_ supports the fully automated provisioning of a Debian Lenny system. Choose type PV and you get a fully executable Debian Lenny System! PV is your choice if you want a VM with good performance.
 
-After a PV VM has been created the provisioning of Debian Lenny automatically starts and the status of the VM in the _Tree_ and on the _General Tab_ are set to _provisioning_. The provisioning can take a couple of minutes, you will see that the provisioning is done when the status of the VM has been updatad to shutoff.
+After a PV VM has been created the provisioning of Debian Lenny automatically starts and the status of the VM in the _Tree_ and on the _General Tab_ are set to _provisioning_. The provisioning can take a couple of minutes, you will see that the provisioning is done when the status of the VM has been updated to shutoff.
 
 [http://vmaki.googlecode.com/files/provisioning.png]    
 
@@ -118,7 +118,7 @@ Here you can enter how much of the physical memory of the Xen host is going to b
 This field sets the amount of virtual CPUs that are going to be used by the VM.
 
 === Root Partition Capacity ===
-Here you can enter the size of the locigal volume for the VM. The size may not be larger than the available capacity left on the LVM pool.
+Here you can enter the size of the logical volume for the VM. The size may not be larger than the available capacity left on the LVM pool.
 
 === NIC ===
 In this drop down menu you can choose which network interface of the Xen Host is going to be mapped to the VM. 
@@ -135,7 +135,7 @@ On PV VMs Debian Lenny gets installed fully automated. The operating system is e
 === HVM ===
 To install the guest operating system on HVM VMs you need to provide the installation media. You can either attach the physical CD-ROM drive or an ISO file. If not changed when adding the VM, the CD-ROM drive is attached by default. Have a look at [UserGuide#Change_the_attached_Media_of_a_VM Change attached Media] to see how you can change the attached media of a VM.
 
-Further you have to configure the boot device of the VM. By default the CD-ROM drive is set as the boot device. Alternative boot devices are HD (logical volume) and Network (PXE). [UserGuide#Reconfigure_a_VM Reconfigure a VM] shows you how you can change the boot device of a vm.
+Further you have to configure the boot device of the VM. By default the CD-ROM drive is set as the boot device. Alternative boot devices are HD (logical volume) and Network (PXE). [UserGuide#Reconfigure_a_VM Reconfigure a VM] shows you how you can change the boot device of a VM.
 
 
 == Controlling a VM ==
@@ -152,7 +152,7 @@ To reconfigure the VM settings you can either use the _Reconfigure VM_ item in t
 [http://vmaki.googlecode.com/files/reconfigure_vm.png]
 
 ==== Memory ====
-Here you can change how much of the physical memory of the Xen host is used by the VM. For _HVM_ VMs this can only be changed if the VM is shut down. The memory for _PV_ VMs can be changed at runtime but may not exceed the _Maximumg Memory_ value.
+Here you can change how much of the physical memory of the Xen host is used by the VM. For _HVM_ VMs this can only be changed if the VM is shut down. The memory for _PV_ VMs can be changed at runtime but may not exceed the _Maximum Memory_ value.
 
 ==== Maximum Memory ====
 This parameter can only be set for _PV_ VMs and specifies the maximum value the memory of the VM can be extended to at runtime. The maximum memory value may never be smaller than the memory value.
@@ -190,7 +190,7 @@ There has to be a VNC viewer installed on your system in order to use the VNC li
 
 === Registering VNC Protocol on Windows ===
 
-If you are using a Windows operating system you need to register the VNC protocol in order to be able to choose your VNC viewer when clicking on the vnc link in vmaki. This can be done by adding an entry to the Windows registery. To simplify this we recommend to use the customURL tool which can be downloaded here:
+If you are using a Windows operating system you need to register the VNC protocol in order to be able to choose your VNC viewer when clicking on the VNC link in _vmaki_. This can be done by adding an entry to the Windows registry. To simplify this we recommend to use the customURL tool which can be downloaded here:
 
 [http://customurl.codeplex.com/Release/ProjectReleases.aspx?ReleaseId=15090#ReleaseFiles customURL]
 
@@ -218,7 +218,7 @@ To take a snapshot of a VM you simply select the VM you want to backup and click
 
 [http://vmaki.googlecode.com/files/add_snapshot.png]
 
-As soon as you commit, the snapshot is being taken and writen into the file. This can take a couple of minutes depending on the size of the logical volume of the VM. You can check the status of the snapshot in the panel of the _Snapshot Tab_.
+As soon as you commit, the snapshot is being taken and written into the file. This can take a couple of minutes depending on the size of the logical volume of the VM. You can check the status of the snapshot in the panel of the _Snapshot Tab_.
 
 [http://vmaki.googlecode.com/files/creating_snapshot.png]
 
@@ -226,7 +226,7 @@ As soon as you commit, the snapshot is being taken and writen into the file. Thi
 
 == Restoring a Snapshot ==
 
-To restore a snapshot you have to select the snapshot which has to be restored. Simply click on the _Restore Snapshot_ button in the toolbar. Make sure the VM is not runnig. The status of the snapshot and the VM is changed to _restoring_. After the restore is done the status will change back to ready. This can take a couple of minutes depending on the size of the snapshot that has to be restored.
+To restore a snapshot you have to select the snapshot which has to be restored. Simply click on the _Restore Snapshot_ button in the toolbar. Make sure the VM is not running. The status of the snapshot and the VM is changed to _restoring_. After the restore is done the status will change back to ready. This can take a couple of minutes depending on the size of the snapshot that has to be restored.
 
 
 [http://vmaki.googlecode.com/files/restoring_snapshot.png] 
@@ -238,12 +238,12 @@ To restore a snapshot you have to select the snapshot which has to be restored. 
 
 = User Management =
 
-_vmaki_ has a build in user management which allows you to controll the access to _vmaki_. The user management can be accessed via the _User tab_. It allows you to create a new user and delete or rename an existing one. Also the password of an existing user can be reseted.
+_vmaki_ has a build in user management which allows you to control the access to _vmaki_. The user management can be accessed via the _User tab_. It allows you to create a new user and delete or rename an existing one. Also the password of an existing user can be resetted.
 
 [http://vmaki.googlecode.com/files/user_tab.png]
 
 == Creating a new User ==
 
-A new user can be added via the Add User button. In the appearing pop-up menu the username, the userrole and the password have to be specified. The role of the new user can either be _Administrator_ or _User_. If you define the new user as _Administrator_ he can also administer the user management while the role _User_ doesn't allow this. Despite of that there are no differences between the role _Administrator_ and _User_.
+A new user can be added via the Add User button. In the appearing pop-up menu the user name, the user role and the password have to be specified. The role of the new user can either be _Administrator_ or _User_. If you define the new user as _Administrator_ he can also administer the user management while the role _User_ doesn't allow this. Despite of that there are no differences between the role _Administrator_ and _User_.
 
 [http://vmaki.googlecode.com/files/add_user_window.png]  
