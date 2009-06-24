@@ -33,16 +33,16 @@ Answer all questions with _yes_. After the package has been installed, reboot th
 
 = Xen Node =
 
-== Prerequisites ==
-
-Install Debian Lenny on a physical host using LVM volumes. Also make sure there is enough free space within the volume pool for the creation of guest volumes.
+Install a host using Debian Lenny and LVM. Make sure the root volume doesn't take up all the space that's available within the volume group. You can also resize an existing root volume if you have to, which is described here. 
 
 == Install all Packages ==
 
-* Check if NFS client has to be installed *
-
-# sudo apt-get install xen-linux-system-2.6.26-2-xen-amd64 libvirt-bin openssh-server
+# sudo apt-get install xen-linux-system-2.6.26-2-xen-amd64 libvirt-bin openssh-server nfs-common portmap
 
 == Xen ==
-
-== SSH ==
+Edit "/etc/xen/xend-config.sxp" and add the following lines:
+{{{
+(xend-unix-server yes)
+(network-script 'network-bridge')
+(vnc-listen '0.0.0.0')
+}}}
