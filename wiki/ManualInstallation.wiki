@@ -40,7 +40,7 @@ download http://vmaki.googlecode.com/svn/trunk/ruby-libvirt/pkg/ruby-libvirt-0.1
 }}}
 
 == Xen ==
-Edit "/etc/xen/xend-config.sxp" and add the following line:
+Edit "/etc/xen/xend-config.sxp" and add the following lines:
 {{{
 (xend-unix-server yes)
 (network-script 'network-bridge')
@@ -151,10 +151,12 @@ Start the vmaki process (also insides vmaki's directory):
 
 == Install all Packages ==
 
-* Check if NFS client has to be installed *
-
-# sudo apt-get install xen-linux-system-2.6.26-2-xen-amd64 libvirt-bin openssh-server
+# sudo apt-get install xen-linux-system-2.6.26-2-xen-amd64 libvirt-bin openssh-server 
 
 == Xen ==
-
-== SSH ==
+Edit "/etc/xen/xend-config.sxp" and add the following lines:
+{{{
+(xend-unix-server yes)
+(network-script 'network-bridge')
+(vnc-listen '0.0.0.0')
+}}}
