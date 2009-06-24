@@ -9,9 +9,8 @@ This document describes in the first part the steps needed to take in order to s
 Install Debian Lenny on a physical host using LVM volumes. Make sure there is enough free space within the volume pool for the creation of guest volumes, also make sure you write down the name of the volume group since that information will be needed when adding the host itself to vmaki.
 
 *Notes:*
-
-* Installation has only been tested on freshly built hosts. So please install Debian on a dedicated host just for vmaki.
-* For client machines Firefox 3 is highly recommended. It has not been tested with other browsers.
+  * Installation has only been tested on newly installed hosts, a dedicated machine for vmaki is highly recommended.
+  * For client machines Firefox 3 is highly recommended. It has not been tested with other browsers.
 
 == Setting up the repository ==
 
@@ -27,9 +26,10 @@ Now hit "apt-get update" to apply these changes.
 
 Installation is just as simple, enter:
 
+{{{
 apt-get install vmaki
-
-Answer all questions with yes. After the package has been installed, reboot the system. A Xen kernel has been installed and it should now be the default kernel. 
+}}}
+Answer all questions with _yes_. After the package has been installed, reboot the system. A Xen kernel has been installed and it should have been configured as the default kernel. After rebooting, vmaki and all of its components will start up automatically.
 
 = Xen Node =
 
