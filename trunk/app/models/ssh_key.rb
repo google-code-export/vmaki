@@ -90,9 +90,8 @@ class SshKey
 			return true
     else
 			if connect("password", hostname, username, password)
-				puts "creating new key"
 				system("ssh-keygen -t rsa -f #{public_key}/id_rsa -q -N '' ")
-				try_different_connection_methods(hostname, username, password, public_key, key_path)
+				try_different_connection_methods(hostname, username, password, public_key, home_path, key_path)
 			else
 				puts "password-based connection could not be established! Wrong credentials?"
 			end
@@ -103,6 +102,7 @@ class SshKey
 
 		# retrieve user under which the managed node is running
 		local_user = `whoami`
+    local_user = local_user.strip
 
 		# set path to local public key
 		if local_user == "root"
