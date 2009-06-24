@@ -200,7 +200,7 @@ As soon as you commit, the snapshot is being taken and writen into the file. Thi
 
 == Restoring a Snapshot ==
 
-To restore a snapshot you have to select the snapshot which has to be restored. Simply click on the _Restore Snapshot_ button in the toolbar. Make sure the VM is not runnig. The status of the snapshot and the VM is changed to restoring. After the restore is done the status will change back to ready.
+To restore a snapshot you have to select the snapshot which has to be restored. Simply click on the _Restore Snapshot_ button in the toolbar. Make sure the VM is not runnig. The status of the snapshot and the VM is changed to restoring. After the restore is done the status will change back to ready. This can take a couple of minutes depending on the size of the snapshot that has to be restored.
 
 
 [http://vmaki.googlecode.com/files/restoring_snapshot.png] 
