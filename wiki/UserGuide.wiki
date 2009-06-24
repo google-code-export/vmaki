@@ -159,7 +159,7 @@ To change the attached media of a VM you can click on the _Media Item_ in the co
 
 [http://vmaki.googlecode.com/files/attach_iso.png]
 
-== Connect VNC Console of a Guest System ==
+== Connect VNC Console of a VM ==
 
 To connect the VNC console of a guest system you simply need to click on the VNC link which can be found in the console tab. After clicking on the vnc link you will be promted to choose which VNC viewer will be used to connect the console.
 
