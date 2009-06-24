@@ -20,7 +20,9 @@ class SshKey
 	end
 
 	def add_key(hostname, username, password, public_key, home_path, key_path)
-		puts hostname, username, password
+		puts "public_key: #{public_key}"
+    puts "home_path: #{home_path}"
+    puts "key_path: #{key_path}"
     Net::SFTP.start(hostname, username, :password => password) do |sftp|
 			# create path to the authorized_keys file
 			public_key_data = String.new
@@ -102,10 +104,9 @@ class SshKey
 
 		# retrieve user under which the managed node is running
 		local_user = `whoami`
-    local_user = local_user.strip
 
 		# set path to local public key
-		if local_user == "root"
+		if local_user.strip == "root"
 			public_key = "/root/.ssh"
 		else
 			public_key = "/home/#{local_user.chomp}/.ssh"
