@@ -67,17 +67,6 @@ Change password of the postgres admin user:
 # sudo passwd postgres
 }}}
  
-Create a new database and connect to it:
-{{{
-# sudo -u postgres createdb test
-# sudo -u postgres psql test
-}}}
-
-Then change the password of the database user as well:
-{{{
-test=# alter user postgres with password 'PASSWORD';
-}}}
-
 Then edit the postgresql.conf file:
 {{{
 # sudo gedit /etc/postgresql/8.3/main/postgresql.conf
