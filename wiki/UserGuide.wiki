@@ -71,7 +71,7 @@ This field specifies the user which is used to connect to the Xen host.
 Here you have to enter the password of the user specified above.
 
 ==== LVM Pool Name ====
-It is mandatory to have set up your Xen host using LVM as described in the [GettingStarted Getting Started Guide]. In this field you have to enter the LVM pool name of the Xen host. 
+It is mandatory that you set up your Xen host using LVM as described in the [GettingStarted Getting Started Guide]. In this field you have to enter the LVM pool name of the Xen host. 
 
 
    
