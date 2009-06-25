@@ -8,7 +8,7 @@ You can also resize an existing root volume if you have to, which is described [
 = Management Node =
 
 == Prerequisites ==
-Install Debian Lenny on a physical host using LVM volumes. Make sure there is enough free space within the volume pool for the creation of guest volumes, also make sure you write down the name of the volume group since that information will be needed when adding the host itself to vmaki.
+Install Debian Lenny on a physical host using LVM volumes. Make sure there is enough free space within the volume pool for the creation of guest volumes, also make sure you write down the name of the volume group since that information will be needed when adding the host itself to vmaki. vmaki needs its own user it will run under, which has to be called "vmaki". During installation, you will have to specify a username for the initial user account to be created, so you directly enter "vmaki" to create it.
 
 *Notes:*
   * Installation has only been tested on newly installed hosts, a dedicated machine for vmaki is highly recommended.
