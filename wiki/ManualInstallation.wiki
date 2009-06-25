@@ -19,7 +19,9 @@ Check out vmaki's trunk:
 == Linux ==
 Install required packages via apt & RubyGems:
 {{{
-# sudo apt-get install linux-image-xen-amd64, xen-hypervisor-3.2-1-amd64, xenstore-utils, xen-utils-common make gcc ruby ruby-dev rubygems irb libvirt-bin libvirt-dev libxml-ruby postgresql postgresql-server-dev-8.3 sqlite3 libsqlite3-dev libopenssl-ruby libxml2-dev libxslt-ruby libxslt1-dev openssh-server nfs-kernel-server
+# sudo apt-get install linux-image-xen-amd64 xen-hypervisor-3.2-1-amd64 xenstore-utils xen-utils-common \
+make gcc ruby ruby-dev rubygems irb libvirt-bin libvirt-dev libxml-ruby postgresql postgresql-server-dev-8.3 \
+sqlite3 libsqlite3-dev libopenssl-ruby libxml2-dev libxslt-ruby libxslt1-dev openssh-server nfs-kernel-server
 }}}
 Add the following line to the .profile file in your home directory:
 {{{
