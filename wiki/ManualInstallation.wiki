@@ -106,7 +106,7 @@ local all all md5
 # sudo -u postgres createuser --superuser vmakidb
 # sudo -u postgres createdb vmakidb
 # sudo -u postgres psql vmakidb
-vmaki=# alter user vmaki with password 'virtual_M0nk83';
+vmaki=# alter user vmakidb with password 'virtual_M0nk83';
 \q
 }}}
 
