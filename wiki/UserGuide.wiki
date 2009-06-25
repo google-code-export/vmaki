@@ -95,24 +95,24 @@ Enter the name for the VM
 There are two different virtualization types offered by Xen. _vmaki_ supports both of them:
 
 ==== para-virtualized (PV) ====
-A guest operating system on a para-virtualized VM must be _virtualization aware_ which means that it has to provide an interface to the Xen hypervisor. Therefore the kernel of the guest operating system has to be modified. This virtualization method has compared to other virtualization methods a better performance. The disadvantage is that only operating systems with a modified kernel can be installed. Also the installation process is more complex compared to other methods.
+A guest operating system on a para-virtualized VM must be _virtualization aware_ which means that it has to provide an interface to the Xen hypervisor. Therefore the kernel of the guest operating system has to be modified. This virtualization method provides better performance when compared to full virtualization. The disadvantage is that only operating systems with a modified kernel can be installed. Also the installation process is more complex compared to other methods.
 
-_vmaki_ supports the fully automated provisioning of a Debian Lenny system. Choose type PV and you get a fully executable Debian Lenny System! PV is your choice if you want a VM with good performance.
+_vmaki_ supports the fully automated provisioning of a Debian Lenny system. Choose type PV and you get a fully installed Debian Lenny System and are good to go! PV is the best choice if you want a VM with good performance and do not have any special requirements in terms of the operating system.
 
-After a PV VM has been created the provisioning of Debian Lenny automatically starts and the status of the VM in the _Tree_ and on the _General Tab_ are set to _provisioning_. The provisioning can take a couple of minutes, you will see that the provisioning is done when the status of the VM has been updated to shutoff.
+After a PV VM has been created the provisioning of Debian Lenny automatically starts and the status of the VM in the _Tree_ and on the _General Tab_ are set to _provisioning_. The provisioning can take a couple of minutes, you will see that the provisioning is done when the status of the VM has been updated to _shutoff_.
 
 [http://vmaki.googlecode.com/files/provisioning.png]    
 
 ==== HVM ====
 
-On a HVM based VM the virtualization functionality is implemented in the hardware. The guest operating system has not to be aware that it is virtualized, therefore its kernel does not have to be modified.
+On an HVM based VM virtualization support is implemented directly within hardware. The guest operating system has not to be aware that it is being virtualized and therefore its kernel does not have to be modified in any way.
 
-To be able to run HVM VMs the CPU of the Xen host must provide HVM support (Intel VT-x/VT-i / AMD Pacifica). Also the HVM support must be activated on the mainboard. You can check on the _General Tab_ in _vmaki_ if HVM is supported for the selected Xen host.
+To be able to run HVM VMs the CPU of the Xen host must provide HVM support (Intel VT-x/VT-i or AMD Pacifica). Also HVM support must be activated within the mainboard's BIOS. You can make sure it is supported by selecting the host and clicking on the _General Tab_ in _vmaki_.
 
 [http://vmaki.googlecode.com/files/hvm_support.png]
  
 === Memory ===
-Here you can enter how much of the physical memory of the Xen host is going to be used by the VM.
+This setting let's you enter how much of the physical memory of the Xen host is going to be used by the VM.
 
 === VCPU ===
 This field sets the amount of virtual CPUs that are going to be used by the VM.
@@ -121,47 +121,44 @@ This field sets the amount of virtual CPUs that are going to be used by the VM.
 Here you can enter the size of the logical volume for the VM. The size may not be larger than the available capacity left on the LVM pool.
 
 === NIC ===
-In this drop down menu you can choose which network interface of the Xen Host is going to be mapped to the VM. 
+This drop down menu let's you choose which network interface of the Xen Host is going to be mapped to the VM. 
 
 === Media ===
-Here you can specify which media is attached to the VM. You can either choose _CD-ROM_ for the physical drive of the Xen host or _ISO File_ to attach an ISO file which has been uploaded to _vmaki_. Have a look at [UserGuide#ISO_Management ISO Management] to see how an ISO file is uploaded.
+Here you can specify which media is attached to the VM. You can either choose _CD-ROM_ for the physical drive of the Xen host or _ISO File_ to attach an ISO file which has been uploaded to _vmaki_. Have a look at [UserGuide#ISO_Management ISO Management] to see how an ISO file can be uploaded.
 
 == Installing the Guest Operating System ==
 
-
 === PV ===
-On PV VMs Debian Lenny gets installed fully automated. The operating system is executable as soon as the provisioning is terminated.
+For PV VMs Debian Lenny is being installed automatically. The operating system can be started as soon as provisioning has completed.
 
 === HVM ===
-To install the guest operating system on HVM VMs you need to provide the installation media. You can either attach the physical CD-ROM drive or an ISO file. If not changed when adding the VM, the CD-ROM drive is attached by default. Have a look at [UserGuide#Change_the_attached_Media_of_a_VM Change attached Media] to see how you can change the attached media of a VM.
+To install the guest operating system on HVM VMs you need to provide the installation media. You can either attach a physical CD-ROM drive or an ISO file. If not changed when adding the VM, the CD-ROM drive is attached by default. Have a look at [UserGuide#Change_the_attached_Media_of_a_VM Change attached Media] to see how you can change the attached media of a VM.
 
 Further you have to configure the boot device of the VM. By default the CD-ROM drive is set as the boot device. Alternative boot devices are HD (logical volume) and Network (PXE). [UserGuide#Reconfigure_a_VM Reconfigure a VM] shows you how you can change the boot device of a VM.
 
-
 == Controlling a VM ==
 
-A VM can be controlled via the top toolbar or the VM context menu, which can be opened by right clicking on the VM. A VM can be started, suspended, resumed, restarted, shut down or killed. You can only select an action that is possible to be applied to the current status of a VM. 
+A VM can be controlled via the top toolbar or the VM context menu, which can be opened by right clicking on the VM. A VM can be started, suspended, resumed, restarted, shut down or killed. You can only select an action that is possible to be applied to the current status of a VM.
 
 [http://vmaki.googlecode.com/files/vm_context.png]
 
-
 == Reconfigure a VM ==
 
-To reconfigure the VM settings you can either use the _Reconfigure VM_ item in the _Edit Menu_ from the top toolbar or from the context menu of the selected VM. After clicking on the _Reconfigure VM_ item a pop-up window is shown with the current configuration of the VM.
+To reconfigure the VM settings you can either use the _Reconfigure VM_ item in the _Edit Menu_ from the top toolbar or from the context menu of the selected VM. After clicking on the _Reconfigure VM_ item a pop-up window is displayed with the current configuration of the VM.
 
 [http://vmaki.googlecode.com/files/reconfigure_vm.png]
 
 ==== Memory ====
-Here you can change how much of the physical memory of the Xen host is used by the VM. For _HVM_ VMs this can only be changed if the VM is shut down. The memory for _PV_ VMs can be changed at runtime but may not exceed the _Maximum Memory_ value.
+This let's you change how much of the physical memory of the Xen host is used by the VM. For _HVM_ VMs this can only be changed if the VM is shut down. The memory for _PV_ VMs can be changed at runtime but may not exceed the _Maximum Memory_ value.
 
 ==== Maximum Memory ====
-This parameter can only be set for _PV_ VMs and specifies the maximum value the memory of the VM can be extended to at runtime. The maximum memory value may never be smaller than the memory value.
+This parameter can only be set for _PV_ VMs and specifies the maximum value the memory can grow at runtime. The maximum memory value mustn't be smaller than the memory value.
 
 ==== Root Partition Capacity ====
 The size of the root partition can be increased or decreased. Be aware that decreasing the partition may cause data loss. This parameter can only be changed if the VM is shut down.
 
 ==== Boot Device ====
-Here you can change the boot device of the VM. Since a _PV_ VMs does not specify a boot device this can only be changed for _HVM_ VMs.
+Here you can change the boot device of the VM. Since _PV_ VMs do not allow for a custom boot device, this can only be changed for _HVM_ VMs.
 
 ==== NIC ====
 In this drop down menu you can change which network interface from the Xen host is used by the VM.
@@ -176,13 +173,13 @@ To change the attached media of a VM you can click on the _Media_ item in the co
 
 == Connect VNC Console of a VM ==
 
-To connect the VNC console of a VM you simply need to click on the VNC link which can be found in the _Console Tab_. After clicking on the VNC link you will be prompted to choose which VNC viewer will be used to connect the console.
+To connect to the VNC console of a VM you simply need to click on the VNC link which can be found in the _Console Tab_. After clicking on the VNC link you will be prompted to choose which VNC viewer will be used to connect the console (depends on the client's operating system).
 
 [http://vmaki.googlecode.com/files/vnc_link.png]
 
 [http://vmaki.googlecode.com/files/vnc_console_debian_small.png]
 
-There has to be a VNC viewer installed on your system in order to use the VNC link. Here are some links to download a VNC viewer which can be used for _vmaki_. ThightVNC also provides a Java version of its viewer which doesn't have to be installed, in case you don't have permission on the system to do so.
+A VNC viewer has to be installed on your system in order to be able to make VNC connections. Here are some links to download a VNC viewer from which can be used for _vmaki_. ThightVNC also provides a Java version of its viewer which even doesn't have to be installed, in case you don't have sufficient permissions on the client system.
 
 [http://www.tightvnc.com/download.html ThightVNC (Linux / Windows)]
 
@@ -190,35 +187,27 @@ There has to be a VNC viewer installed on your system in order to use the VNC li
 
 === Registering VNC Protocol on Windows ===
 
-If you are using a Windows operating system you need to register the VNC protocol in order to be able to choose your VNC viewer when clicking on the VNC link in _vmaki_. This can be done by adding an entry to the Windows registry. To simplify this we recommend to use the customURL tool which can be downloaded here:
-
-[http://customurl.codeplex.com/Release/ProjectReleases.aspx?ReleaseId=15090#ReleaseFiles customURL]
-
-
-
+If you are using a Windows operating system you will need to register the VNC protocol in order to be able to choose your VNC viewer when clicking on the VNC link in _vmaki_. This can be done by adding an entry to the Windows registry. To simplify this we recommend to use the _customURL_ tool which can be downloaded [http://customurl.codeplex.com/Release/ProjectReleases.aspx?ReleaseId=15090#ReleaseFiles here].
 
 = ISO Management =
 
-You can upload ISO files to _vmaki_ which can be attached to the VMs. Click on the _ISO Tab_ to get to the overview of all ISO files that are currently available. You can then add a new ISO file, delete or rename an existing one. 
+You can upload ISO files to _vmaki_ which can be attached to VMs. Click on the _ISO Tab_ to get an overview of all ISO files that are currently available. You can then add a new ISO file, delete or rename an existing one. 
 
 [http://vmaki.googlecode.com/files/iso_toolbar.png]
 
-
-
-
 = Snapshot Management =
 
-To backup a VM you can take a snapshot of it which stores the current state of the VM and writes it to an image file. Click on the _Snapshot Tab_ to get to the overview panel of the current snapshots of a VM.
+To backup a VM you can take a snapshot of it which stores the current state of the VM and writes it to an image file. Click on the _Snapshot Tab_ to get to the overview panel of all snapshots created for the VM.
 
 [http://vmaki.googlecode.com/files/toolbar_snapshot.png]
 
 == Taking a Snapshot ==
 
-To take a snapshot of a VM you simply select the VM you want to backup and click on the _Add Snapshot_ button. This can be done while the VM is running. After clicking on the _Add Snapshot_ button you will be prompted to enter a description of the snapshot. 
+To take a snapshot of a VM you simply select the VM you want to backup and click on the _Add Snapshot_ button. This can be done while the VM is running. After clicking on the _Add Snapshot_ button you will be prompted to enter a description for the snapshot. 
 
 [http://vmaki.googlecode.com/files/add_snapshot.png]
 
-As soon as you commit, the snapshot is being taken and written into the file. This can take a couple of minutes depending on the size of the logical volume of the VM. You can check the status of the snapshot in the panel of the _Snapshot Tab_.
+As soon as you commit, the snapshot is being taken and written into the file. This can take a couple of minutes depending on the size of the root volume that the VM is using. You can check the status of the snapshot in the panel of the _Snapshot Tab_.
 
 [http://vmaki.googlecode.com/files/creating_snapshot.png]
 
@@ -226,24 +215,20 @@ As soon as you commit, the snapshot is being taken and written into the file. Th
 
 == Restoring a Snapshot ==
 
-To restore a snapshot you have to select the snapshot which has to be restored. Simply click on the _Restore Snapshot_ button in the toolbar. Make sure the VM is not running. The status of the snapshot and the VM is changed to _restoring_. After the restore is done the status will change back to ready. This can take a couple of minutes depending on the size of the snapshot that has to be restored.
-
+To restore a snapshot you have to select the snapshot which has to be restored. Simply click on the _Restore Snapshot_ button within the toolbar. Make sure the VM is not running. The status of the snapshot and the VM is changed to _restoring_. After the restore is done the status will change back to _ready_. This can take a couple of minutes depending on the size of the snapshot that has to be restored.
 
 [http://vmaki.googlecode.com/files/restoring_snapshot.png] 
 
 [http://vmaki.googlecode.com/files/restoring_snapshot_node.png] 
 
-
-
-
 = User Management =
 
-_vmaki_ has a build in user management which allows you to control the access to _vmaki_. The user management can be accessed via the _User tab_. It allows you to create a new user and delete or rename an existing one. Also the password of an existing user can be resetted.
+_vmaki_ has a build-in user management which allows you to control access to _vmaki_. The user management area can be accessed via the _User tab_. It allows you to create new users, but also to delete or rename an existing ones. This area also allows you to reset user passwords (if your account belongs to the _Administrator_ role).
 
 [http://vmaki.googlecode.com/files/user_tab.png]
 
 == Creating a new User ==
 
-A new user can be added via the Add User button. In the appearing pop-up menu the user name, the user role and the password have to be specified. The role of the new user can either be _Administrator_ or _User_. If you define the new user as _Administrator_ he can also administer the user management while the role _User_ doesn't allow this. Despite of that there are no differences between the role _Administrator_ and _User_.
+A new user can be added via the _Add User_ button. The pop-up menu that appears let's you set user name, user role and password. The role of the new user can either be _Administrator_ or _User_. If you define a new user as belonging to the _Administrator_ role, he can also make modifications to existing users and is allowed to create new ones, while the _User_ role does not allow this. Except for this, there are no differences between these two roles.
 
 [http://vmaki.googlecode.com/files/add_user_window.png]  
