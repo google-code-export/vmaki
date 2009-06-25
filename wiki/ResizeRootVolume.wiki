@@ -2,7 +2,7 @@
 
 = Resize Root Volume =
 
-For this you will need some kind of Live CD (e.g. [http://www.sysresccd.org SystemRescueCD]), since the volume may not be mounted at boot-time and write down, how much space is being occupied and determine, the size it should have from now on
+For this you will need some kind of Live CD (e.g. [http://www.sysresccd.org SystemRescueCD]), since the volume may not be mounted at boot-time and write down, how much space is being occupied and determine, the size it should have from now on.
 
 After you booted with the Live CD, make sure the LVM module is loaded:
 {{{
