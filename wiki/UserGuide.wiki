@@ -37,14 +37,14 @@ You will then be prompted to enter the username and password. If you log in for 
   * *username: admin*
   * *password: admin*
 
-After you successfully logged in with the admin user account you should create a new user account and change the admin's password. Have a look at [UserGuide#User_Management User Management] to see how that is done.
+After you successfully logged in with the admin user account you should create a new user account and change the admin's password. Have a look at [UserGuide#User_Management User Management] to see how this is done.
 
 
 
 
 = Host Management =
 
-You can add one or several Xen host to _vmaki_. The local Xen host on the system _vmaki_ has been installed can be added right away without any further modifications. In order to connect remote Xen Hosts running on an other system than _vmaki_ itself, you have to set up the Xen host as described in the [GettingStarted#Xen_Node Getting Started Guide].
+You can add one or several Xen hosts to _vmaki_. The local Xen host on the system _vmaki_ has been installed can be added right away without any further modifications. In order to connect remote Xen Hosts running on an other system than _vmaki_ itself, you have to set up the Xen host as described in the [GettingStarted#Xen_Node Getting Started Guide].
 
 
 == Adding a Xen Host ==
