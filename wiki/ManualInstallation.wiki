@@ -112,9 +112,9 @@ local all all md5
 === Create new vmaki User ===
 
 {{{
-# sudo -u postgres createuser --superuser vmaki
-# sudo -u postgres createdb vmaki
-# sudo -u postgres psql vmaki
+# sudo -u postgres createuser --superuser vmakidb
+# sudo -u postgres createdb vmakidb
+# sudo -u postgres psql vmakidb
 vmaki=# alter user vmaki with password 'virtual_M0nk83';
 \q
 }}}
