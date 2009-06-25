@@ -14,8 +14,8 @@ function TabPanel(){
     this.tabPanel = new Ext.TabPanel({
         activeTab: 0,
         resizeTabs: true,
-        tabWidth: 90,
-        minTabWidth: 60,
+        tabWidth: 95,
+        minTabWidth: 65,
         border: false,
         defaults: {layout: 'fit'},
         items: [{
